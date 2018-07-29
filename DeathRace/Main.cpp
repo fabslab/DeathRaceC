@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	RenderTexture2D virtualRenderTexture = LoadRenderTexture(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 	SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
 	Vector2 screenOrigin = { 0, 0 };
-	Scene *scene = new Scene();
+	Scene scene = Scene();
 
 	// Main game loop
 	// Detect window close button or ESC key
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 		ClearBackground(BLACK);
 
 		BeginTextureMode(virtualRenderTexture);
-		scene->Draw();
+		scene.Draw();
 		DrawText("9 8 7 6 5 4 3 2 1 0", 2, 0, 32, WHITE);
 		EndTextureMode();
 
