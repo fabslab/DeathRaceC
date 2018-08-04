@@ -9,12 +9,12 @@ int main(int argc, char* argv[])
 	const float PREFERRED_ASPECT_RATIO = (float)VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
 
 	// TODO: Use device's resolution instead of hardcoded screen width/height
-	int screenWidth = 1920;
-	int screenHeight = 1080;
+	int screenWidth = 480;
+	int screenHeight = 360;
 
 	InitWindow(screenWidth, screenHeight, "Death Race");
 	SetWindowMinSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-	ToggleFullscreen();
+	//ToggleFullscreen();
 
 	SetTargetFPS(60);
 
@@ -25,8 +25,6 @@ int main(int argc, char* argv[])
 	Vector2 screenOrigin = { 0, 0 };
 	Scene scene = Scene();
 
-	// Main game loop
-	// Detect window close button or ESC key
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
@@ -34,8 +32,9 @@ int main(int argc, char* argv[])
 		ClearBackground(BLACK);
 
 		BeginTextureMode(virtualRenderTexture);
+		scene.Update();
 		scene.Draw();
-		DrawText("9 8 7 6 5 4 3 2 1 0", 2, 0, 32, WHITE);
+		DrawFPS(2, 2);
 		EndTextureMode();
 
 		DrawTexturePro(

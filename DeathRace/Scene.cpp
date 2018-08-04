@@ -1,7 +1,10 @@
 #include "Scene.h"
 #include "Constants.h"
 #include "raymath.h"
-
+#include "Player.h"
+#include "KeyboardInputMap.h"
+#include "PlayerInput.h"
+#include <vector>
 
 Scene::Scene()
 {
@@ -18,10 +21,29 @@ Scene::Scene()
 
 	sidewalkRightStartPos = { sidewalkRightX, sidewalkStartY };
 	sidewalkRightEndPos = { sidewalkRightX, sidewalkEndY };
+
+	Vector2 player1Position = { (int)(border.width * 0.25), (int)(border.height * 0.8) };
+	Vector2 player2Position = { (int)(border.width * 0.75), (int)(border.height * 0.8) };
+
+	player1Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_LEFT);
+	player2Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_RIGHT);
+
+	player1 = new Player(player1Position, 0, { player1Input }, WHITE);
+	player2 = new Player(player2Position, 1, { player2Input }, Color{ 70, 90, 100, 255 });
 }
 
 Scene::~Scene()
 {
+	delete player1;
+	delete player2;
+	delete player1Input;
+	delete player2Input;
+}
+
+void Scene::Update()
+{
+	player1->Update();
+	player2->Update();
 }
 
 void Scene::Draw()
@@ -30,6 +52,9 @@ void Scene::Draw()
 
 	DrawDottedLine(sidewalkLeftStartPos, sidewalkLeftEndPos, BORDER_WIDTH, WHITE);
 	DrawDottedLine(sidewalkRightStartPos, sidewalkRightEndPos, BORDER_WIDTH, WHITE);
+
+	player1->Draw();
+	player2->Draw();
 }
 
 void Scene::DrawDottedLine(Vector2 startPos, Vector2 endPos, int thickness, Color color)
