@@ -6,7 +6,7 @@
 class AggregatedPlayerInput : public PlayerInput {
 public:
     AggregatedPlayerInput(std::vector<PlayerInput*> inputs);
-    ~AggregatedPlayerInput() override;
+    ~AggregatedPlayerInput() override = default;
 
     float GetThrottleValue() override;
     float GetDirection() override;

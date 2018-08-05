@@ -5,8 +5,6 @@ AggregatedPlayerInput::AggregatedPlayerInput(std::vector<PlayerInput*> inputs)
     this->inputs = inputs;
 }
 
-AggregatedPlayerInput::~AggregatedPlayerInput() = default;
-
 float AggregatedPlayerInput::GetThrottleValue()
 {
     float throttle = 0;

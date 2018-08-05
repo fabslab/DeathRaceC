@@ -6,7 +6,7 @@
 
 namespace Input {
 namespace Keyboard {
-    typedef std::unordered_map<InputCommand, int> KeyboardInputMap;
+    using KeyboardInputMap = std::unordered_map<InputCommand, int>;
 
     const KeyboardInputMap PLAYER_LEFT = {
         { InputCommand::Forward, KEY_W },

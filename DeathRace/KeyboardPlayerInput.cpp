@@ -39,6 +39,3 @@ float KeyboardPlayerInput::GetThrottleValue()
 
     return throttle;
 }
-
-KeyboardPlayerInput::~KeyboardPlayerInput()
-    = default;

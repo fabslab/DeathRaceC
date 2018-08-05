@@ -7,7 +7,7 @@
 class KeyboardPlayerInput : public PlayerInput {
 public:
     KeyboardPlayerInput(Input::Keyboard::KeyboardInputMap inputMap);
-    ~KeyboardPlayerInput() override;
+    ~KeyboardPlayerInput() override = default;
 
     float GetThrottleValue() override;
     float GetDirection() override;
