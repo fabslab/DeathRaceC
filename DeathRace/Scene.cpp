@@ -8,13 +8,11 @@
 
 Scene::Scene()
 {
-	border = { 0, (float)SCOREBOARD_HEIGHT, VIRTUAL_WIDTH, (float)(VIRTUAL_HEIGHT - SCOREBOARD_HEIGHT) };
-
 	float sidewalkStartY = SCOREBOARD_HEIGHT + BORDER_WIDTH * 3;
-	float sidewalkEndY = sidewalkStartY + border.height - BORDER_WIDTH * 3;
+	float sidewalkEndY = sidewalkStartY + GAME_BOUNDS.height - BORDER_WIDTH * 3;
 
 	float sidewalkLeftX = SIDEWALK_WIDTH;
-	float sidewalkRightX = border.width - SIDEWALK_WIDTH;
+	float sidewalkRightX = GAME_BOUNDS.width - SIDEWALK_WIDTH;
 
 	sidewalkLeftStartPos = { sidewalkLeftX, sidewalkStartY };
 	sidewalkLeftEndPos = { sidewalkLeftX, sidewalkEndY };
@@ -22,8 +20,8 @@ Scene::Scene()
 	sidewalkRightStartPos = { sidewalkRightX, sidewalkStartY };
 	sidewalkRightEndPos = { sidewalkRightX, sidewalkEndY };
 
-	Vector2 player1Position = { (int)(border.width * 0.25), (int)(border.height * 0.8) };
-	Vector2 player2Position = { (int)(border.width * 0.75), (int)(border.height * 0.8) };
+	Vector2 player1Position = { (int)(GAME_BOUNDS.width * 0.25), (int)(GAME_BOUNDS.height * 0.8) };
+	Vector2 player2Position = { (int)(GAME_BOUNDS.width * 0.75), (int)(GAME_BOUNDS.height * 0.8) };
 
 	player1Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_LEFT);
 	player2Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_RIGHT);
@@ -48,7 +46,7 @@ void Scene::Update()
 
 void Scene::Draw()
 {
-	DrawRectangleLinesEx(border, BORDER_WIDTH, WHITE);
+	DrawRectangleLinesEx(GAME_BOUNDS, BORDER_WIDTH, WHITE);
 
 	DrawDottedLine(sidewalkLeftStartPos, sidewalkLeftEndPos, BORDER_WIDTH, WHITE);
 	DrawDottedLine(sidewalkRightStartPos, sidewalkRightEndPos, BORDER_WIDTH, WHITE);

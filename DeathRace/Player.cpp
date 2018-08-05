@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "MathUtil.h"
-
+#include "Constants.h"
 
 Player::Player(Vector2 initialPosition, int playerIndex, std::vector<PlayerInput*> supportedInputs, Color color)
 {
@@ -63,7 +63,7 @@ void Player::Update()
 	Vector3 movementDirection = Vector3Transform(initialDirection, rotationMatrix);
 	Vector3 movement = Vector3Multiply(movementDirection, speed);
 
-	position = Vector2Add(position, { movement.x, movement.y });
+	position = MathUtil::WrapPosition(Vector2Add(position, { movement.x, movement.y }), GAME_BOUNDS);
 }
 
 void Player::Reset()
