@@ -20,8 +20,8 @@ Scene::Scene()
 	sidewalkRightStartPos = { sidewalkRightX, sidewalkStartY };
 	sidewalkRightEndPos = { sidewalkRightX, sidewalkEndY };
 
-	Vector2 player1Position = { (int)(GAME_BOUNDS.width * 0.25), (int)(GAME_BOUNDS.height * 0.8) };
-	Vector2 player2Position = { (int)(GAME_BOUNDS.width * 0.75), (int)(GAME_BOUNDS.height * 0.8) };
+	Vector2 player1Position = { (GAME_BOUNDS.width * 0.25f), (GAME_BOUNDS.height * 0.8f) };
+	Vector2 player2Position = { (GAME_BOUNDS.width * 0.75f), (GAME_BOUNDS.height * 0.8f) };
 
 	player1Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_LEFT);
 	player2Input = new KeyboardPlayerInput(Input::Keyboard::PLAYER_RIGHT);
@@ -55,7 +55,7 @@ void Scene::Draw()
 	player2->Draw();
 }
 
-void Scene::DrawDottedLine(Vector2 startPos, Vector2 endPos, int thickness, Color color)
+void Scene::DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickness, Color color)
 {
 	Vector2 dashStart = Vector2(startPos);
 	Vector2 dash = Vector2Scale(Vector2Normalize(Vector2Subtract(endPos, startPos)), thickness);

@@ -7,8 +7,8 @@
 Player::Player(Vector2 initialPosition, int playerIndex, std::vector<PlayerInput*> supportedInputs, Color color)
 {
 	texture = LoadTexture("Content/car16bit02.png");
-	sourceRec = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
-	origin = { (float)texture.width/2, (float)texture.height/2 };
+	sourceRec = { 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+	origin = { static_cast<float>(texture.width)/2, static_cast<float>(texture.height)/2 };
 	input = new AggregatedPlayerInput(supportedInputs);
 	this->initialPosition = initialPosition;
 	this->color = color;
@@ -23,7 +23,7 @@ Player::~Player()
 
 void Player::Draw()
 {
-	Rectangle destRec = { position.x, position.y, (float)texture.width, (float)texture.height };
+	Rectangle destRec = { position.x, position.y, static_cast<float>(texture.width), static_cast<float>(texture.height) };
 	DrawTexturePro(texture, sourceRec, destRec, origin, snappedRotation * RAD2DEG, color);
 }
 

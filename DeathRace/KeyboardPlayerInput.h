@@ -8,10 +8,10 @@ class KeyboardPlayerInput : public PlayerInput
 {
 public:
 	KeyboardPlayerInput(Input::Keyboard::KeyboardInputMap inputMap);
-	~KeyboardPlayerInput();
+	~KeyboardPlayerInput() override;
 
-	virtual float GetThrottleValue() override;
-	virtual float GetDirection() override;
+	float GetThrottleValue() override;
+	float GetDirection() override;
 private:
 	Input::Keyboard::KeyboardInputMap inputMap;
 };

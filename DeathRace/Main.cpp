@@ -6,9 +6,8 @@ Rectangle GetDestinationRectangle(float screenWidth, float screenHeight, float p
 
 int main(int argc, char* argv[])
 {
-	const float PREFERRED_ASPECT_RATIO = (float)VIRTUAL_WIDTH / VIRTUAL_HEIGHT;
+	const float PREFERRED_ASPECT_RATIO = static_cast<float>(VIRTUAL_WIDTH) / VIRTUAL_HEIGHT;
 
-	// TODO: Use device's resolution instead of hardcoded screen width/height
 	int screenWidth = 480;
 	int screenHeight = 360;
 
@@ -19,7 +18,7 @@ int main(int argc, char* argv[])
 	SetTargetFPS(60);
 
 	Rectangle virtualSizeRectangle = { 0, 0, VIRTUAL_WIDTH, -VIRTUAL_HEIGHT };
-	Rectangle destinationRectangle = GetDestinationRectangle(screenWidth, screenHeight, PREFERRED_ASPECT_RATIO);
+	Rectangle destinationRectangle = GetDestinationRectangle(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
 	RenderTexture2D virtualRenderTexture = LoadRenderTexture(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 	SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
 	Vector2 screenOrigin = { 0, 0 };
@@ -65,14 +64,14 @@ Rectangle GetDestinationRectangle(float screenWidth, float screenHeight, float p
 	if (outputAspectRatio <= preferredAspectRatio)
 	{
 		// letterbox - bars on top and bottom
-		float gameHeight = (int)(screenWidth / preferredAspectRatio + 0.5f);
+		float gameHeight = std::round(screenWidth / preferredAspectRatio);
 		float barHeight = (screenHeight - gameHeight) / 2;
 		destinationRectangle = { 0, barHeight, screenWidth, gameHeight };
 	}
 	else
 	{
 		// pillarbox - bars on left and right
-		float gameWidth = (int)(screenHeight * preferredAspectRatio + 0.5f);
+		float gameWidth = std::round(screenHeight * preferredAspectRatio);
 		float barWidth = (screenWidth - gameWidth) / 2;
 		destinationRectangle = { barWidth, 0, gameWidth, screenHeight };
 	}

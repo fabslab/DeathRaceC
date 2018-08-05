@@ -45,5 +45,4 @@ float KeyboardPlayerInput::GetThrottleValue()
 }
 
 KeyboardPlayerInput::~KeyboardPlayerInput()
-{
-}
+= default;
