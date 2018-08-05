@@ -4,15 +4,14 @@
 #include "PlayerInput.h"
 #include <unordered_map>
 
-class KeyboardPlayerInput : public PlayerInput
-{
+class KeyboardPlayerInput : public PlayerInput {
 public:
-	KeyboardPlayerInput(Input::Keyboard::KeyboardInputMap inputMap);
-	~KeyboardPlayerInput() override;
+    KeyboardPlayerInput(Input::Keyboard::KeyboardInputMap inputMap);
+    ~KeyboardPlayerInput() override;
 
-	float GetThrottleValue() override;
-	float GetDirection() override;
+    float GetThrottleValue() override;
+    float GetDirection() override;
+
 private:
-	Input::Keyboard::KeyboardInputMap inputMap;
+    Input::Keyboard::KeyboardInputMap inputMap;
 };
-
