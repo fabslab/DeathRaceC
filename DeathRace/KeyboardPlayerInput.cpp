@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <unordered_map>
 
-KeyboardPlayerInput::KeyboardPlayerInput(Input::Keyboard::KeyboardInputMap inputMap)
+KeyboardPlayerInput::KeyboardPlayerInput(Input::KeyboardInputMap inputMap)
 {
     this->inputMap = inputMap;
 }
