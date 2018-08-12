@@ -1,30 +1,17 @@
 #pragma once
 
-#include <cmath>
+#include "raylib.h"
+
+bool operator==(const Vector2& v1, const Vector2& v2);
 
 namespace MathUtil {
-float Snap(float value, float increment)
-{
-    return std::round(value / increment) * increment;
+float Snap(float value, float increment);
+Vector2 WrapPosition(Vector2 position, Rectangle bounds);
 }
 
-Vector2 WrapPosition(Vector2 position, Rectangle bounds)
-{
-    float x = position.x;
-    float y = position.y;
-
-    if (position.x < bounds.x) {
-        x = bounds.x + bounds.width;
-    } else if (position.x > (bounds.x + bounds.width)) {
-        x = bounds.x;
-    }
-
-    if (position.y < bounds.y) {
-        y = bounds.y + bounds.height;
-    } else if (position.y > (bounds.y + bounds.height)) {
-        y = bounds.y;
-    }
-
-    return { x, y };
-}
+namespace DirectionVectors {
+const Vector2 Up = { 0.0f, -1.0f };
+const Vector2 Right = { 1.0f, 0.0f };
+const Vector2 Down = { 0.0f, 1.0f };
+const Vector2 Left = { -1.0f, 0.0f };
 }

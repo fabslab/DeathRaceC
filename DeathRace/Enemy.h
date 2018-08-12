@@ -12,10 +12,14 @@ public:
     void Update();
 
 private:
-    void Kill();
+    void Die();
     void MakeRandomTurn();
+    bool ShouldMakeTurn();
     void UpdateSpriteDirection();
 
     GraphicUtil::AnimatedTexture *spriteFront, *spriteLeft, *spriteRight, *currentSprite;
-    Vector2 initialPosition, position;
+    Vector2 initialPosition, position, initialDirection, direction;
+    float timeSinceTurnMs;
+    const float timeRangeForRandomTurnMs[2] = { 350.0f, 1800.0f };
+    const float speed = 1.5f;
 };

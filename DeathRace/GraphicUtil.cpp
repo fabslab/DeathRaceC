@@ -28,13 +28,12 @@ void GraphicUtil::DrawTexture(Texture2D texture, Vector2 position, float rotatio
 }
 
 GraphicUtil::AnimatedTexture::AnimatedTexture(const char* fileName, int frameCount, float frameDurationMs)
+    : frameCount(frameCount)
+    , frameDurationMs(frameDurationMs)
 {
     texture = LoadTexture(fileName);
-    this->frameCount = frameCount;
-    this->frameDurationMs = frameDurationMs;
     frameWidth = texture.width / frameCount;
-    remainingFrameTime = frameDurationMs;
-    currentFrameIndex = 0;
+    Reset();
 }
 
 GraphicUtil::AnimatedTexture::~AnimatedTexture()
@@ -42,9 +41,9 @@ GraphicUtil::AnimatedTexture::~AnimatedTexture()
     UnloadTexture(texture);
 }
 
-void GraphicUtil::AnimatedTexture::Update()
+void GraphicUtil::AnimatedTexture::Update(float frameTimeMs)
 {
-    remainingFrameTime -= (GetFrameTime() * 1000);
+    remainingFrameTime -= frameTimeMs;
     if (remainingFrameTime <= 0) {
         ++currentFrameIndex %= frameCount;
         remainingFrameTime = frameDurationMs;
@@ -58,4 +57,10 @@ void GraphicUtil::AnimatedTexture::Draw(Vector2 position)
     Vector2 origin = { static_cast<float>(frameWidth) / 2, static_cast<float>(texture.height) / 2 };
 
     DrawTexturePro(texture, currentFrame, destRec, origin, 0, WHITE);
+}
+
+void GraphicUtil::AnimatedTexture::Reset()
+{
+    currentFrameIndex = 0;
+    remainingFrameTime = frameDurationMs;
 }

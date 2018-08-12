@@ -12,8 +12,9 @@ class AnimatedTexture {
 public:
     AnimatedTexture(const char* fileName, int frameCount, float frameDurationMs);
     ~AnimatedTexture();
-    void Update();
+    void Update(float frameTimeMs);
     void Draw(Vector2 position);
+    void Reset();
 
 private:
     int frameCount, frameWidth, currentFrameIndex;

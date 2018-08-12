@@ -6,11 +6,11 @@
 #include "raymath.h"
 
 Player::Player(Vector2 initialPosition, int playerIndex, std::vector<PlayerInput*> supportedInputs, Color color)
+    : initialPosition(initialPosition)
+    , color(color)
 {
     texture = LoadTexture("Content/car.png");
     input = new AggregatedPlayerInput(supportedInputs);
-    this->initialPosition = initialPosition;
-    this->color = color;
     Reset();
 }
 
