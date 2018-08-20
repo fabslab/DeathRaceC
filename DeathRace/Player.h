@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AggregatedPlayerInput.h"
+#include "BoxCollider.h"
 #include "PlayerInput.h"
 #include "raylib.h"
 #include <vector>
@@ -19,6 +20,7 @@ private:
     float rotation, snappedRotation;
     Color color;
     AggregatedPlayerInput* input;
+    BoxCollider* collider;
 
     // Max number of pixels to move in one update
     float maxForwardSpeed = 2;

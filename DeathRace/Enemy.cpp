@@ -12,6 +12,7 @@ Enemy::Enemy(Vector2 initialPosition)
     spriteLeft = new GraphicUtil::AnimatedTexture("Content/gremlin-left.png", 2, 60);
     spriteRight = new GraphicUtil::AnimatedTexture("Content/gremlin-right.png", 2, 60);
     currentSprite = spriteFront;
+    collider = new BoxCollider(currentSprite->frameWidth, currentSprite->frameHeight, CollisionLayer::Enemy, static_cast<CollisionLayerFilter>(CollisionLayer::All));
 }
 
 Enemy::~Enemy()
@@ -19,6 +20,7 @@ Enemy::~Enemy()
     delete spriteFront;
     delete spriteLeft;
     delete spriteRight;
+    delete collider;
 }
 
 void Enemy::Draw()

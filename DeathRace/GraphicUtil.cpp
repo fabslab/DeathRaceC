@@ -32,7 +32,8 @@ GraphicUtil::AnimatedTexture::AnimatedTexture(const char* fileName, int frameCou
     , frameDurationMs(frameDurationMs)
 {
     texture = LoadTexture(fileName);
-    frameWidth = texture.width / frameCount;
+    frameWidth = static_cast<float>(texture.width) / frameCount;
+    frameHeight = texture.height;
     Reset();
 }
 
@@ -52,9 +53,9 @@ void GraphicUtil::AnimatedTexture::Update(float frameTimeMs)
 
 void GraphicUtil::AnimatedTexture::Draw(Vector2 position)
 {
-    Rectangle currentFrame = Rectangle{ static_cast<float>(frameWidth * currentFrameIndex), 0.0f, static_cast<float>(frameWidth), static_cast<float>(texture.height) };
-    Rectangle destRec = { position.x, position.y, static_cast<float>(frameWidth), static_cast<float>(texture.height) };
-    Vector2 origin = { static_cast<float>(frameWidth) / 2, static_cast<float>(texture.height) / 2 };
+    Rectangle currentFrame = Rectangle{ frameWidth * currentFrameIndex, 0.0f, frameWidth, frameHeight };
+    Rectangle destRec = { position.x, position.y, frameWidth, frameHeight };
+    Vector2 origin = { frameWidth / 2, texture.height / 2 };
 
     DrawTexturePro(texture, currentFrame, destRec, origin, 0, WHITE);
 }

@@ -11,6 +11,7 @@ Player::Player(Vector2 initialPosition, int playerIndex, std::vector<PlayerInput
 {
     texture = LoadTexture("Content/car.png");
     input = new AggregatedPlayerInput(supportedInputs);
+    collider = new BoxCollider(texture.width, texture.height, CollisionLayer::Player, static_cast<CollisionLayerFilter>(CollisionLayer::All));
     Reset();
 }
 
@@ -18,6 +19,7 @@ Player::~Player()
 {
     UnloadTexture(texture);
     delete input;
+    delete collider;
 }
 
 void Player::Draw()
@@ -61,4 +63,5 @@ void Player::Reset()
 {
     position = initialPosition;
     rotation = snappedRotation = 0;
+    collider->SetPosition(initialPosition);
 }

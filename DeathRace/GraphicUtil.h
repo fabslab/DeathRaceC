@@ -15,9 +15,10 @@ public:
     void Update(float frameTimeMs);
     void Draw(Vector2 position);
     void Reset();
+    float frameWidth, frameHeight;
 
 private:
-    int frameCount, frameWidth, currentFrameIndex;
+    int frameCount, currentFrameIndex;
     float remainingFrameTime, frameDurationMs;
     Texture2D texture;
 };

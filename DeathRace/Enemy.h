@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BoxCollider.h"
 #include "GraphicUtil.h"
 #include "raylib.h"
 
@@ -18,6 +19,7 @@ private:
     void UpdateSpriteDirection();
 
     GraphicUtil::AnimatedTexture *spriteFront, *spriteLeft, *spriteRight, *currentSprite;
+    BoxCollider* collider;
     Vector2 initialPosition, position, initialDirection, direction;
     float timeSinceTurnMs;
     const float timeRangeForRandomTurnMs[2] = { 350.0f, 1800.0f };

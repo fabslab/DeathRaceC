@@ -9,12 +9,12 @@ int main(int argc, char* argv[])
 {
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(VIRTUAL_WIDTH) / VIRTUAL_HEIGHT;
 
-    int screenWidth = 1920;
-    int screenHeight = 1080;
+    int screenWidth = 1920 / 3 * 2;
+    int screenHeight = 1080 / 3 * 2;
 
     InitWindow(screenWidth, screenHeight, "Death Race");
     SetWindowMinSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-    ToggleFullscreen();
+    //ToggleFullscreen();
 
     SetTargetFPS(60);
 

@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
@@ -30,6 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AggregatedPlayerInput.h" />
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="CollisionLayer.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GraphicUtil.h" />
