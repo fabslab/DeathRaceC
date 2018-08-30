@@ -1,10 +1,10 @@
 #pragma once
 
+#include "IPlayerInput.h"
 #include "KeyboardInputMap.h"
-#include "PlayerInput.h"
 #include <unordered_map>
 
-class KeyboardPlayerInput : public PlayerInput {
+class KeyboardPlayerInput : public IPlayerInput {
 public:
     KeyboardPlayerInput(Input::KeyboardInputMap inputMap);
     ~KeyboardPlayerInput() override = default;

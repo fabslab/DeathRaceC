@@ -1,10 +1,5 @@
 #include "AggregatedPlayerInput.h"
 
-AggregatedPlayerInput::AggregatedPlayerInput(std::vector<PlayerInput*> inputs)
-{
-    this->inputs = inputs;
-}
-
 float AggregatedPlayerInput::GetThrottleValue()
 {
     float throttle = 0;
@@ -27,4 +22,9 @@ float AggregatedPlayerInput::GetDirection()
         }
     }
     return direction;
+}
+
+void AggregatedPlayerInput::SetInputs(std::vector<IPlayerInput*> inputs)
+{
+    this->inputs = inputs;
 }

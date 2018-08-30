@@ -1,16 +1,17 @@
 #pragma once
 
-#include "PlayerInput.h"
+#include "IPlayerInput.h"
 #include <vector>
 
-class AggregatedPlayerInput : public PlayerInput {
+class AggregatedPlayerInput : public IPlayerInput {
 public:
-    AggregatedPlayerInput(std::vector<PlayerInput*> inputs);
     ~AggregatedPlayerInput() override = default;
 
     float GetThrottleValue() override;
     float GetDirection() override;
 
+    void SetInputs(std::vector<IPlayerInput*> inputs);
+
 private:
-    std::vector<PlayerInput*> inputs;
+    std::vector<IPlayerInput*> inputs;
 };

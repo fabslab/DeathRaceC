@@ -20,31 +20,40 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyMovementSystem.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerMovementSystem.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AggregatedPlayerInput.h" />
-    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="CollisionLayer.h" />
-    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Components.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="ECS.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMovementSystem.h" />
     <ClInclude Include="GraphicUtil.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="KeyboardInputMap.h" />
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="MovementCommand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInput.h" />
+    <ClInclude Include="PlayerMovementSystem.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

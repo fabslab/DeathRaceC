@@ -1,4 +1,5 @@
 #include "GraphicUtil.h"
+#include <cmath>
 
 void GraphicUtil::DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickness, Color color)
 {
@@ -27,41 +28,22 @@ void GraphicUtil::DrawTexture(Texture2D texture, Vector2 position, float rotatio
     DrawTexturePro(texture, sourceRec, destRec, origin, rotation * RAD2DEG, tint);
 }
 
-GraphicUtil::AnimatedTexture::AnimatedTexture(const char* fileName, int frameCount, float frameDurationMs)
-    : frameCount(frameCount)
-    , frameDurationMs(frameDurationMs)
+Rectangle GraphicUtil::GetDestinationRectangleForScreen(float screenWidth, float screenHeight, float preferredAspectRatio)
 {
-    texture = LoadTexture(fileName);
-    frameWidth = static_cast<float>(texture.width) / frameCount;
-    frameHeight = texture.height;
-    Reset();
-}
+    float outputAspectRatio = screenWidth / screenHeight;
+    Rectangle destinationRectangle;
 
-GraphicUtil::AnimatedTexture::~AnimatedTexture()
-{
-    UnloadTexture(texture);
-}
-
-void GraphicUtil::AnimatedTexture::Update(float frameTimeMs)
-{
-    remainingFrameTime -= frameTimeMs;
-    if (remainingFrameTime <= 0) {
-        ++currentFrameIndex %= frameCount;
-        remainingFrameTime = frameDurationMs;
+    if (outputAspectRatio <= preferredAspectRatio) {
+        // letterbox - bars on top and bottom
+        float gameHeight = std::round(screenWidth / preferredAspectRatio);
+        float barHeight = (screenHeight - gameHeight) / 2;
+        destinationRectangle = { 0, barHeight, screenWidth, gameHeight };
+    } else {
+        // pillarbox - bars on left and right
+        float gameWidth = std::round(screenHeight * preferredAspectRatio);
+        float barWidth = (screenWidth - gameWidth) / 2;
+        destinationRectangle = { barWidth, 0, gameWidth, screenHeight };
     }
-}
 
-void GraphicUtil::AnimatedTexture::Draw(Vector2 position)
-{
-    Rectangle currentFrame = Rectangle{ frameWidth * currentFrameIndex, 0.0f, frameWidth, frameHeight };
-    Rectangle destRec = { position.x, position.y, frameWidth, frameHeight };
-    Vector2 origin = { frameWidth / 2, texture.height / 2 };
-
-    DrawTexturePro(texture, currentFrame, destRec, origin, 0, WHITE);
-}
-
-void GraphicUtil::AnimatedTexture::Reset()
-{
-    currentFrameIndex = 0;
-    remainingFrameTime = frameDurationMs;
+    return destinationRectangle;
 }

@@ -1,8 +1,8 @@
 #pragma once
 
-class PlayerInput {
+class IPlayerInput {
 public:
-    virtual ~PlayerInput() = default;
+    virtual ~IPlayerInput() = default;
     virtual float GetThrottleValue() = 0;
     virtual float GetDirection() = 0;
 };
