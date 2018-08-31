@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ECS.h"
-#include "GraphicUtil.h"
+#include "GraphicsUtil.h"
 #include "raylib.h"
 
 class Enemy {

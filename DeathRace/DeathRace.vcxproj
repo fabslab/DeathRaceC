@@ -44,14 +44,15 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyMovementCommand.h" />
     <ClInclude Include="EnemyMovementSystem.h" />
     <ClInclude Include="GameBounds.h" />
-    <ClInclude Include="GraphicUtil.h" />
+    <ClInclude Include="GraphicsUtil.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="KeyboardInputMap.h" />
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
-    <ClInclude Include="MovementCommand.h" />
+    <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMovementSystem.h" />

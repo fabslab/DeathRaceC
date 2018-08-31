@@ -30,7 +30,7 @@ typedef struct EnemyMovementComponent {
     }
     EnemyMovementComponent() = default;
     float chancePerUpdate = 0.f;
-    Vector3 direction = DirectionVectors::Down;
+    Vector2 direction = DirectionVectors::Down;
     float lookDistance = 2.f;
     float speed = 0.f;
     float timeRangeEnd = 0.f;

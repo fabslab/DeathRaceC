@@ -4,7 +4,7 @@
 #include "CollisionSystem.h"
 #include "Constants.h"
 #include "EnemyMovementSystem.h"
-#include "GraphicUtil.h"
+#include "GraphicsUtil.h"
 #include "PlayerMovementSystem.h"
 #include "RenderSystem.h"
 #include "Scene.h"
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     SetTargetFPS(60);
 
     auto virtualSizeRectangle = Rectangle{ 0, 0, VIRTUAL_WIDTH, -VIRTUAL_HEIGHT };
-    auto destinationRectangle = GraphicUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
+    auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
     auto virtualRenderTexture = LoadRenderTexture(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
     auto screenOrigin = Vector2{ 0, 0 };

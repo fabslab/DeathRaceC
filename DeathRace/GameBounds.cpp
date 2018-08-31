@@ -1,7 +1,7 @@
 #include "GameBounds.h"
 #include "Components.h"
 #include "Constants.h"
-#include "GraphicUtil.h"
+#include "GraphicsUtil.h"
 
 void GameBounds::Init(ECS::World* world)
 {
@@ -35,6 +35,6 @@ void GameBounds::Draw()
     Vector2 sidewalkRightStartPos = Vector2{ sidewalkRightX, sidewalkStartY };
     Vector2 sidewalkRightEndPos = Vector2{ sidewalkRightX, sidewalkEndY };
 
-    GraphicUtil::DrawDottedLine(sidewalkLeftStartPos, sidewalkLeftEndPos, BORDER_WIDTH, WHITE);
-    GraphicUtil::DrawDottedLine(sidewalkRightStartPos, sidewalkRightEndPos, BORDER_WIDTH, WHITE);
+    GraphicsUtil::DrawDottedLine(sidewalkLeftStartPos, sidewalkLeftEndPos, BORDER_WIDTH, WHITE);
+    GraphicsUtil::DrawDottedLine(sidewalkRightStartPos, sidewalkRightEndPos, BORDER_WIDTH, WHITE);
 }

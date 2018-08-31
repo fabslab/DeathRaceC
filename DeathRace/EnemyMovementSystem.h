@@ -8,6 +8,6 @@ public:
     virtual void tick(ECS::World* world, float deltaTime) override;
     static bool IsCollisionAhead(ECS::World* world, ECS::Entity* entity);
     static bool ShouldMakeTimeBasedTurn(ECS::Entity* entity);
-    static Vector3 GetRandomTurnDirection(ECS::Entity* entity);
-    static void UpdateEnemyDirection(ECS::Entity* entity, Vector3 direction);
+    static Vector2 GetRandomTurnDirection(ECS::Entity* entity);
+    static void UpdateEnemyDirection(ECS::Entity* entity, Vector2 direction);
 };

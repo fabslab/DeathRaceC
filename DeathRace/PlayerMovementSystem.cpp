@@ -59,26 +59,25 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                     : throttle * movementComponent->reverseSpeed;
                 float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
                 Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
-                Vector3 movementDirection = Vector3Transform(DirectionVectors::Down, rotationMatrix);
+                Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
                 Vector3 movement = Vector3Multiply(movementDirection, speed);
-
                 transformComponent->position = MathUtil::WrapPosition(
-                    Vector2Add(transformComponent->position, { movement.x, movement.y }),
+                    Vector2Add(transformComponent->position, MathUtil::Vector3To2(movement)),
                     GAME_BOUNDS);
             }
 
             // Store result of this tick to enable replays
             movementCommandBuffer[movementComponent->playerIndex].push_back(
-                MovementCommand{ transformComponent->position, transformComponent->rotation });
+                PlayerMovementCommand{ transformComponent->position, transformComponent->rotation });
         });
 }
 
-void PlayerMovementSystem::SetCommandBuffers(std::array<std::vector<MovementCommand>, 2>& buffer)
+void PlayerMovementSystem::SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer)
 {
     movementCommandBuffer = buffer;
 }
 
-std::array<std::vector<MovementCommand>, 2> PlayerMovementSystem::GetCommandBuffers()
+std::array<std::vector<PlayerMovementCommand>, 2> PlayerMovementSystem::GetCommandBuffers()
 {
     return movementCommandBuffer;
 }

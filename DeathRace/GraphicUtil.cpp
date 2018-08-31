@@ -1,7 +1,7 @@
-#include "GraphicUtil.h"
+#include "GraphicsUtil.h"
 #include <cmath>
 
-void GraphicUtil::DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickness, Color color)
+void GraphicsUtil::DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickness, Color color)
 {
     Vector2 dashStart = Vector2(startPos);
     Vector2 dash = Vector2Scale(Vector2Normalize(Vector2Subtract(endPos, startPos)), thickness);
@@ -14,12 +14,12 @@ void GraphicUtil::DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickne
     }
 }
 
-void GraphicUtil::DrawTexture(Texture2D texture, Vector2 position)
+void GraphicsUtil::DrawTexture(Texture2D texture, Vector2 position)
 {
     DrawTexture(texture, position, 0, WHITE);
 }
 
-void GraphicUtil::DrawTexture(Texture2D texture, Vector2 position, float rotation, Color tint)
+void GraphicsUtil::DrawTexture(Texture2D texture, Vector2 position, float rotation, Color tint)
 {
     Rectangle sourceRec = { 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
     Rectangle destRec = { position.x, position.y, static_cast<float>(texture.width), static_cast<float>(texture.height) };
@@ -28,7 +28,7 @@ void GraphicUtil::DrawTexture(Texture2D texture, Vector2 position, float rotatio
     DrawTexturePro(texture, sourceRec, destRec, origin, rotation * RAD2DEG, tint);
 }
 
-Rectangle GraphicUtil::GetDestinationRectangleForScreen(float screenWidth, float screenHeight, float preferredAspectRatio)
+Rectangle GraphicsUtil::GetDestinationRectangleForScreen(float screenWidth, float screenHeight, float preferredAspectRatio)
 {
     float outputAspectRatio = screenWidth / screenHeight;
     Rectangle destinationRectangle;

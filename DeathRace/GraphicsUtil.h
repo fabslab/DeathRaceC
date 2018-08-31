@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-namespace GraphicUtil {
+namespace GraphicsUtil {
 void DrawDottedLine(Vector2 startPos, Vector2 endPos, float thickness, Color color);
 void DrawTexture(Texture2D texture, Vector2 position);
 void DrawTexture(Texture2D texture, Vector2 position, float rotation, Color tint);

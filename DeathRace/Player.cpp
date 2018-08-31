@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Components.h"
 #include "Constants.h"
-#include "GraphicUtil.h"
+#include "GraphicsUtil.h"
 #include "MathUtil.h"
 #include "Textures.h"
 #include "raylib.h"

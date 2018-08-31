@@ -16,17 +16,17 @@ void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
             movementComponent->timeSinceTurn += deltaTime;
             bool madeTurn = false;
             bool stuck = false;
-            Vector3 originalDirection = movementComponent->direction;
+            Vector2 originalDirection = movementComponent->direction;
             if (IsCollisionAhead(world, entity)) {
                 // Try random left/right turn
                 UpdateEnemyDirection(entity, GetRandomTurnDirection(entity));
                 madeTurn = true;
                 if (IsCollisionAhead(world, entity)) {
                     // Try opposite turn
-                    UpdateEnemyDirection(entity, Vector3Negate(movementComponent->direction));
+                    UpdateEnemyDirection(entity, Vector2Negate(movementComponent->direction));
                     if (IsCollisionAhead(world, entity)) {
                         // Turn entity around from original movement direction
-                        UpdateEnemyDirection(entity, Vector3Negate(originalDirection));
+                        UpdateEnemyDirection(entity, Vector2Negate(originalDirection));
                         if (IsCollisionAhead(world, entity)) {
                             UpdateEnemyDirection(entity, originalDirection);
                             stuck = true;
@@ -38,10 +38,10 @@ void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
                 if (!madeTurn && ShouldMakeTimeBasedTurn(entity)) {
                     UpdateEnemyDirection(entity, GetRandomTurnDirection(entity));
                 }
-                Vector3 movement = Vector3Scale(movementComponent->direction, movementComponent->speed);
+                Vector2 movement = Vector2Scale(movementComponent->direction, movementComponent->speed);
                 transformComponent->position = Vector2Add(
                     transformComponent->position,
-                    Vector2{ movement.x, movement.y });
+                    movement);
             }
         });
 }
@@ -52,8 +52,8 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
     auto transformComponent = entity->get<Components::Transform2DComponent>();
     auto collisionComponent = entity->get<Components::CollisionComponent>();
     // Should cast the collision box but instead we simply shift it by the look distance
-    Vector3 lookAmount = Vector3Scale(movementComponent->direction, movementComponent->lookDistance);
-    Vector2 lookAheadPoint = Vector2Add(transformComponent->position, Vector2{ lookAmount.x, lookAmount.y });
+    Vector2 lookAmount = Vector2Scale(movementComponent->direction, movementComponent->lookDistance);
+    Vector2 lookAheadPoint = Vector2Add(transformComponent->position, lookAmount);
     Rectangle collisionBox = CollisionSystem::GetCollisionBox(lookAheadPoint, collisionComponent->width, collisionComponent->height);
     for (auto otherCollisionEntity : world->each<Components::CollisionComponent, Components::Transform2DComponent>()) {
         if (otherCollisionEntity != entity) {
@@ -79,18 +79,19 @@ bool EnemyMovementSystem::ShouldMakeTimeBasedTurn(ECS::Entity* entity)
     return shouldTurn;
 }
 
-Vector3 EnemyMovementSystem::GetRandomTurnDirection(ECS::Entity* entity)
+Vector2 EnemyMovementSystem::GetRandomTurnDirection(ECS::Entity* entity)
 {
     auto movementComponent = entity->get<Components::EnemyMovementComponent>();
+    // Rotate 90 degrees around z-axis for turn
+    Vector3 turnDirection = Vector3CrossProduct(MathUtil::Vector2To3(movementComponent->direction), { 0, 0, 1 });
     // 50/50 chance to turn left/right
-    Vector3 turnDirection = Vector3CrossProduct(movementComponent->direction, { 0, 0, 1 });
     if (GetRandomValue(0, 1) == 0) {
-        turnDirection = { -turnDirection.x, -turnDirection.y, 0 };
+        turnDirection = Vector3Negate(turnDirection);
     }
-    return turnDirection;
+    return MathUtil::Vector3To2(turnDirection);
 }
 
-void EnemyMovementSystem::UpdateEnemyDirection(ECS::Entity* entity, Vector3 direction)
+void EnemyMovementSystem::UpdateEnemyDirection(ECS::Entity* entity, Vector2 direction)
 {
     auto textureComponent = entity->get<Components::TextureComponent>();
     auto animationComponent = entity->get<Components::TextureAnimationComponent>();
