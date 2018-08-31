@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
     <ClCompile Include="AnimationSystem.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
+    <ClCompile Include="GameBounds.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -37,11 +39,13 @@
     <ClInclude Include="AggregatedPlayerInput.h" />
     <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="CollisionLayer.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMovementSystem.h" />
+    <ClInclude Include="GameBounds.h" />
     <ClInclude Include="GraphicUtil.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="KeyboardInputMap.h" />

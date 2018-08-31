@@ -31,6 +31,7 @@ typedef struct EnemyMovementComponent {
     EnemyMovementComponent() = default;
     float chancePerUpdate = 0.f;
     Vector3 direction = DirectionVectors::Down;
+    float lookDistance = 2.f;
     float speed = 0.f;
     float timeRangeEnd = 0.f;
     float timeRangeStart = 0.f;
@@ -92,6 +93,10 @@ typedef struct Transform2DComponent {
     Transform2DComponent(Vector2 position, float rotation)
         : position(position)
         , rotation(rotation)
+    {
+    }
+    Transform2DComponent(Vector2 position)
+        : position(position)
     {
     }
     Transform2DComponent() = default;

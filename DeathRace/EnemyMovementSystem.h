@@ -6,7 +6,8 @@
 class EnemyMovementSystem : public ECS::EntitySystem {
 public:
     virtual void tick(ECS::World* world, float deltaTime) override;
-    bool ShouldMakeTurn(ECS::ComponentHandle<Components::EnemyMovementComponent> movementComponent);
-    Vector3 GetTurnDirection(ECS::ComponentHandle<Components::EnemyMovementComponent> movementComponent);
-    void UpdateSpriteDirection(ECS::ComponentHandle<Components::TextureComponent> textureComponent, ECS::ComponentHandle<Components::TextureAnimationComponent> animationComponent, Vector3 direction);
+    static bool IsCollisionAhead(ECS::World* world, ECS::Entity* entity);
+    static bool ShouldMakeTimeBasedTurn(ECS::Entity* entity);
+    static Vector3 GetRandomTurnDirection(ECS::Entity* entity);
+    static void UpdateEnemyDirection(ECS::Entity* entity, Vector3 direction);
 };

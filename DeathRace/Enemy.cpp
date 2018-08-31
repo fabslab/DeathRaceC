@@ -4,7 +4,7 @@
 
 Enemy::Enemy(ECS::Entity* entity, Vector2 position)
 {
-    entity->assign<Components::Transform2DComponent>(position, 0);
+    entity->assign<Components::Transform2DComponent>(position);
     entity->assign<Components::TextureComponent>(Textures::enemyFront, Color(WHITE), Rectangle{ 0.f, 0.f, 16.f, 16.f });
     entity->assign<Components::TextureAnimationComponent>(2, 60.f);
     entity->assign<Components::EnemyMovementComponent>(1.5f, 350.f, 1800.f, .05);

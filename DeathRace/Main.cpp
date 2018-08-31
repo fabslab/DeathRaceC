@@ -1,6 +1,7 @@
 #include "raylib.h"
 
 #include "AnimationSystem.h"
+#include "CollisionSystem.h"
 #include "Constants.h"
 #include "EnemyMovementSystem.h"
 #include "GraphicUtil.h"
@@ -35,6 +36,7 @@ int main(int argc, char* argv[])
     playerMovement->SetNumPlayers(numPlayers);
     world->registerSystem(playerMovement);
     world->registerSystem(new EnemyMovementSystem());
+    world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());
 
     while (!WindowShouldClose()) {

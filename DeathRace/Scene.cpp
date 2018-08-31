@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Constants.h"
+#include "GameBounds.h"
 #include "GraphicUtil.h"
 #include "KeyboardInputMap.h"
 #include "Player.h"
@@ -10,6 +11,8 @@
 Scene::Scene(ECS::World* world, int numPlayers)
 {
     Textures::Load();
+
+    GameBounds::Init(world);
 
     Vector2 player1Position = Vector2{ (GAME_BOUNDS.width * 0.25f), (GAME_BOUNDS.height * 0.8f) };
     player1 = new Player(world->create(), 0, player1Position, WHITE);
@@ -44,20 +47,5 @@ Scene::~Scene()
 
 void Scene::Draw()
 {
-    DrawRectangleLinesEx(GAME_BOUNDS, BORDER_WIDTH, WHITE);
-
-    float sidewalkStartY = SCOREBOARD_HEIGHT + BORDER_WIDTH * 3;
-    float sidewalkEndY = sidewalkStartY + GAME_BOUNDS.height - BORDER_WIDTH * 3;
-
-    float sidewalkLeftX = SIDEWALK_WIDTH;
-    float sidewalkRightX = GAME_BOUNDS.width - SIDEWALK_WIDTH;
-
-    sidewalkLeftStartPos = { sidewalkLeftX, sidewalkStartY };
-    sidewalkLeftEndPos = { sidewalkLeftX, sidewalkEndY };
-
-    sidewalkRightStartPos = { sidewalkRightX, sidewalkStartY };
-    sidewalkRightEndPos = { sidewalkRightX, sidewalkEndY };
-
-    GraphicUtil::DrawDottedLine(sidewalkLeftStartPos, sidewalkLeftEndPos, BORDER_WIDTH, WHITE);
-    GraphicUtil::DrawDottedLine(sidewalkRightStartPos, sidewalkRightEndPos, BORDER_WIDTH, WHITE);
+    GameBounds::Draw();
 }

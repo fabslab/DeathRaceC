@@ -60,6 +60,12 @@
     <ClCompile Include="AnimationSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="GameBounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -120,6 +126,12 @@
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="AnimationSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>

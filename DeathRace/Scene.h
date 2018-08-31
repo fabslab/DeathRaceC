@@ -13,7 +13,6 @@ public:
     void Draw();
 
 private:
-    Vector2 sidewalkLeftStartPos, sidewalkLeftEndPos, sidewalkRightStartPos, sidewalkRightEndPos;
     Player* player1 = nullptr;
     Player* player2 = nullptr;
     Enemy *enemy1, *enemy2;
