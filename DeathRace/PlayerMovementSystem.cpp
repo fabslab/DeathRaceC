@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "MathUtil.h"
 #include "raymath.h"
+#include <algorithm>
 
 PlayerMovementSystem::PlayerMovementSystem()
 {
@@ -19,8 +20,7 @@ PlayerMovementSystem::~PlayerMovementSystem()
 void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 {
     world->each<Components::PlayerMovementComponent, Components::SnappedRotationComponent, Components::Transform2DComponent>(
-        [&](
-            ECS::Entity* entity,
+        [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::PlayerMovementComponent> movementComponent,
             ECS::ComponentHandle<Components::SnappedRotationComponent> snappedRotationComponent,
             ECS::ComponentHandle<Components::Transform2DComponent> transformComponent) {
@@ -37,33 +37,40 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
             float throttle = inputAggregator.GetThrottleValue();
             float turnDirection = inputAggregator.GetDirection();
 
-            float rotation = transformComponent->rotation;
-            if (turnDirection == 0) {
-                // Reset rotation back to snapped value if player stops turning
-                rotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
-            } else {
-                rotation += (turnDirection * snappedRotationComponent->maxTurnPerUpdate);
-                // Prevent value from becoming too large by resetting once full circle reached
-                float pi2 = PI * 2;
-                if (rotation > pi2) {
-                    rotation -= pi2;
-                } else if (rotation < -pi2) {
-                    rotation += pi2;
-                }
+            movementComponent->remainingCrashTime = std::max(movementComponent->remainingCrashTime - deltaTime, 0.f);
+            if (throttle < 0.f) {
+                movementComponent->remainingCrashTime = 0.f;
             }
-            transformComponent->rotation = rotation;
 
-            if (throttle != 0) {
-                float speed = throttle > 0
-                    ? throttle * movementComponent->forwardSpeed
-                    : throttle * movementComponent->reverseSpeed;
-                float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
-                Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
-                Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
-                Vector3 movement = Vector3Multiply(movementDirection, speed);
-                transformComponent->position = MathUtil::WrapPosition(
-                    Vector2Add(transformComponent->position, MathUtil::Vector3To2(movement)),
-                    GAME_BOUNDS);
+            if (movementComponent->remainingCrashTime <= 0.f) {
+                float rotation = transformComponent->rotation;
+                if (turnDirection == 0.f) {
+                    // Reset rotation back to snapped value if player stops turning
+                    rotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
+                } else {
+                    rotation += (turnDirection * snappedRotationComponent->maxTurnPerUpdate);
+                    // Prevent value from becoming too large by resetting once full circle reached
+                    float pi2 = PI * 2;
+                    if (rotation > pi2) {
+                        rotation -= pi2;
+                    } else if (rotation < -pi2) {
+                        rotation += pi2;
+                    }
+                }
+                transformComponent->rotation = rotation;
+
+                if (throttle != 0.f) {
+                    float speed = throttle > 0.f
+                        ? throttle * movementComponent->forwardSpeed
+                        : throttle * movementComponent->reverseSpeed;
+                    float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
+                    Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
+                    Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
+                    Vector3 movement = Vector3Multiply(movementDirection, speed);
+                    transformComponent->position = MathUtil::WrapPosition(
+                        Vector2Add(transformComponent->position, MathUtil::Vector3To2(movement)),
+                        GAME_BOUNDS);
+                }
             }
 
             // Store result of this tick to enable replays

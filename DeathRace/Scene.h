@@ -1,9 +1,7 @@
 #pragma once
 
 #include "ECS.h"
-#include "Enemy.h"
 #include "KeyboardPlayerInput.h"
-#include "Player.h"
 #include "raylib.h"
 
 class Scene {
@@ -13,9 +11,5 @@ public:
     void Draw();
 
 private:
-    Player* player1 = nullptr;
-    Player* player2 = nullptr;
-    Enemy *enemy1, *enemy2;
-    KeyboardPlayerInput *player1Input, *player2Input;
     ECS::World* world;
 };

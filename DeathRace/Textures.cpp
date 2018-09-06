@@ -5,7 +5,8 @@ Texture
     enemyFront,
     enemyLeft,
     enemyRight,
-    player;
+    player,
+    tombstone;
 
 void Load()
 {
@@ -13,6 +14,7 @@ void Load()
     enemyLeft = LoadTexture("Content/gremlin-left.png");
     enemyRight = LoadTexture("Content/gremlin-right.png");
     player = LoadTexture("Content/car.png");
+    tombstone = LoadTexture("Content/cross.png");
 }
 
 void Unload()
@@ -21,5 +23,6 @@ void Unload()
     UnloadTexture(enemyLeft);
     UnloadTexture(enemyRight);
     UnloadTexture(player);
+    UnloadTexture(tombstone);
 }
 }

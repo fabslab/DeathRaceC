@@ -9,8 +9,7 @@ void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
     world->each<
         Components::Transform2DComponent,
         Components::EnemyMovementComponent>(
-        [&](
-            ECS::Entity* entity,
+        [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::Transform2DComponent> transformComponent,
             ECS::ComponentHandle<Components::EnemyMovementComponent> movementComponent) {
             movementComponent->timeSinceTurn += deltaTime;
@@ -51,13 +50,12 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
     auto movementComponent = entity->get<Components::EnemyMovementComponent>();
     auto transformComponent = entity->get<Components::Transform2DComponent>();
     auto collisionComponent = entity->get<Components::CollisionComponent>();
-    // Should cast the collision box but instead we simply shift it by the look distance
+    // TODO: Should cast the collision box but instead we simply shift it by the look distance
     Vector2 lookAmount = Vector2Scale(movementComponent->direction, movementComponent->lookDistance);
     Vector2 lookAheadPoint = Vector2Add(transformComponent->position, lookAmount);
     Rectangle collisionBox = CollisionSystem::GetCollisionBox(lookAheadPoint, collisionComponent->width, collisionComponent->height);
     for (auto otherCollisionEntity : world->each<Components::CollisionComponent, Components::Transform2DComponent>()) {
-        if (otherCollisionEntity != entity) {
-            // TODO: Add collision filter check, call into collision system to do it
+        if (CollisionSystem::PassesCollisionFilter(entity, otherCollisionEntity)) {
             Rectangle otherCollisionBox = CollisionSystem::GetCollisionBox(otherCollisionEntity);
             if (CheckCollisionRecs(collisionBox, otherCollisionBox)) {
                 return true;
@@ -107,4 +105,12 @@ void EnemyMovementSystem::UpdateEnemyDirection(ECS::Entity* entity, Vector2 dire
     animationComponent->currentFrameIndex = 0;
     animationComponent->remainingFrameTime = 0.f;
     movementComponent->timeSinceTurn = 0.f;
+}
+
+void EnemyMovementSystem::ResetEnemy(ECS::Entity* entity)
+{
+    auto transformComponent = entity->get<Components::Transform2DComponent>();
+    auto movementComponent = entity->get<Components::EnemyMovementComponent>();
+    transformComponent->position = movementComponent->initialPosition;
+    UpdateEnemyDirection(entity, DirectionVectors::Down);
 }

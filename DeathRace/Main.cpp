@@ -1,9 +1,11 @@
 #include "raylib.h"
 
 #include "AnimationSystem.h"
+#include "CollisionEventSubscriber.h"
 #include "CollisionSystem.h"
 #include "Constants.h"
 #include "EnemyMovementSystem.h"
+#include "Events.h"
 #include "GraphicsUtil.h"
 #include "PlayerMovementSystem.h"
 #include "RenderSystem.h"
@@ -13,12 +15,12 @@ int main(int argc, char* argv[])
 {
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(VIRTUAL_WIDTH) / VIRTUAL_HEIGHT;
 
-    int screenWidth = 1920;
-    int screenHeight = 1080;
+    int screenWidth = 1920 / 3 * 2;
+    int screenHeight = 1080 / 3 * 2;
 
     InitWindow(screenWidth, screenHeight, "Death Race");
     SetWindowMinSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-    ToggleFullscreen();
+    //ToggleFullscreen();
 
     SetTargetFPS(60);
 
@@ -30,7 +32,7 @@ int main(int argc, char* argv[])
 
     int numPlayers = 2;
     auto world = ECS::World::createWorld();
-    auto scene = Scene(world, numPlayers);
+
     world->registerSystem(new AnimationSystem());
     auto playerMovement = new PlayerMovementSystem();
     playerMovement->SetNumPlayers(numPlayers);
@@ -38,6 +40,10 @@ int main(int argc, char* argv[])
     world->registerSystem(new EnemyMovementSystem());
     world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());
+
+    world->subscribe<Events::CollisionEvent>(new CollisionEventSubscriber());
+
+    auto scene = Scene(world, numPlayers);
 
     while (!WindowShouldClose()) {
         BeginDrawing();

@@ -5,8 +5,7 @@
 void RenderSystem::tick(ECS::World* world, float deltaTime)
 {
     world->each<Components::Transform2DComponent, Components::TextureComponent>(
-        [&](
-            ECS::Entity* entity,
+        [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::Transform2DComponent> transformComponent,
             ECS::ComponentHandle<Components::TextureComponent> textureComponent) {
             Texture2D texture = textureComponent->texture;

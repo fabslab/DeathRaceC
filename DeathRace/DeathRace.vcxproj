@@ -21,15 +21,15 @@
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
     <ClCompile Include="AnimationSystem.cpp" />
+    <ClCompile Include="CollisionEventSubscriber.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
+    <ClCompile Include="Entities.cpp" />
     <ClCompile Include="GameBounds.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathUtil.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -38,14 +38,16 @@
   <ItemGroup>
     <ClInclude Include="AggregatedPlayerInput.h" />
     <ClInclude Include="AnimationSystem.h" />
+    <ClInclude Include="CollisionEventSubscriber.h" />
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ECS.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMovementCommand.h" />
     <ClInclude Include="EnemyMovementSystem.h" />
+    <ClInclude Include="Entities.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="GameBounds.h" />
     <ClInclude Include="GraphicsUtil.h" />
     <ClInclude Include="InputCommand.h" />
@@ -53,7 +55,6 @@
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMovementSystem.h" />
     <ClInclude Include="RenderSystem.h" />

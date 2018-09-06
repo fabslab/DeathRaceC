@@ -10,4 +10,5 @@ public:
     static bool ShouldMakeTimeBasedTurn(ECS::Entity* entity);
     static Vector2 GetRandomTurnDirection(ECS::Entity* entity);
     static void UpdateEnemyDirection(ECS::Entity* entity, Vector2 direction);
+    static void ResetEnemy(ECS::Entity* entity);
 };

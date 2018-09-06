@@ -4,8 +4,7 @@
 void AnimationSystem::tick(ECS::World* world, float deltaTime)
 {
     world->each<Components::TextureAnimationComponent, Components::TextureComponent>(
-        [&](
-            ECS::Entity* entity,
+        [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::TextureAnimationComponent> animationComponent,
             ECS::ComponentHandle<Components::TextureComponent> textureComponent) {
             animationComponent->remainingFrameTime -= deltaTime;

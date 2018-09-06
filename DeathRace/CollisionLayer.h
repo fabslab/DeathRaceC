@@ -4,12 +4,14 @@
 
 using CollisionLayerFilter = uint_fast32_t;
 
-const enum class CollisionLayer {
+const enum class CollisionLayer : CollisionLayerFilter {
     None = 0,
     Player = 1 << 0,
     Enemy = 1 << 1,
-    RoadBounds = 1 << 2,
-    GameBounds = 1 << 3
+    Tombstone = 1 << 2,
+    Sidewalk = 1 << 3,
+    GameBounds = 1 << 4,
+    All = ~None
 };
 
 inline CollisionLayer operator|(CollisionLayer a, CollisionLayer b)

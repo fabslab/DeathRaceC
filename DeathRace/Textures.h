@@ -7,7 +7,8 @@ extern Texture
     enemyFront,
     enemyLeft,
     enemyRight,
-    player;
+    player,
+    tombstone;
 void Load();
 void Unload();
 }

@@ -27,16 +27,10 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="KeyboardPlayerInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AggregatedPlayerInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraphicUtil.cpp">
@@ -66,15 +60,18 @@
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionEventSubscriber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardPlayerInput.h">
@@ -93,9 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MathUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionLayer.h">
@@ -135,6 +129,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEventSubscriber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

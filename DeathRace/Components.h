@@ -6,9 +6,10 @@
 
 namespace Components {
 typedef struct CollisionComponent {
-    CollisionComponent(float width, float height, CollisionLayer layer, CollisionLayer filter)
+    CollisionComponent(float width, float height, bool isStatic, CollisionLayer layer, CollisionLayer filter)
         : filter(filter)
         , height(height)
+        , isStatic(isStatic)
         , layer(layer)
         , width(width)
     {
@@ -17,12 +18,14 @@ typedef struct CollisionComponent {
     CollisionLayer filter = CollisionLayer::None;
     CollisionLayer layer = CollisionLayer::None;
     float height = 0;
+    bool isStatic = true;
     float width = 0;
 } CollisionComponent;
 
 typedef struct EnemyMovementComponent {
-    EnemyMovementComponent(float speed, float timeRangeStart, float timeRangeEnd, float chancePerUpdate)
+    EnemyMovementComponent(Vector2 initialPosition, float speed, float timeRangeStart, float timeRangeEnd, float chancePerUpdate)
         : chancePerUpdate(chancePerUpdate)
+        , initialPosition(initialPosition)
         , speed(speed)
         , timeRangeEnd(timeRangeEnd)
         , timeRangeStart(timeRangeStart)
@@ -31,6 +34,7 @@ typedef struct EnemyMovementComponent {
     EnemyMovementComponent() = default;
     float chancePerUpdate = 0.f;
     Vector2 direction = DirectionVectors::Down;
+    Vector2 initialPosition = Vector2{ 0.f, 0.f };
     float lookDistance = 2.f;
     float speed = 0.f;
     float timeRangeEnd = 0.f;
@@ -46,8 +50,10 @@ typedef struct PlayerMovementComponent {
     {
     }
     PlayerMovementComponent() = default;
+    float crashTime = 1000.f;
     int playerIndex = 0;
     float forwardSpeed = 0.f;
+    float remainingCrashTime = 0.f;
     float reverseSpeed = 0.f;
 } PlayerMovementComponent;
 
@@ -79,6 +85,11 @@ typedef struct TextureComponent {
     TextureComponent(Texture& texture, Color tint)
         : texture(texture)
         , tint(tint)
+    {
+        sourceRect = Rectangle{ 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+    }
+    TextureComponent(Texture& texture)
+        : texture(texture)
     {
         sourceRect = Rectangle{ 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
     }
