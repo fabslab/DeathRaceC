@@ -7,24 +7,18 @@ void CollisionEventSubscriber::receive(ECS::World* world, const Events::Collisio
 {
     auto firstEntity = event.firstEntity;
     auto secondEntity = event.secondEntity;
-
     auto playerMovementComponent = firstEntity->get<Components::PlayerMovementComponent>();
     if (playerMovementComponent) {
         if (secondEntity->get<Components::EnemyMovementComponent>()) {
-            // increase score for player
+            if (!EnemyMovementSystem::IsEnemySafe(world, secondEntity)) {
+                auto enemyTransformComponent = secondEntity->get<Components::Transform2DComponent>();
+                Entities::CreateTombstone(world, enemyTransformComponent->position);
+                EnemyMovementSystem::ResetEnemy(secondEntity);
+                firstEntity->get<Components::ScoreComponent>()->score++;
+            }
         } else {
-            // crash player
             if (playerMovementComponent->remainingCrashTime <= 0.f) {
                 playerMovementComponent->remainingCrashTime = playerMovementComponent->crashTime;
-            }
-        }
-    } else {
-        auto enemyMovementComponent = firstEntity->get<Components::EnemyMovementComponent>();
-        auto enemyTransformComponent = firstEntity->get<Components::Transform2DComponent>();
-        if (enemyMovementComponent) {
-            if (secondEntity->get<Components::PlayerMovementComponent>()) {
-                Entities::CreateTombstone(world, enemyTransformComponent->position);
-                EnemyMovementSystem::ResetEnemy(firstEntity);
             }
         }
     }

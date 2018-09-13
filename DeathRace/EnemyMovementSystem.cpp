@@ -50,19 +50,33 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
     auto movementComponent = entity->get<Components::EnemyMovementComponent>();
     auto transformComponent = entity->get<Components::Transform2DComponent>();
     auto collisionComponent = entity->get<Components::CollisionComponent>();
+    bool enemySafe = EnemyMovementSystem::IsEnemySafe(world, entity);
+
     // TODO: Should cast the collision box but instead we simply shift it by the look distance
     Vector2 lookAmount = Vector2Scale(movementComponent->direction, movementComponent->lookDistance);
     Vector2 lookAheadPoint = Vector2Add(transformComponent->position, lookAmount);
     Rectangle collisionBox = CollisionSystem::GetCollisionBox(lookAheadPoint, collisionComponent->width, collisionComponent->height);
     for (auto otherCollisionEntity : world->each<Components::CollisionComponent, Components::Transform2DComponent>()) {
-        if (CollisionSystem::PassesCollisionFilter(entity, otherCollisionEntity)) {
-            Rectangle otherCollisionBox = CollisionSystem::GetCollisionBox(otherCollisionEntity);
-            if (CheckCollisionRecs(collisionBox, otherCollisionBox)) {
+        if (!(otherCollisionEntity->get<Components::PlayerMovementComponent>() && enemySafe)
+            && CollisionSystem::PassesCollisionFilter(entity, otherCollisionEntity)) {
+            if (CheckCollisionRecs(collisionBox, CollisionSystem::GetCollisionBox(otherCollisionEntity))) {
                 return true;
             }
         }
     }
     return false;
+}
+
+bool EnemyMovementSystem::IsEnemySafe(ECS::World* world, ECS::Entity* entity)
+{
+    auto enemySafe = false;
+    for (auto safeAreaEntity : world->each<Components::EnemySafeAreaComponent>()) {
+        if (CollisionSystem::AreColliding(entity, safeAreaEntity)) {
+            enemySafe = true;
+            break;
+        }
+    }
+    return enemySafe;
 }
 
 bool EnemyMovementSystem::ShouldMakeTimeBasedTurn(ECS::Entity* entity)

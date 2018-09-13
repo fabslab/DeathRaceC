@@ -2,6 +2,7 @@
 
 #include "CollisionLayer.h"
 #include "MathUtil.h"
+#include "PlayerIndex.h"
 #include "raylib.h"
 
 namespace Components {
@@ -43,7 +44,7 @@ typedef struct EnemyMovementComponent {
 } EnemyMovementComponent;
 
 typedef struct PlayerMovementComponent {
-    PlayerMovementComponent(int playerIndex, float forwardSpeed, float reverseSpeed)
+    PlayerMovementComponent(PlayerIndex playerIndex, float forwardSpeed, float reverseSpeed)
         : forwardSpeed(forwardSpeed)
         , playerIndex(playerIndex)
         , reverseSpeed(reverseSpeed)
@@ -51,11 +52,24 @@ typedef struct PlayerMovementComponent {
     }
     PlayerMovementComponent() = default;
     float crashTime = 1000.f;
-    int playerIndex = 0;
+    PlayerIndex playerIndex = PlayerIndex::One;
     float forwardSpeed = 0.f;
     float remainingCrashTime = 0.f;
     float reverseSpeed = 0.f;
 } PlayerMovementComponent;
+
+typedef struct EnemySafeAreaComponent {
+    bool enabled = true;
+} EnemySafeAreaComponent;
+
+typedef struct ScoreComponent {
+    ScoreComponent(PlayerIndex playerIndex)
+        : playerIndex(playerIndex)
+    {
+    }
+    int score = 0;
+    PlayerIndex playerIndex = PlayerIndex::One;
+} ScoreComponent;
 
 typedef struct SnappedRotationComponent {
     float snapAngle = PI / 8;

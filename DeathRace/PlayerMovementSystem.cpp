@@ -1,6 +1,7 @@
 #include "PlayerMovementSystem.h"
 #include "Components.h"
 #include "Constants.h"
+#include "GameStateChangeEventSubscriber.h"
 #include "MathUtil.h"
 #include "raymath.h"
 #include <algorithm>
@@ -19,6 +20,10 @@ PlayerMovementSystem::~PlayerMovementSystem()
 
 void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 {
+    if (GameStateChangeEventSubscriber::GetGameState() != GameState::GameRunning) {
+        return;
+    }
+
     world->each<Components::PlayerMovementComponent, Components::SnappedRotationComponent, Components::Transform2DComponent>(
         [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::PlayerMovementComponent> movementComponent,
@@ -27,9 +32,9 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
             if (numPlayers == 1) {
                 inputAggregator.SetInputs({ keyboardInputLeft, keyboardInputRight });
             } else if (numPlayers == 2) {
-                if (movementComponent->playerIndex == 0) {
+                if (movementComponent->playerIndex == PlayerIndex::One) {
                     inputAggregator.SetInputs({ keyboardInputLeft });
-                } else if (movementComponent->playerIndex == 1) {
+                } else if (movementComponent->playerIndex == PlayerIndex::Two) {
                     inputAggregator.SetInputs({ keyboardInputRight });
                 }
             }
@@ -69,12 +74,12 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                     Vector3 movement = Vector3Multiply(movementDirection, speed);
                     transformComponent->position = MathUtil::WrapPosition(
                         Vector2Add(transformComponent->position, MathUtil::Vector3To2(movement)),
-                        GAME_BOUNDS);
+                        GameConstants::GAME_BOUNDS);
                 }
             }
 
             // Store result of this tick to enable replays
-            movementCommandBuffer[movementComponent->playerIndex].push_back(
+            movementCommandBuffer[static_cast<int>(movementComponent->playerIndex)].push_back(
                 PlayerMovementCommand{ transformComponent->position, transformComponent->rotation });
         });
 }

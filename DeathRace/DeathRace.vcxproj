@@ -25,7 +25,9 @@
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
     <ClCompile Include="Entities.cpp" />
+    <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="GameBounds.cpp" />
+    <ClCompile Include="GameStateChangeEventSubscriber.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -33,6 +35,7 @@
     <ClCompile Include="PlayerMovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScoreSystem.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -48,17 +51,22 @@
     <ClInclude Include="EnemyMovementSystem.h" />
     <ClInclude Include="Entities.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="Fonts.h" />
     <ClInclude Include="GameBounds.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameStateChangeEventSubscriber.h" />
     <ClInclude Include="GraphicsUtil.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="KeyboardInputMap.h" />
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="PlayerIndex.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMovementSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ScoreSystem.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

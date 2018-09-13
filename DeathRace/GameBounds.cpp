@@ -3,6 +3,8 @@
 #include "Constants.h"
 #include "GraphicsUtil.h"
 
+using namespace GameConstants;
+
 void GameBounds::Init(ECS::World* world)
 {
     auto borderLeft = world->create();
@@ -19,9 +21,11 @@ void GameBounds::Init(ECS::World* world)
     borderBottom->assign<Components::Transform2DComponent>(Vector2{ GAME_BOUNDS.x + GAME_BOUNDS.width / 2, GAME_BOUNDS.y + GAME_BOUNDS.height - BORDER_WIDTH / 2 });
 
     auto leftSidewalk = world->create();
+    leftSidewalk->assign<Components::EnemySafeAreaComponent>();
     leftSidewalk->assign<Components::CollisionComponent>(SIDEWALK_WIDTH, GAME_BOUNDS.height, true, CollisionLayer::Sidewalk, CollisionLayer::Player);
     leftSidewalk->assign<Components::Transform2DComponent>(Vector2{ GAME_BOUNDS.x + SIDEWALK_WIDTH / 2, GAME_BOUNDS.y + GAME_BOUNDS.height / 2 });
     auto rightSidewalk = world->create();
+    rightSidewalk->assign<Components::EnemySafeAreaComponent>();
     rightSidewalk->assign<Components::CollisionComponent>(SIDEWALK_WIDTH, GAME_BOUNDS.height, true, CollisionLayer::Sidewalk, CollisionLayer::Player);
     rightSidewalk->assign<Components::Transform2DComponent>(Vector2{ GAME_BOUNDS.x + GAME_BOUNDS.width - SIDEWALK_WIDTH / 2, GAME_BOUNDS.y + GAME_BOUNDS.height / 2 });
 }
