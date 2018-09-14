@@ -1,4 +1,4 @@
-#include "ScoreSystem.h"
+#include "ScoreRenderSystem.h"
 #include "Components.h"
 #include "Constants.h"
 #include "Events.h"
@@ -8,12 +8,12 @@
 #include <cmath>
 #include <string>
 
-ScoreSystem::ScoreSystem(float gameTime)
+ScoreRenderSystem::ScoreRenderSystem(float gameTime)
     : gameTime(gameTime)
 {
 }
 
-void ScoreSystem::tick(ECS::World* world, float deltaTime)
+void ScoreRenderSystem::tick(ECS::World* world, float deltaTime)
 {
     gameTime = std::max(gameTime - deltaTime / 1000, 0.f);
     if (gameTime == 0.f) {
@@ -39,12 +39,12 @@ void ScoreSystem::tick(ECS::World* world, float deltaTime)
         });
 }
 
-void ScoreSystem::SetGameTime(float gameTime)
+void ScoreRenderSystem::SetGameTime(float gameTime)
 {
     this->gameTime = gameTime;
 }
 
-std::string ScoreSystem::IntToDisplayString(int num)
+std::string ScoreRenderSystem::IntToDisplayString(int num)
 {
     auto str = std::to_string(num);
     if (str.length() < 2) {

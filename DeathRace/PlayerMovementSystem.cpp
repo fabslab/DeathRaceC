@@ -20,7 +20,8 @@ PlayerMovementSystem::~PlayerMovementSystem()
 
 void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 {
-    if (GameStateChangeEventSubscriber::GetGameState() != GameState::GameRunning) {
+    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    if (gameState != GameState::GameRunning) {
         return;
     }
 

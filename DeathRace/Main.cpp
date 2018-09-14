@@ -13,7 +13,7 @@
 #include "PlayerMovementSystem.h"
 #include "RenderSystem.h"
 #include "Scene.h"
-#include "ScoreSystem.h"
+#include "ScoreRenderSystem.h"
 
 int main(int argc, char* argv[])
 {
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     world->registerSystem(new EnemyMovementSystem());
     world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());
-    world->registerSystem(new ScoreSystem(GameConstants::GAME_TIME));
+    world->registerSystem(new ScoreRenderSystem(GameConstants::GAME_TIME));
 
     auto scene = Scene(world, numPlayers);
 

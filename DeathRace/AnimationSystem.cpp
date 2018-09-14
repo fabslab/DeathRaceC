@@ -1,8 +1,15 @@
 #include "AnimationSystem.h"
 #include "Components.h"
+#include "GameState.h"
+#include "GameStateChangeEventSubscriber.h"
 
 void AnimationSystem::tick(ECS::World* world, float deltaTime)
 {
+    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    if (!(gameState == GameState::GameRunning || gameState == GameState::GameOver)) {
+        return;
+    }
+
     world->each<Components::TextureAnimationComponent, Components::TextureComponent>(
         [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::TextureAnimationComponent> animationComponent,

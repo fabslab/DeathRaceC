@@ -2,9 +2,9 @@
 
 #include "ECS.h"
 
-class ScoreSystem : public ECS::EntitySystem {
+class ScoreRenderSystem : public ECS::EntitySystem {
 public:
-    ScoreSystem(float gameTime);
+    ScoreRenderSystem(float gameTime);
     virtual void tick(ECS::World* world, float deltaTime) override;
     void SetGameTime(float gameTime);
 

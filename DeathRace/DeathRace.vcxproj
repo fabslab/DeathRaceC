@@ -32,10 +32,11 @@
     <ClCompile Include="KeyboardPlayerInput.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="MenuRenderSystem.cpp" />
     <ClCompile Include="PlayerMovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="ScoreSystem.cpp" />
+    <ClCompile Include="ScoreRenderSystem.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -60,13 +61,14 @@
     <ClInclude Include="KeyboardInputMap.h" />
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="MenuRenderSystem.h" />
     <ClInclude Include="PlayerIndex.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMovementSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="ScoreSystem.h" />
+    <ClInclude Include="ScoreRenderSystem.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

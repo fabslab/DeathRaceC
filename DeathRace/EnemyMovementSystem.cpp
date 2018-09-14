@@ -1,11 +1,18 @@
 #include "EnemyMovementSystem.h"
 #include "CollisionSystem.h"
+#include "GameState.h"
+#include "GameStateChangeEventSubscriber.h"
 #include "MathUtil.h"
 #include "Textures.h"
 #include "raymath.h"
 
 void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
 {
+    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    if (!(gameState == GameState::GameRunning || gameState == GameState::GameOver)) {
+        return;
+    }
+
     world->each<
         Components::Transform2DComponent,
         Components::EnemyMovementComponent>(
