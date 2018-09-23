@@ -2,6 +2,7 @@
 #include "Components.h"
 #include "Constants.h"
 #include "Events.h"
+#include "Fonts.h"
 #include "GameState.h"
 #include "GraphicsUtil.h"
 #include <algorithm>
@@ -22,19 +23,19 @@ void ScoreRenderSystem::tick(ECS::World* world, float deltaTime)
 
     float fontSize = 32;
     float letterSpacing = 4;
-    std::string remainingTime = IntToDisplayString(static_cast<int>(std::round(gameTime)));
-    Vector2 textSize = GraphicsUtil::MeasureText(remainingTime, fontSize, letterSpacing);
-    GraphicsUtil::DrawText(remainingTime, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width / 2 - textSize.x / 2, 0 }, fontSize, letterSpacing);
+    std::string remainingTime = IntToDisplayString(static_cast<int>(std::ceil(gameTime)));
+    Vector2 textSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, remainingTime, fontSize, letterSpacing);
+    GraphicsUtil::DrawText(Fonts::defaultFont32px, remainingTime, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width / 2 - textSize.x / 2, 0 }, fontSize, letterSpacing);
 
     world->each<Components::ScoreComponent>(
         [&](ECS::Entity* entity,
             ECS::ComponentHandle<Components::ScoreComponent> scoreComponent) {
             std::string score = IntToDisplayString(scoreComponent->score);
             if (scoreComponent->playerIndex == PlayerIndex::One) {
-                GraphicsUtil::DrawText(score, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing);
+                GraphicsUtil::DrawText(Fonts::defaultFont32px, score, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing);
             } else if (scoreComponent->playerIndex == PlayerIndex::Two) {
-                Vector2 textSize = GraphicsUtil::MeasureText(score, fontSize, letterSpacing);
-                GraphicsUtil::DrawText(score, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - textSize.x, 0 }, fontSize, letterSpacing);
+                Vector2 textSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, score, fontSize, letterSpacing);
+                GraphicsUtil::DrawText(Fonts::defaultFont32px, score, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - textSize.x, 0 }, fontSize, letterSpacing);
             }
         });
 }

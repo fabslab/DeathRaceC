@@ -1,4 +1,3 @@
-#include "Fonts.h"
 #include "GraphicsUtil.h"
 #include <cmath>
 
@@ -29,24 +28,24 @@ void GraphicsUtil::DrawTexture(Texture2D texture, Vector2 position, float rotati
     DrawTexturePro(texture, sourceRec, destRec, origin, rotation * RAD2DEG, tint);
 }
 
-void GraphicsUtil::DrawText(const char* text, Vector2 pos, float fontSize, float spacing)
+void GraphicsUtil::DrawText(Font font, const char* text, Vector2 pos, float fontSize, float spacing)
 {
-    DrawTextEx(Fonts::defaultFont32px, text, pos, fontSize, spacing, WHITE);
+    DrawTextEx(font, text, pos, fontSize, spacing, WHITE);
 }
 
-void GraphicsUtil::DrawText(std::string text, Vector2 pos, float fontSize, float spacing)
+void GraphicsUtil::DrawText(Font font, std::string text, Vector2 pos, float fontSize, float spacing)
 {
-    GraphicsUtil::DrawText(text.c_str(), pos, fontSize, spacing);
+    GraphicsUtil::DrawText(font, text.c_str(), pos, fontSize, spacing);
 }
 
-Vector2 GraphicsUtil::MeasureText(const char* text, float fontSize, float spacing)
+Vector2 GraphicsUtil::MeasureText(Font font, const char* text, float fontSize, float spacing)
 {
-    return MeasureTextEx(Fonts::defaultFont32px, text, fontSize, spacing);
+    return MeasureTextEx(font, text, fontSize, spacing);
 }
 
-Vector2 GraphicsUtil::MeasureText(std::string text, float fontSize, float spacing)
+Vector2 GraphicsUtil::MeasureText(Font font, std::string text, float fontSize, float spacing)
 {
-    return GraphicsUtil::MeasureText(text.c_str(), fontSize, spacing);
+    return GraphicsUtil::MeasureText(font, text.c_str(), fontSize, spacing);
 }
 
 Rectangle GraphicsUtil::GetDestinationRectangleForScreen(float screenWidth, float screenHeight, float preferredAspectRatio)

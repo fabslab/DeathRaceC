@@ -1,10 +1,12 @@
 #pragma once
 
+#include "raylib.h"
+
 namespace GameConstants {
 const int VIRTUAL_WIDTH = 480;
 const int VIRTUAL_HEIGHT = 360;
 
-const float GAME_TIME = 99.f;
+const float GAME_TIME = 1.f;
 
 const int SCOREBOARD_HEIGHT = 30;
 const int SIDEWALK_WIDTH = 32;

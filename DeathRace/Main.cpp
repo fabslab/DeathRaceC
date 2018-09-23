@@ -10,6 +10,7 @@
 #include "GameState.h"
 #include "GameStateChangeEventSubscriber.h"
 #include "GraphicsUtil.h"
+#include "MenuRenderSystem.h"
 #include "PlayerMovementSystem.h"
 #include "RenderSystem.h"
 #include "Scene.h"
@@ -51,6 +52,7 @@ int main(int argc, char* argv[])
     world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());
     world->registerSystem(new ScoreRenderSystem(GameConstants::GAME_TIME));
+    world->registerSystem(new MenuRenderSystem());
 
     auto scene = Scene(world, numPlayers);
 

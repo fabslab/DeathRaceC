@@ -21,12 +21,15 @@
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
     <ClCompile Include="AnimationSystem.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonArea.cpp" />
     <ClCompile Include="CollisionEventSubscriber.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="GameBounds.cpp" />
+    <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="GameStateChangeEventSubscriber.cpp" />
     <ClCompile Include="GraphicUtil.cpp" />
     <ClCompile Include="KeyboardPlayerInput.cpp" />
@@ -42,6 +45,8 @@
   <ItemGroup>
     <ClInclude Include="AggregatedPlayerInput.h" />
     <ClInclude Include="AnimationSystem.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonArea.h" />
     <ClInclude Include="CollisionEventSubscriber.h" />
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionSystem.h" />
@@ -54,6 +59,7 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="Fonts.h" />
     <ClInclude Include="GameBounds.h" />
+    <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateChangeEventSubscriber.h" />
     <ClInclude Include="GraphicsUtil.h" />
