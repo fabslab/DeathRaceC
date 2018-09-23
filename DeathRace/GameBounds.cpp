@@ -1,6 +1,6 @@
 #include "GameBounds.h"
 #include "Components.h"
-#include "Constants.h"
+#include "GameConstants.h"
 #include "GraphicsUtil.h"
 
 using namespace GameConstants;

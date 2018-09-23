@@ -16,6 +16,7 @@ void Button::Draw()
 {
     int borderWidth = 2;
     Rectangle border = Rectangle{ x, y, width, height };
+    DrawRectangleRec(border, BLACK);
     DrawRectangleLinesEx(border, borderWidth, borderColor);
 
     float fontSize = 14.f;
@@ -27,7 +28,7 @@ void Button::Draw()
 
 void Button::Focus()
 {
-    borderColor = WHITE;
+    borderColor = focusedBorderColor;
 }
 
 void Button::Unfocus()

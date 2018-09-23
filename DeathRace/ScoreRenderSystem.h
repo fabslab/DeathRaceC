@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ECS.h"
+#include "PlayerIndex.h"
 
 class ScoreRenderSystem : public ECS::EntitySystem {
 public:
@@ -9,6 +10,12 @@ public:
     void SetGameTime(float gameTime);
 
 private:
+    void Update(ECS::World* world, float deltaTime);
+    void Draw();
+
     std::string IntToDisplayString(int num);
+    void SetScore(PlayerIndex playerIndex, int score);
     float gameTime;
+    int player1Score = 0;
+    int player2Score = 0;
 };

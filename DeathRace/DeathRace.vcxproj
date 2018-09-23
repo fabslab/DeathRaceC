@@ -36,6 +36,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="MenuRenderSystem.cpp" />
+    <ClCompile Include="PausedMenu.cpp" />
     <ClCompile Include="PlayerMovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -51,7 +52,7 @@
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components.h" />
-    <ClInclude Include="Constants.h" />
+    <ClInclude Include="GameConstants.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="EnemyMovementCommand.h" />
     <ClInclude Include="EnemyMovementSystem.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="KeyboardPlayerInput.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="MenuRenderSystem.h" />
+    <ClInclude Include="PausedMenu.h" />
     <ClInclude Include="PlayerIndex.h" />
     <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PlayerInput.h" />

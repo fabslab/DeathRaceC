@@ -2,6 +2,7 @@
 
 #include "ECS.h"
 #include "GameOverMenu.h"
+#include "PausedMenu.h"
 
 class MenuRenderSystem : public ECS::EntitySystem {
 public:
@@ -10,4 +11,5 @@ public:
 
 private:
     GameOverMenu gameOverMenu;
+    PausedMenu pausedMenu;
 };

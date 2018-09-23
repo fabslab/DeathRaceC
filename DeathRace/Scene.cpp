@@ -1,7 +1,7 @@
 #include "Scene.h"
-#include "Constants.h"
 #include "Entities.h"
 #include "GameBounds.h"
+#include "GameConstants.h"
 #include "KeyboardInputMap.h"
 #include "PlayerIndex.h"
 #include "Textures.h"

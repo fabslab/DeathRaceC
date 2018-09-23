@@ -1,18 +1,18 @@
 #include "GameOverMenu.h"
-#include "Constants.h"
 #include "Fonts.h"
+#include "GameConstants.h"
 #include "GraphicsUtil.h"
 
 GameOverMenu::GameOverMenu()
 {
     float buttonWidth = 120.f;
     float buttonHeight = 30.f;
+    float buttonSeparation = 10.f;
     float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - buttonWidth / 2;
     float buttonsY = 178.f;
 
     mainMenuButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "MAIN MENU");
-    buttonsY += buttonHeight + 10.f;
-
+    buttonsY += buttonHeight + buttonSeparation;
     exitButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "EXIT");
 
     buttonArea = ButtonArea(MenuOrientation::Vertical, { mainMenuButton, exitButton });
