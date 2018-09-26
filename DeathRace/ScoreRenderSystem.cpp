@@ -12,7 +12,7 @@
 
 void ScoreRenderSystem::configure(ECS::World* world)
 {
-    gameTime = GameConstants::GAME_TIME;
+    Reset();
     world->subscribe<Events::GameStateChangedEvent>(this);
 }
 
@@ -24,7 +24,7 @@ void ScoreRenderSystem::unconfigure(ECS::World* world)
 void ScoreRenderSystem::receive(ECS::World* world, const Events::GameStateChangedEvent& event)
 {
     if (event.state == GameState::MainMenu) {
-        gameTime = GameConstants::GAME_TIME;
+        Reset();
     }
 }
 
@@ -94,4 +94,11 @@ void ScoreRenderSystem::SetScore(PlayerIndex playerIndex, int score)
     } else if (playerIndex == PlayerIndex::Two) {
         player2Score = score;
     }
+}
+
+void ScoreRenderSystem::Reset()
+{
+    gameTime = GameConstants::GAME_TIME;
+    player1Score = -1;
+    player2Score = -1;
 }

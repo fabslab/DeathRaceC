@@ -1,4 +1,5 @@
 #include "GameOverMenu.h"
+#include "Events.h"
 #include "Fonts.h"
 #include "GameConstants.h"
 #include "GraphicsUtil.h"
@@ -29,6 +30,15 @@ GameOverMenu::~GameOverMenu()
 void GameOverMenu::Update(ECS::World* world)
 {
     buttonArea.Update();
+
+    if (IsKeyPressed(KEY_ENTER)) {
+        Button* selectedButton = buttonArea.GetFocusedButton();
+        if (selectedButton == mainMenuButton) {
+            world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
+        } else if (selectedButton == exitButton) {
+            world->emit(Events::GameStateChangedEvent{ GameState::Exit });
+        }
+    }
 }
 
 void GameOverMenu::Draw()
