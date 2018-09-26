@@ -1,14 +1,14 @@
 #include "EnemyMovementSystem.h"
 #include "CollisionSystem.h"
 #include "GameState.h"
-#include "GameStateChangeEventSubscriber.h"
+#include "GameStateChangedEventSubscriber.h"
 #include "MathUtil.h"
 #include "Textures.h"
 #include "raymath.h"
 
 void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
 {
-    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    auto gameState = GameStateChangedEventSubscriber::GetGameState();
     if (!(gameState == GameState::GameRunning || gameState == GameState::GameOver)) {
         return;
     }

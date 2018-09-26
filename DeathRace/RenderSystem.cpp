@@ -1,5 +1,7 @@
 #include "RenderSystem.h"
 #include "Components.h"
+#include "GameState.h"
+#include "GameStateChangedEventSubscriber.h"
 #include "MathUtil.h"
 
 void RenderSystem::tick(ECS::World* world, float deltaTime)

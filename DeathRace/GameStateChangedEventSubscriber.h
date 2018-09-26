@@ -4,7 +4,7 @@
 #include "Events.h"
 #include "GameState.h"
 
-class GameStateChangeEventSubscriber : public ECS::EventSubscriber<Events::GameStateChangedEvent> {
+class GameStateChangedEventSubscriber : public ECS::EventSubscriber<Events::GameStateChangedEvent> {
 public:
     virtual void receive(ECS::World* world, const Events::GameStateChangedEvent& event) override;
     static GameState GetGameState();

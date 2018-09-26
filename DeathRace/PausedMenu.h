@@ -2,12 +2,14 @@
 
 #include "Button.h"
 #include "ButtonArea.h"
+#include "ECS.h"
+#include "IMenu.h"
 
-class PausedMenu {
+class PausedMenu : IMenu {
 public:
     PausedMenu();
     ~PausedMenu();
-    void Update();
+    void Update(ECS::World* world) override;
     void Draw();
 
 private:

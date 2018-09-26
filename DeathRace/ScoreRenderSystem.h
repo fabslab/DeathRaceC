@@ -16,6 +16,6 @@ private:
     std::string IntToDisplayString(int num);
     void SetScore(PlayerIndex playerIndex, int score);
     float gameTime;
-    int player1Score = 0;
-    int player2Score = 0;
+    int player1Score = -1;
+    int player2Score = -1;
 };

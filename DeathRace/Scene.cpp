@@ -4,14 +4,13 @@
 #include "GameConstants.h"
 #include "KeyboardInputMap.h"
 #include "PlayerIndex.h"
-#include "Textures.h"
 #include "raymath.h"
 #include <vector>
 
+Scene* Scene::currentScene = nullptr;
+
 Scene::Scene(ECS::World* world, int numPlayers)
 {
-    Textures::Load();
-
     GameBounds::Init(world);
 
     Vector2 player1Position = Vector2{ (GameConstants::GAME_BOUNDS.width * 0.25f), (GameConstants::GAME_BOUNDS.height * 0.8f) };
@@ -34,12 +33,25 @@ Scene::Scene(ECS::World* world, int numPlayers)
     Entities::CreateEnemy(world, enemy2Position);
 }
 
-Scene::~Scene()
-{
-    Textures::Unload();
-}
-
 void Scene::Draw()
 {
     GameBounds::Draw();
+}
+
+Scene* Scene::GetCurrentScene()
+{
+    return currentScene;
+}
+
+void Scene::SetCurrentScene(Scene* scene)
+{
+    UnloadCurrentScene();
+    currentScene = scene;
+}
+
+void Scene::UnloadCurrentScene()
+{
+    if (currentScene != nullptr) {
+        delete currentScene;
+    }
 }

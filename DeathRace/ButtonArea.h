@@ -14,6 +14,7 @@ public:
     ButtonArea(MenuOrientation orientation, std::vector<Button*> buttons);
     void Update();
     void Draw();
+    Button* GetFocusedButton();
 
 private:
     int focusedIndex = 0;

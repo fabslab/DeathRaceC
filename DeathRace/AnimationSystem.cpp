@@ -1,11 +1,11 @@
 #include "AnimationSystem.h"
 #include "Components.h"
 #include "GameState.h"
-#include "GameStateChangeEventSubscriber.h"
+#include "GameStateChangedEventSubscriber.h"
 
 void AnimationSystem::tick(ECS::World* world, float deltaTime)
 {
-    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    auto gameState = GameStateChangedEventSubscriber::GetGameState();
     if (!(gameState == GameState::GameRunning || gameState == GameState::GameOver)) {
         return;
     }

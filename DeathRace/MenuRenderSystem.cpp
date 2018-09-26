@@ -1,7 +1,7 @@
 #include "MenuRenderSystem.h"
 #include "Events.h"
 #include "GameState.h"
-#include "GameStateChangeEventSubscriber.h"
+#include "GameStateChangedEventSubscriber.h"
 #include "raylib.h"
 
 MenuRenderSystem::MenuRenderSystem()
@@ -10,22 +10,23 @@ MenuRenderSystem::MenuRenderSystem()
 
 void MenuRenderSystem::tick(ECS::World* world, float deltaTime)
 {
-    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    auto gameState = GameStateChangedEventSubscriber::GetGameState();
     if (gameState == GameState::GameRunning) {
         if (IsKeyPressed(KEY_ESCAPE)) {
-            world->emit(Events::GameStateChangeEvent{ GameState::GamePaused });
+            world->emit(Events::GameStateChangedEvent{ GameState::GamePaused });
         }
     } else if (gameState == GameState::GamePaused) {
         if (IsKeyPressed(KEY_ESCAPE)) {
-            world->emit(Events::GameStateChangeEvent{ GameState::GameRunning });
+            world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
         } else {
-            pausedMenu.Update();
+            pausedMenu.Update(world);
             pausedMenu.Draw();
         }
     } else if (gameState == GameState::GameOver) {
-        gameOverMenu.Update();
+        gameOverMenu.Update(world);
         gameOverMenu.Draw();
     } else if (gameState == GameState::MainMenu) {
-        // render main menu
+        mainMenu.Update(world);
+        mainMenu.Draw();
     }
 }

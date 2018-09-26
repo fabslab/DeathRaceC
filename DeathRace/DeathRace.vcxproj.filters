@@ -13,11 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Systems">
-      <UniqueIdentifier>{4cddb05a-1b9c-4928-ad67-c333ff6400ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{ea99da08-dfa2-4826-b408-3ddbec02a45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{615ed316-6476-4583-bb57-060c4a6f854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{461bf0b8-da18-4df1-b12f-66692d347e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{85be7253-00ba-4cd7-b98d-170e7ccdb8ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{d1822782-ba2c-4ca2-8a16-d1041700705a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{4cddb05a-1b9c-4928-ad67-c333ff6400ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,16 +72,10 @@
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionEventSubscriber.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fonts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateChangeEventSubscriber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ScoreRenderSystem.cpp">
@@ -81,14 +87,23 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonArea.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
     <ClCompile Include="PausedMenu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionEventSubscriber.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateChangedEventSubscriber.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AggregatedPlayerInput.h">
@@ -152,12 +164,6 @@
     <ClInclude Include="GraphicsUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionEventSubscriber.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Events.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -170,9 +176,6 @@
     <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateChangeEventSubscriber.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreRenderSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
@@ -182,17 +185,35 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ButtonArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PausedMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameConstants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlayerInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="PausedMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEventSubscriber.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateChangedEventSubscriber.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

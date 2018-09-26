@@ -8,13 +8,14 @@
 #include "Fonts.h"
 #include "GameConstants.h"
 #include "GameState.h"
-#include "GameStateChangeEventSubscriber.h"
+#include "GameStateChangedEventSubscriber.h"
 #include "GraphicsUtil.h"
 #include "MenuRenderSystem.h"
 #include "PlayerMovementSystem.h"
 #include "RenderSystem.h"
 #include "Scene.h"
 #include "ScoreRenderSystem.h"
+#include "Textures.h"
 
 int main(int argc, char* argv[])
 {
@@ -36,11 +37,12 @@ int main(int argc, char* argv[])
     auto screenOrigin = Vector2{ 0, 0 };
 
     Fonts::Load();
+    Textures::Load();
 
     int numPlayers = 2;
     auto world = ECS::World::createWorld();
 
-    auto gameStateSubscriber = new GameStateChangeEventSubscriber();
+    auto gameStateSubscriber = new GameStateChangedEventSubscriber();
     world->subscribe<Events::GameStateChangedEvent>(gameStateSubscriber);
     world->subscribe<Events::CollisionEvent>(new CollisionEventSubscriber());
 
@@ -54,9 +56,7 @@ int main(int argc, char* argv[])
     world->registerSystem(new ScoreRenderSystem(GameConstants::GAME_TIME));
     world->registerSystem(new MenuRenderSystem());
 
-    auto scene = Scene(world, numPlayers);
-
-    world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
+    world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -65,7 +65,14 @@ int main(int argc, char* argv[])
         BeginTextureMode(virtualRenderTexture);
 
         world->tick(GetFrameTime() * 1000);
-        scene.Draw();
+
+        GameState gameState = GameStateChangedEventSubscriber::GetGameState();
+        if (gameState != GameState::MainMenu) {
+            Scene* scene = Scene::GetCurrentScene();
+            if (scene != nullptr) {
+                scene->Draw();
+            }
+        }
 
         EndTextureMode();
 
@@ -82,7 +89,9 @@ int main(int argc, char* argv[])
         EndDrawing();
     }
 
+    Scene::UnloadCurrentScene();
     world->destroyWorld();
+    Textures::Unload();
     Fonts::Unload();
     UnloadRenderTexture(virtualRenderTexture);
     CloseWindow();

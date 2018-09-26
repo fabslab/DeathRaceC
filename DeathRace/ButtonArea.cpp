@@ -31,7 +31,7 @@ void ButtonArea::Update()
     if (IsKeyPressed(keyPrevious) && focusedIndex > 0) {
         focusedIndex--;
     }
-    if (IsKeyPressed(keyNext) && focusedIndex < buttons.size()) {
+    if (IsKeyPressed(keyNext) && focusedIndex < buttons.size() - 1) {
         focusedIndex++;
     }
 
@@ -46,4 +46,9 @@ void ButtonArea::Draw()
     for (Button* button : buttons) {
         button->Draw();
     }
+}
+
+Button* ButtonArea::GetFocusedButton()
+{
+    return buttons[focusedIndex];
 }

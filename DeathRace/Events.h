@@ -11,5 +11,5 @@ typedef struct CollisionEvent {
 
 typedef struct GameStateChangedEvent {
     GameState state;
-} GameStateChangeEvent;
+} GameStateChangedEvent;
 }

@@ -3,17 +3,20 @@
 
 PausedMenu::PausedMenu()
 {
-    float buttonWidth = 120.f;
-    float buttonHeight = 30.f;
     float buttonSeparation = 10.f;
-    float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - buttonWidth / 2;
-    float buttonsY = GameConstants::VIRTUAL_HEIGHT / 2 - (buttonHeight * 3 + 2 * buttonSeparation) / 2;
 
-    resumeButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "RESUME");
-    buttonsY += buttonHeight + buttonSeparation;
-    mainMenuButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "MAIN MENU");
-    buttonsY += buttonHeight + buttonSeparation;
-    exitButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "EXIT");
+    resumeButton = new Button("RESUME");
+    float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - resumeButton->width / 2;
+    float buttonsY = GameConstants::VIRTUAL_HEIGHT / 2 - (resumeButton->height * 3 + 2 * buttonSeparation) / 2;
+    resumeButton->SetPosition(Vector2{ buttonsX, buttonsY });
+
+    buttonsY += resumeButton->height + buttonSeparation;
+    mainMenuButton = new Button("MAIN MENU");
+    mainMenuButton->SetPosition(Vector2{ buttonsX, buttonsY });
+
+    buttonsY += mainMenuButton->height + buttonSeparation;
+    exitButton = new Button("EXIT");
+    exitButton->SetPosition(Vector2{ buttonsX, buttonsY });
 
     buttonArea = ButtonArea(MenuOrientation::Vertical, { resumeButton, mainMenuButton, exitButton });
 }
@@ -25,7 +28,7 @@ PausedMenu::~PausedMenu()
     delete exitButton;
 }
 
-void PausedMenu::Update()
+void PausedMenu::Update(ECS::World* world)
 {
     buttonArea.Update();
 }

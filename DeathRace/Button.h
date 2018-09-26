@@ -4,19 +4,19 @@
 
 class Button {
 public:
-    Button(float x, float y, float width, float height, const char* text);
+    Button(const char* text);
     void Draw();
     void Focus();
     void Unfocus();
-    /*void Select();*/
+    void SetPosition(Vector2 pos);
+    float width = 120.f;
+    float height = 30.f;
+    float x = 0;
+    float y = 0;
 
 private:
     Color defaultBorderColor = Color{ 100, 100, 100, 255 };
     Color focusedBorderColor = WHITE;
-    const char* text;
     Color borderColor = defaultBorderColor;
-    float height;
-    float width;
-    float x;
-    float y;
+    const char* text;
 };

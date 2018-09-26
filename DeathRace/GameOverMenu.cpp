@@ -2,18 +2,20 @@
 #include "Fonts.h"
 #include "GameConstants.h"
 #include "GraphicsUtil.h"
+#include "raylib.h"
 
 GameOverMenu::GameOverMenu()
 {
-    float buttonWidth = 120.f;
-    float buttonHeight = 30.f;
     float buttonSeparation = 10.f;
-    float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - buttonWidth / 2;
-    float buttonsY = 178.f;
 
-    mainMenuButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "MAIN MENU");
-    buttonsY += buttonHeight + buttonSeparation;
-    exitButton = new Button(buttonsX, buttonsY, buttonWidth, buttonHeight, "EXIT");
+    mainMenuButton = new Button("MAIN MENU");
+    float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - mainMenuButton->width / 2;
+    float buttonsY = 178.f;
+    mainMenuButton->SetPosition(Vector2{ buttonsX, buttonsY });
+
+    buttonsY += mainMenuButton->height + buttonSeparation;
+    exitButton = new Button("EXIT");
+    exitButton->SetPosition(Vector2{ buttonsX, buttonsY });
 
     buttonArea = ButtonArea(MenuOrientation::Vertical, { mainMenuButton, exitButton });
 }
@@ -24,7 +26,7 @@ GameOverMenu::~GameOverMenu()
     delete exitButton;
 }
 
-void GameOverMenu::Update()
+void GameOverMenu::Update(ECS::World* world)
 {
     buttonArea.Update();
 }
@@ -33,13 +35,14 @@ void GameOverMenu::Draw()
 {
     float yPos = GameConstants::VIRTUAL_HEIGHT / 2 - 60;
     float fontSize = 12.f;
+    float letterSpacing = 0.f;
     for (auto text : scoreText) {
         // Using two different font variations to render text due to rendering issues with letter E in main font
-        Vector2 textSize1 = GraphicsUtil::MeasureText(Fonts::defaultFont12px, text[0], fontSize, 0);
-        Vector2 textSize2 = GraphicsUtil::MeasureText(Fonts::defaultFont12pxEdit, text[1], fontSize, 0);
+        Vector2 textSize1 = GraphicsUtil::MeasureText(Fonts::defaultFont12px, text[0], fontSize, letterSpacing);
+        Vector2 textSize2 = GraphicsUtil::MeasureText(Fonts::defaultFont12pxEdit, text[1], fontSize, letterSpacing);
         float textX = GameConstants::VIRTUAL_WIDTH / 2 - (textSize1.x + textSize2.x) / 2;
-        GraphicsUtil::DrawText(Fonts::defaultFont12px, text[0], Vector2{ textX, yPos }, fontSize, 0);
-        GraphicsUtil::DrawText(Fonts::defaultFont12pxEdit, text[1], Vector2{ textX + textSize1.x, yPos }, fontSize, 0);
+        GraphicsUtil::DrawText(Fonts::defaultFont12px, text[0], Vector2{ textX, yPos }, fontSize, letterSpacing);
+        GraphicsUtil::DrawText(Fonts::defaultFont12pxEdit, text[1], Vector2{ textX + textSize1.x, yPos }, fontSize, letterSpacing);
         yPos += Fonts::defaultFont12px.baseSize;
     }
 

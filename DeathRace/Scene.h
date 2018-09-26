@@ -7,9 +7,11 @@
 class Scene {
 public:
     Scene(ECS::World* world, int numPlayers);
-    ~Scene();
     void Draw();
+    static Scene* GetCurrentScene();
+    static void SetCurrentScene(Scene* scene);
+    static void UnloadCurrentScene();
 
 private:
-    ECS::World* world;
+    static Scene* currentScene;
 };

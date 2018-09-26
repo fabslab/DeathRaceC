@@ -2,12 +2,13 @@
 
 #include "Button.h"
 #include "ButtonArea.h"
+#include "IMenu.h"
 
-class GameOverMenu {
+class GameOverMenu : IMenu {
 public:
     GameOverMenu();
     ~GameOverMenu();
-    void Update();
+    void Update(ECS::World* world) override;
     void Draw();
 
 private:

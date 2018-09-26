@@ -1,15 +1,16 @@
 #include "Button.h"
 #include "Fonts.h"
 #include "GraphicsUtil.h"
-#include "raylib.h"
 
-Button::Button(float x, float y, float width, float height, const char* text)
-    : height(height)
-    , text(text)
-    , width(width)
-    , x(x)
-    , y(y)
+Button::Button(const char* text)
+    : text(text)
 {
+}
+
+void Button::SetPosition(Vector2 position)
+{
+    x = position.x;
+    y = position.y;
 }
 
 void Button::Draw()
@@ -20,10 +21,11 @@ void Button::Draw()
     DrawRectangleLinesEx(border, borderWidth, borderColor);
 
     float fontSize = 14.f;
-    Vector2 textSize = GraphicsUtil::MeasureText(Fonts::defaultFont14px, text, fontSize, 0);
+    float letterSpacing = 2.f;
+    Vector2 textSize = GraphicsUtil::MeasureText(Fonts::defaultFont14px, text, fontSize, letterSpacing);
     float textX = x + (width / 2 - textSize.x / 2);
     float textY = y + (height / 2 - Fonts::defaultFont14px.baseSize / 2);
-    GraphicsUtil::DrawText(Fonts::defaultFont14px, text, Vector2{ textX, textY }, fontSize, 0);
+    GraphicsUtil::DrawText(Fonts::defaultFont14px, text, Vector2{ textX, textY }, fontSize, letterSpacing);
 }
 
 void Button::Focus()

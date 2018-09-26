@@ -4,7 +4,7 @@
 #include "Fonts.h"
 #include "GameConstants.h"
 #include "GameState.h"
-#include "GameStateChangeEventSubscriber.h"
+#include "GameStateChangedEventSubscriber.h"
 #include "GraphicsUtil.h"
 #include <algorithm>
 #include <cmath>
@@ -23,7 +23,7 @@ void ScoreRenderSystem::tick(ECS::World* world, float deltaTime)
 
 void ScoreRenderSystem::Update(ECS::World* world, float deltaTime)
 {
-    auto gameState = GameStateChangeEventSubscriber::GetGameState();
+    auto gameState = GameStateChangedEventSubscriber::GetGameState();
     if (gameState != GameState::GameRunning) {
         return;
     }
@@ -42,18 +42,27 @@ void ScoreRenderSystem::Update(ECS::World* world, float deltaTime)
 
 void ScoreRenderSystem::Draw()
 {
+    auto gameState = GameStateChangedEventSubscriber::GetGameState();
+    if (gameState == GameState::MainMenu) {
+        return;
+    }
+
     float fontSize = 32;
     float letterSpacing = 4;
     std::string remainingTime = IntToDisplayString(static_cast<int>(std::ceil(gameTime)));
     Vector2 remainingTimeTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, remainingTime, fontSize, letterSpacing);
     GraphicsUtil::DrawText(Fonts::defaultFont32px, remainingTime, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width / 2 - remainingTimeTextSize.x / 2, 0 }, fontSize, letterSpacing);
 
-    std::string player1ScoreDisplay = IntToDisplayString(player1Score);
-    GraphicsUtil::DrawText(Fonts::defaultFont32px, player1ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing);
+    if (player1Score != -1) {
+        std::string player1ScoreDisplay = IntToDisplayString(player1Score);
+        GraphicsUtil::DrawText(Fonts::defaultFont32px, player1ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing);
+    }
 
-    std::string player2ScoreDisplay = IntToDisplayString(player2Score);
-    Vector2 scoreTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, player2ScoreDisplay, fontSize, letterSpacing);
-    GraphicsUtil::DrawText(Fonts::defaultFont32px, player2ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - scoreTextSize.x, 0 }, fontSize, letterSpacing);
+    if (player2Score != -1) {
+        std::string player2ScoreDisplay = IntToDisplayString(player2Score);
+        Vector2 scoreTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, player2ScoreDisplay, fontSize, letterSpacing);
+        GraphicsUtil::DrawText(Fonts::defaultFont32px, player2ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - scoreTextSize.x, 0 }, fontSize, letterSpacing);
+    }
 }
 
 void ScoreRenderSystem::SetGameTime(float gameTime)
