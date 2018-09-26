@@ -9,7 +9,7 @@ public:
     MainMenu();
     ~MainMenu();
     void Update(ECS::World* world) override;
-    void Draw();
+    void Draw() override;
 
 private:
     const char* instructionsText[3] = {

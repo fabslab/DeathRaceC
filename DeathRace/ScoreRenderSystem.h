@@ -1,13 +1,15 @@
 #pragma once
 
 #include "ECS.h"
+#include "Events.h"
 #include "PlayerIndex.h"
 
-class ScoreRenderSystem : public ECS::EntitySystem {
+class ScoreRenderSystem : public ECS::EntitySystem, public ECS::EventSubscriber<Events::GameStateChangedEvent> {
 public:
-    ScoreRenderSystem(float gameTime);
+    virtual void configure(ECS::World* world) override;
+    virtual void unconfigure(ECS::World* world) override;
+    void receive(ECS::World* world, const Events::GameStateChangedEvent& event) override;
     virtual void tick(ECS::World* world, float deltaTime) override;
-    void SetGameTime(float gameTime);
 
 private:
     void Update(ECS::World* world, float deltaTime);

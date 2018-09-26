@@ -2,14 +2,14 @@
 #include "Entities.h"
 #include "GameBounds.h"
 #include "GameConstants.h"
-#include "KeyboardInputMap.h"
 #include "PlayerIndex.h"
-#include "raymath.h"
-#include <vector>
 
+// TODO: remove this once class is all static entity loading/unloading methods
 Scene* Scene::currentScene = nullptr;
 
+// TODO: make this a static Load method
 Scene::Scene(ECS::World* world, int numPlayers)
+    : world(world)
 {
     GameBounds::Init(world);
 
@@ -33,25 +33,38 @@ Scene::Scene(ECS::World* world, int numPlayers)
     Entities::CreateEnemy(world, enemy2Position);
 }
 
+// TODO: make this a static Unload method
+Scene::~Scene()
+{
+    world->all([&](ECS::Entity* entity) {
+        world->destroy(entity);
+    });
+}
+
 void Scene::Draw()
 {
+    // TODO: make a GameBoundsSystem that calls this
     GameBounds::Draw();
 }
 
+// TODO: remove this once class is all static entity loading/unloading methods
 Scene* Scene::GetCurrentScene()
 {
     return currentScene;
 }
 
+// TODO: remove this once class is all static entity loading/unloading methods
 void Scene::SetCurrentScene(Scene* scene)
 {
     UnloadCurrentScene();
     currentScene = scene;
 }
 
+// TODO: remove this once class is all static entity loading/unloading methods
 void Scene::UnloadCurrentScene()
 {
     if (currentScene != nullptr) {
         delete currentScene;
+        currentScene = nullptr;
     }
 }

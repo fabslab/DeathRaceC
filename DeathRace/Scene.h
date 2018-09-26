@@ -1,12 +1,13 @@
 #pragma once
 
 #include "ECS.h"
-#include "KeyboardPlayerInput.h"
 #include "raylib.h"
 
+// TODO: rename this SceneLoader once all static methods
 class Scene {
 public:
     Scene(ECS::World* world, int numPlayers);
+    ~Scene();
     void Draw();
     static Scene* GetCurrentScene();
     static void SetCurrentScene(Scene* scene);
@@ -14,4 +15,5 @@ public:
 
 private:
     static Scene* currentScene;
+    ECS::World* world;
 };

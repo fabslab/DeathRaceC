@@ -53,12 +53,12 @@ int main(int argc, char* argv[])
     world->registerSystem(new EnemyMovementSystem());
     world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());
-    world->registerSystem(new ScoreRenderSystem(GameConstants::GAME_TIME));
+    world->registerSystem(new ScoreRenderSystem());
     world->registerSystem(new MenuRenderSystem());
 
-    world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
+    GameState gameState = GameStateChangedEventSubscriber::GetGameState();
 
-    while (!WindowShouldClose()) {
+    while (!WindowShouldClose() && gameState != GameState::Exit) {
         BeginDrawing();
         ClearBackground(BLACK);
 
@@ -66,13 +66,12 @@ int main(int argc, char* argv[])
 
         world->tick(GetFrameTime() * 1000);
 
-        GameState gameState = GameStateChangedEventSubscriber::GetGameState();
-        if (gameState != GameState::MainMenu) {
-            Scene* scene = Scene::GetCurrentScene();
-            if (scene != nullptr) {
-                scene->Draw();
-            }
+        Scene* scene = Scene::GetCurrentScene();
+        if (scene != nullptr) {
+            scene->Draw();
         }
+
+        gameState = GameStateChangedEventSubscriber::GetGameState();
 
         EndTextureMode();
 

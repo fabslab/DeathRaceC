@@ -9,7 +9,7 @@ public:
     GameOverMenu();
     ~GameOverMenu();
     void Update(ECS::World* world) override;
-    void Draw();
+    void Draw() override;
 
 private:
     const char* scoreText[4][2] = {

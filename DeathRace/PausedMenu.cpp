@@ -1,5 +1,7 @@
 #include "PausedMenu.h"
+#include "Events.h"
 #include "GameConstants.h"
+#include "GameState.h"
 
 PausedMenu::PausedMenu()
 {
@@ -31,6 +33,17 @@ PausedMenu::~PausedMenu()
 void PausedMenu::Update(ECS::World* world)
 {
     buttonArea.Update();
+
+    if (IsKeyPressed(KEY_ENTER)) {
+        Button* selectedButton = buttonArea.GetFocusedButton();
+        if (selectedButton == resumeButton) {
+            world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
+        } else if (selectedButton == mainMenuButton) {
+            world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
+        } else if (selectedButton == exitButton) {
+            world->emit(Events::GameStateChangedEvent{ GameState::Exit });
+        }
+    }
 }
 
 void PausedMenu::Draw()

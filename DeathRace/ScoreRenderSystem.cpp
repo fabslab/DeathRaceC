@@ -10,9 +10,22 @@
 #include <cmath>
 #include <string>
 
-ScoreRenderSystem::ScoreRenderSystem(float gameTime)
-    : gameTime(gameTime)
+void ScoreRenderSystem::configure(ECS::World* world)
 {
+    gameTime = GameConstants::GAME_TIME;
+    world->subscribe<Events::GameStateChangedEvent>(this);
+}
+
+void ScoreRenderSystem::unconfigure(ECS::World* world)
+{
+    world->unsubscribeAll(this);
+}
+
+void ScoreRenderSystem::receive(ECS::World* world, const Events::GameStateChangedEvent& event)
+{
+    if (event.state == GameState::MainMenu) {
+        gameTime = GameConstants::GAME_TIME;
+    }
 }
 
 void ScoreRenderSystem::tick(ECS::World* world, float deltaTime)
@@ -63,11 +76,6 @@ void ScoreRenderSystem::Draw()
         Vector2 scoreTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, player2ScoreDisplay, fontSize, letterSpacing);
         GraphicsUtil::DrawText(Fonts::defaultFont32px, player2ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - scoreTextSize.x, 0 }, fontSize, letterSpacing);
     }
-}
-
-void ScoreRenderSystem::SetGameTime(float gameTime)
-{
-    this->gameTime = gameTime;
 }
 
 std::string ScoreRenderSystem::IntToDisplayString(int num)

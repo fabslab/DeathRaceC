@@ -5,6 +5,7 @@
 
 using namespace GameConstants;
 
+// TODO: rename to Load
 void GameBounds::Init(ECS::World* world)
 {
     auto borderLeft = world->create();

@@ -10,7 +10,7 @@ public:
     PausedMenu();
     ~PausedMenu();
     void Update(ECS::World* world) override;
-    void Draw();
+    void Draw() override;
 
 private:
     Button* resumeButton;
