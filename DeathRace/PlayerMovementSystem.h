@@ -3,7 +3,9 @@
 #include "AggregatedPlayerInput.h"
 #include "ECS.h"
 #include "KeyboardPlayerInput.h"
+#include "PlayerIndex.h"
 #include "PlayerMovementCommand.h"
+#include "raylib.h"
 #include <array>
 #include <vector>
 
@@ -18,8 +20,13 @@ public:
     void SetNumPlayers(int numPlayers);
 
 private:
+    void UpdateEngineIdleSound();
+    void UpdateEngineRunningSound(PlayerIndex playerIndex, float throttle);
     AggregatedPlayerInput inputAggregator;
     KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
     std::array<std::vector<PlayerMovementCommand>, 2> movementCommandBuffer;
     int numPlayers = 0;
+    Music engineIdleSound = nullptr;
+    Music playerEngineSounds[2];
+    float playerEngineVolumes[2];
 };

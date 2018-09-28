@@ -1,11 +1,13 @@
 #include "PlayerMovementSystem.h"
 #include "Components.h"
+#include "GameAudio.h"
 #include "GameConstants.h"
 #include "GameStateChangedEventSubscriber.h"
 #include "MathUtil.h"
 #include "raymath.h"
 #include <algorithm>
 
+// TODO: use configure/unconfigure methods
 PlayerMovementSystem::PlayerMovementSystem()
 {
     keyboardInputLeft = new KeyboardPlayerInput(Input::PLAYER_LEFT);
@@ -16,6 +18,12 @@ PlayerMovementSystem::~PlayerMovementSystem()
 {
     delete keyboardInputLeft;
     delete keyboardInputRight;
+    for (auto sound : playerEngineSounds) {
+        if (sound != 0) {
+            StopMusicStream(sound);
+            UnloadMusicStream(sound);
+        }
+    }
 }
 
 void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
@@ -24,6 +32,8 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
     if (gameState != GameState::GameRunning) {
         return;
     }
+
+    UpdateEngineIdleSound();
 
     world->each<Components::PlayerMovementComponent, Components::SnappedRotationComponent, Components::Transform2DComponent>(
         [&](ECS::Entity* entity,
@@ -42,6 +52,8 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 
             float throttle = inputAggregator.GetThrottleValue();
             float turnDirection = inputAggregator.GetDirection();
+
+            UpdateEngineRunningSound(movementComponent->playerIndex, throttle);
 
             movementComponent->remainingCrashTime = std::max(movementComponent->remainingCrashTime - deltaTime, 0.f);
             if (throttle < 0.f) {
@@ -83,6 +95,44 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
             movementCommandBuffer[static_cast<int>(movementComponent->playerIndex)].push_back(
                 PlayerMovementCommand{ transformComponent->position, transformComponent->rotation });
         });
+}
+
+void PlayerMovementSystem::UpdateEngineIdleSound()
+{
+    if (engineIdleSound == nullptr) {
+        engineIdleSound = LoadMusicStream("Content/Audio/engine-idle.ogg");
+        PlayMusicStream(engineIdleSound);
+    }
+    UpdateMusicStream(engineIdleSound);
+}
+
+void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, float throttle)
+{
+    int engineSoundIndex = static_cast<int>(playerIndex);
+    Music engineSound = playerEngineSounds[engineSoundIndex];
+
+    if (engineSound == 0) {
+        engineSound = playerEngineSounds[engineSoundIndex] = LoadMusicStream("Content/Audio/engine-running.ogg");
+        playerEngineVolumes[engineSoundIndex] = 0.f;
+    }
+
+    UpdateMusicStream(engineSound);
+
+    if (throttle != 0.f) {
+        if (!IsMusicPlaying(engineSound)) {
+            PlayMusicStream(engineSound);
+        }
+        float volume = 1.f;
+        playerEngineVolumes[engineSoundIndex] = volume;
+        SetMusicVolume(engineSound, volume);
+    } else {
+        if (playerEngineVolumes[engineSoundIndex] < 0.1f) {
+            StopMusicStream(engineSound);
+        } else {
+            playerEngineVolumes[engineSoundIndex] -= 0.1f;
+            SetMusicVolume(engineSound, playerEngineVolumes[engineSoundIndex]);
+        }
+    }
 }
 
 void PlayerMovementSystem::SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer)

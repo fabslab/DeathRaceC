@@ -6,4 +6,8 @@
 class CollisionEventSubscriber : public ECS::EventSubscriber<Events::CollisionEvent> {
 public:
     virtual void receive(ECS::World* world, const Events::CollisionEvent& event) override;
+
+private:
+    void KillEnemy(ECS::World* world, ECS::Entity* enemy, ECS::Entity* player);
+    void CrashPlayer(ECS::Entity* player);
 };

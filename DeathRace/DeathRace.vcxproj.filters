@@ -105,6 +105,9 @@
     <ClCompile Include="GameStateChangedEventSubscriber.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
+    <ClCompile Include="GameAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="GameStateChangedEventSubscriber.h">
       <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAudio.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

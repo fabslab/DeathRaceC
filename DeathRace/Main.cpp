@@ -6,6 +6,7 @@
 #include "EnemyMovementSystem.h"
 #include "Events.h"
 #include "Fonts.h"
+#include "GameAudio.h"
 #include "GameConstants.h"
 #include "GameState.h"
 #include "GameStateChangedEventSubscriber.h"
@@ -28,6 +29,8 @@ int main(int argc, char* argv[])
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     //ToggleFullscreen();
 
+    InitAudioDevice();
+
     SetTargetFPS(60);
 
     auto virtualSizeRectangle = Rectangle{ 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
@@ -38,6 +41,7 @@ int main(int argc, char* argv[])
 
     Fonts::Load();
     Textures::Load();
+    GameAudio::Load();
 
     int numPlayers = 2;
     auto world = ECS::World::createWorld();
@@ -90,9 +94,12 @@ int main(int argc, char* argv[])
 
     Scene::UnloadCurrentScene();
     world->destroyWorld();
+
+    GameAudio::Unload();
     Textures::Unload();
     Fonts::Unload();
     UnloadRenderTexture(virtualRenderTexture);
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
