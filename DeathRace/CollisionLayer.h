@@ -4,7 +4,7 @@
 
 using CollisionLayerFilter = uint_fast32_t;
 
-const enum class CollisionLayer : CollisionLayerFilter {
+enum class CollisionLayer : CollisionLayerFilter {
     None = 0,
     Player = 1 << 0,
     Enemy = 1 << 1,

@@ -23,7 +23,7 @@ void ButtonArea::Update()
     if (orientation == MenuOrientation::Horizontal) {
         keyPrevious = KEY_LEFT;
         keyNext = KEY_RIGHT;
-    } else if (orientation == MenuOrientation::Vertical) {
+    } else {
         keyPrevious = KEY_UP;
         keyNext = KEY_DOWN;
     }
