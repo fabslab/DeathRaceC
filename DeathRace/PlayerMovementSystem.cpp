@@ -111,9 +111,8 @@ void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, flo
     int engineSoundIndex = static_cast<int>(playerIndex);
     Music engineSound = playerEngineSounds[engineSoundIndex];
 
-    if (engineSound == 0) {
+    if (engineSound == nullptr) {
         engineSound = playerEngineSounds[engineSoundIndex] = LoadMusicStream("Content/Audio/engine-running.ogg");
-        playerEngineVolumes[engineSoundIndex] = 0.f;
     }
 
     UpdateMusicStream(engineSound);

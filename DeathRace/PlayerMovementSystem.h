@@ -27,6 +27,6 @@ private:
     std::array<std::vector<PlayerMovementCommand>, 2> movementCommandBuffer;
     int numPlayers = 0;
     Music engineIdleSound = nullptr;
-    Music playerEngineSounds[2];
-    float playerEngineVolumes[2];
+    Music playerEngineSounds[2] = { nullptr, nullptr };
+    float playerEngineVolumes[2] = { 0.f, 0.f };
 };
