@@ -7,7 +7,7 @@ PausedMenu::PausedMenu()
 {
     float buttonSeparation = 10.f;
 
-    resumeButton = new Button("RESUME");
+    resumeButton = new Button("CONTINUE");
     float buttonsX = GameConstants::VIRTUAL_WIDTH / 2 - resumeButton->width / 2;
     float buttonsY = GameConstants::VIRTUAL_HEIGHT / 2 - (resumeButton->height * 3 + 2 * buttonSeparation) / 2;
     resumeButton->SetPosition(Vector2{ buttonsX, buttonsY });

@@ -11,7 +11,7 @@
 MainMenu::MainMenu()
 {
     onePlayerButton = new Button("1 PLAYER");
-    twoPlayersButton = new Button("2 PLAYERS");
+    twoPlayersButton = new Button("2 PLAYER");
 
     float buttonSpacing = 20.f;
     float buttonWidth = onePlayerButton->width;
