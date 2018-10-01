@@ -33,6 +33,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
         return;
     }
 
+    // Play a single idle sound even if two players, two sounds together sounds too overwhelming for an idle sound.
     UpdateEngineIdleSound();
 
     world->each<Components::PlayerMovementComponent, Components::SnappedRotationComponent, Components::Transform2DComponent>(
@@ -100,7 +101,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 void PlayerMovementSystem::UpdateEngineIdleSound()
 {
     if (engineIdleSound == nullptr) {
-        engineIdleSound = LoadMusicStream("Content/Audio/engine-idle.ogg");
+        engineIdleSound = LoadMusicStream("Content/Audio/engine-idle-loop.ogg");
         PlayMusicStream(engineIdleSound);
     }
     UpdateMusicStream(engineIdleSound);
@@ -112,7 +113,7 @@ void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, flo
     Music engineSound = playerEngineSounds[engineSoundIndex];
 
     if (engineSound == nullptr) {
-        engineSound = playerEngineSounds[engineSoundIndex] = LoadMusicStream("Content/Audio/engine-running.ogg");
+        engineSound = playerEngineSounds[engineSoundIndex] = LoadMusicStream("Content/Audio/engine-running-loop.ogg");
     }
 
     UpdateMusicStream(engineSound);
