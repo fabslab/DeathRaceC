@@ -45,7 +45,8 @@ void MenuRenderSystem::tick(ECS::World* world, float deltaTime)
             world->emit(Events::GameStateChangedEvent{ GameState::GamePaused });
         }
     } else if (gameState == GameState::GamePaused) {
-        if (inputAggregator.WasCommandEntered(Input::InputCommand::Pause)) {
+        if (inputAggregator.WasCommandEntered(Input::InputCommand::Pause)
+            || inputAggregator.WasCommandEntered(Input::InputCommand::Back)) {
             world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
         } else {
             pausedMenu.Update(world);
