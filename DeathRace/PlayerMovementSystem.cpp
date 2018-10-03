@@ -1,5 +1,6 @@
 #include "PlayerMovementSystem.h"
 #include "Components.h"
+#include "ControllerInputMap.h"
 #include "GameAudio.h"
 #include "GameConstants.h"
 #include "GameStateChangedEventSubscriber.h"
@@ -7,23 +8,33 @@
 #include "raymath.h"
 #include <algorithm>
 
-// TODO: use configure/unconfigure methods
-PlayerMovementSystem::PlayerMovementSystem()
+void PlayerMovementSystem::configure(ECS::World* world)
 {
+    world->subscribe<Events::NumberOfPlayersChanged>(this);
     keyboardInputLeft = new KeyboardPlayerInput(Input::PLAYER_LEFT);
     keyboardInputRight = new KeyboardPlayerInput(Input::PLAYER_RIGHT);
+    controllerInputOne = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::One);
+    controllerInputTwo = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::Two);
 }
 
-PlayerMovementSystem::~PlayerMovementSystem()
+void PlayerMovementSystem::unconfigure(ECS::World* world)
 {
+    world->unsubscribeAll(this);
     delete keyboardInputLeft;
     delete keyboardInputRight;
+    delete controllerInputOne;
+    delete controllerInputTwo;
     for (auto sound : playerEngineSounds) {
         if (sound != 0) {
             StopMusicStream(sound);
             UnloadMusicStream(sound);
         }
     }
+}
+
+void PlayerMovementSystem::receive(ECS::World* world, const Events::NumberOfPlayersChanged& event)
+{
+    numPlayers = event.numberOfPlayers;
 }
 
 void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
@@ -42,12 +53,12 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
             ECS::ComponentHandle<Components::SnappedRotationComponent> snappedRotationComponent,
             ECS::ComponentHandle<Components::Transform2DComponent> transformComponent) {
             if (numPlayers == 1) {
-                inputAggregator.SetInputs({ keyboardInputLeft, keyboardInputRight });
+                inputAggregator.SetInputs({ keyboardInputLeft, keyboardInputRight, controllerInputOne, controllerInputTwo });
             } else if (numPlayers == 2) {
                 if (movementComponent->playerIndex == PlayerIndex::One) {
-                    inputAggregator.SetInputs({ keyboardInputLeft });
+                    inputAggregator.SetInputs({ keyboardInputLeft, controllerInputOne });
                 } else if (movementComponent->playerIndex == PlayerIndex::Two) {
-                    inputAggregator.SetInputs({ keyboardInputRight });
+                    inputAggregator.SetInputs({ keyboardInputRight, controllerInputTwo });
                 }
             }
 
@@ -58,6 +69,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 
             movementComponent->remainingCrashTime = std::max(movementComponent->remainingCrashTime - deltaTime, 0.f);
             if (throttle < 0.f) {
+                turnDirection = -turnDirection;
                 movementComponent->remainingCrashTime = 0.f;
             }
 
@@ -150,9 +162,4 @@ void PlayerMovementSystem::ClearCommandBuffers()
     for (auto buffer : movementCommandBuffer) {
         buffer.clear();
     }
-}
-
-void PlayerMovementSystem::SetNumPlayers(int numPlayers)
-{
-    this->numPlayers = numPlayers;
 }

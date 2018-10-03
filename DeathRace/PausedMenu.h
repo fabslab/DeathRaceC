@@ -3,18 +3,18 @@
 #include "Button.h"
 #include "ButtonArea.h"
 #include "ECS.h"
-#include "IMenu.h"
+#include "Menu.h"
 
-class PausedMenu : IMenu {
+class PausedMenu : Menu {
 public:
     PausedMenu();
-    ~PausedMenu();
+    ~PausedMenu() override;
     void Update(ECS::World* world) override;
     void Draw() override;
 
 private:
+    ButtonArea* buttonArea;
     Button* resumeButton;
     Button* mainMenuButton;
     Button* exitButton;
-    ButtonArea buttonArea;
 };

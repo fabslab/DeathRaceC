@@ -25,6 +25,7 @@
     <ClCompile Include="ButtonArea.cpp" />
     <ClCompile Include="CollisionEventSubscriber.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="ControllerPlayerInput.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="Fonts.cpp" />
@@ -36,6 +37,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuRenderSystem.cpp" />
     <ClCompile Include="PausedMenu.cpp" />
     <ClCompile Include="PlayerMovementSystem.cpp" />
@@ -54,6 +56,8 @@
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="ControllerInputMap.h" />
+    <ClInclude Include="ControllerPlayerInput.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="EnemyMovementCommand.h" />
@@ -66,7 +70,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateChangedEventSubscriber.h" />
     <ClInclude Include="GraphicsUtil.h" />
-    <ClInclude Include="IMenu.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="IPlayerInput.h" />
     <ClInclude Include="KeyboardInputMap.h" />

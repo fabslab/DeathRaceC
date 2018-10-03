@@ -24,7 +24,17 @@ float AggregatedPlayerInput::GetDirection()
     return direction;
 }
 
-void AggregatedPlayerInput::SetInputs(std::vector<IPlayerInput*> inputs)
+void AggregatedPlayerInput::SetInputs(std::unordered_set<IPlayerInput*> inputs)
 {
     this->inputs = inputs;
+}
+
+bool AggregatedPlayerInput::WasCommandEntered(Input::InputCommand command)
+{
+    for (auto input : inputs) {
+        if (input->WasCommandEntered(command)) {
+            return true;
+        }
+    }
+    return false;
 }

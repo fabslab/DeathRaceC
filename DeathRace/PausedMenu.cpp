@@ -2,6 +2,7 @@
 #include "Events.h"
 #include "GameConstants.h"
 #include "GameState.h"
+#include "InputCommand.h"
 
 PausedMenu::PausedMenu()
 {
@@ -20,7 +21,7 @@ PausedMenu::PausedMenu()
     exitButton = new Button("EXIT");
     exitButton->SetPosition(Vector2{ buttonsX, buttonsY });
 
-    buttonArea = ButtonArea(MenuOrientation::Vertical, { resumeButton, mainMenuButton, exitButton });
+    buttonArea = new ButtonArea(MenuOrientation::Vertical, { resumeButton, mainMenuButton, exitButton });
 }
 
 PausedMenu::~PausedMenu()
@@ -32,14 +33,16 @@ PausedMenu::~PausedMenu()
 
 void PausedMenu::Update(ECS::World* world)
 {
-    buttonArea.Update();
+    buttonArea->Update();
 
-    if (IsKeyPressed(KEY_ENTER)) {
-        Button* selectedButton = buttonArea.GetFocusedButton();
+    if (inputAggregator.WasCommandEntered(Input::InputCommand::Enter)) {
+        Button* selectedButton = buttonArea->GetFocusedButton();
         if (selectedButton == resumeButton) {
             world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
+            buttonArea->ResetFocus();
         } else if (selectedButton == mainMenuButton) {
             world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
+            buttonArea->ResetFocus();
         } else if (selectedButton == exitButton) {
             world->emit(Events::GameStateChangedEvent{ GameState::Exit });
         }
@@ -48,5 +51,5 @@ void PausedMenu::Update(ECS::World* world)
 
 void PausedMenu::Draw()
 {
-    buttonArea.Draw();
+    buttonArea->Draw();
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "AggregatedPlayerInput.h"
+#include "ControllerPlayerInput.h"
 #include "ECS.h"
 #include "Events.h"
 #include "GameOverMenu.h"
@@ -19,4 +21,7 @@ private:
     PausedMenu pausedMenu;
     MainMenu mainMenu;
     GameState gameState;
+    AggregatedPlayerInput inputAggregator;
+    KeyboardPlayerInput* keyboardInput;
+    ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
 };

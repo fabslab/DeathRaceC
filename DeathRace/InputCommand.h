@@ -9,7 +9,6 @@ enum class InputCommand {
     Down,
     Left,
     Enter,
-    Exit,
     Pause
 };
 }

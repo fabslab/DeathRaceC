@@ -2,12 +2,12 @@
 
 #include "Button.h"
 #include "ButtonArea.h"
-#include "IMenu.h"
+#include "Menu.h"
 
-class MainMenu : IMenu {
+class MainMenu : Menu {
 public:
     MainMenu();
-    ~MainMenu();
+    ~MainMenu() override;
     void Update(ECS::World* world) override;
     void Draw() override;
 
@@ -17,7 +17,7 @@ private:
         "USE REVERSE FOR QUICKER",
         "GETAWAY AFTER CRASH",
     };
+    ButtonArea* buttonArea;
     Button* onePlayerButton;
     Button* twoPlayersButton;
-    ButtonArea buttonArea;
 };

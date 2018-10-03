@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
     Textures::Load();
     GameAudio::Load();
 
-    int numPlayers = 2;
     auto world = ECS::World::createWorld();
 
     auto gameStateSubscriber = new GameStateChangedEventSubscriber();
@@ -51,9 +50,7 @@ int main(int argc, char* argv[])
     world->subscribe<Events::CollisionEvent>(new CollisionEventSubscriber());
 
     world->registerSystem(new AnimationSystem());
-    auto playerMovement = new PlayerMovementSystem();
-    playerMovement->SetNumPlayers(numPlayers);
-    world->registerSystem(playerMovement);
+    world->registerSystem(new PlayerMovementSystem());
     world->registerSystem(new EnemyMovementSystem());
     world->registerSystem(new CollisionSystem());
     world->registerSystem(new RenderSystem());

@@ -1,43 +1,48 @@
 #include "ButtonArea.h"
+#include "ControllerInputMap.h"
+#include "KeyboardInputMap.h"
+#include "PlayerIndex.h"
 
 ButtonArea::ButtonArea(MenuOrientation orientation, std::vector<Button*> buttons)
     : buttons(buttons)
     , orientation(orientation)
 {
+    keyboardInput = new KeyboardPlayerInput(Input::UI_NAVIGATION);
+    controllerInputOne = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::One);
+    controllerInputTwo = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::Two);
+    inputAggregator.SetInputs({ keyboardInput, controllerInputOne, controllerInputTwo });
+
+    focusedIndex = 0;
     if (!buttons.empty()) {
-        buttons.front()->Focus();
+        buttons[focusedIndex]->Focus();
     }
+}
+
+ButtonArea::~ButtonArea()
+{
+    delete keyboardInput;
+    delete controllerInputOne;
+    delete controllerInputTwo;
 }
 
 void ButtonArea::Update()
 {
-    if (buttons.empty()) {
-        return;
-    }
-
-    int previousFocusedIndex = focusedIndex;
-
-    int keyNext;
-    int keyPrevious;
+    Input::InputCommand next;
+    Input::InputCommand previous;
 
     if (orientation == MenuOrientation::Horizontal) {
-        keyPrevious = KEY_LEFT;
-        keyNext = KEY_RIGHT;
+        next = Input::InputCommand::Right;
+        previous = Input::InputCommand::Left;
     } else {
-        keyPrevious = KEY_UP;
-        keyNext = KEY_DOWN;
+        next = Input::InputCommand::Down;
+        previous = Input::InputCommand::Up;
     }
 
-    if (IsKeyPressed(keyPrevious) && focusedIndex > 0) {
-        focusedIndex--;
+    if (inputAggregator.WasCommandEntered(next)) {
+        SetFocus(focusedIndex + 1);
     }
-    if (IsKeyPressed(keyNext) && focusedIndex < buttons.size() - 1) {
-        focusedIndex++;
-    }
-
-    if (previousFocusedIndex != focusedIndex) {
-        buttons[previousFocusedIndex]->Unfocus();
-        buttons[focusedIndex]->Focus();
+    if (inputAggregator.WasCommandEntered(previous)) {
+        SetFocus(focusedIndex - 1);
     }
 }
 
@@ -51,4 +56,18 @@ void ButtonArea::Draw()
 Button* ButtonArea::GetFocusedButton()
 {
     return buttons[focusedIndex];
+}
+
+void ButtonArea::SetFocus(int focusIndex)
+{
+    if (focusedIndex != focusIndex && focusIndex >= 0 && focusIndex < buttons.size()) {
+        buttons[focusedIndex]->Unfocus();
+        buttons[focusIndex]->Focus();
+        focusedIndex = focusIndex;
+    }
+}
+
+void ButtonArea::ResetFocus()
+{
+    SetFocus(0);
 }

@@ -1,8 +1,10 @@
 #include "GameOverMenu.h"
+#include "ControllerInputMap.h"
 #include "Events.h"
 #include "Fonts.h"
 #include "GameConstants.h"
 #include "GraphicsUtil.h"
+#include "InputCommand.h"
 #include "raylib.h"
 
 GameOverMenu::GameOverMenu()
@@ -18,7 +20,7 @@ GameOverMenu::GameOverMenu()
     exitButton = new Button("EXIT");
     exitButton->SetPosition(Vector2{ buttonsX, buttonsY });
 
-    buttonArea = ButtonArea(MenuOrientation::Vertical, { mainMenuButton, exitButton });
+    buttonArea = new ButtonArea(MenuOrientation::Vertical, { mainMenuButton, exitButton });
 }
 
 GameOverMenu::~GameOverMenu()
@@ -29,12 +31,13 @@ GameOverMenu::~GameOverMenu()
 
 void GameOverMenu::Update(ECS::World* world)
 {
-    buttonArea.Update();
+    buttonArea->Update();
 
-    if (IsKeyPressed(KEY_ENTER)) {
-        Button* selectedButton = buttonArea.GetFocusedButton();
+    if (inputAggregator.WasCommandEntered(Input::InputCommand::Enter)) {
+        Button* selectedButton = buttonArea->GetFocusedButton();
         if (selectedButton == mainMenuButton) {
             world->emit(Events::GameStateChangedEvent{ GameState::MainMenu });
+            buttonArea->ResetFocus();
         } else if (selectedButton == exitButton) {
             world->emit(Events::GameStateChangedEvent{ GameState::Exit });
         }
@@ -56,5 +59,5 @@ void GameOverMenu::Draw()
         yPos += Fonts::defaultFont12px.baseSize;
     }
 
-    buttonArea.Draw();
+    buttonArea->Draw();
 }

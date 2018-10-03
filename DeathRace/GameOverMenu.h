@@ -2,12 +2,12 @@
 
 #include "Button.h"
 #include "ButtonArea.h"
-#include "IMenu.h"
+#include "Menu.h"
 
-class GameOverMenu : IMenu {
+class GameOverMenu : Menu {
 public:
     GameOverMenu();
-    ~GameOverMenu();
+    ~GameOverMenu() override;
     void Update(ECS::World* world) override;
     void Draw() override;
 
@@ -18,7 +18,7 @@ private:
         { "11-20", " POINTS: GREMLIN HUNTER" },
         { "21", " or OVER: EXPERT DRIVER" }
     };
+    ButtonArea* buttonArea;
     Button* mainMenuButton;
     Button* exitButton;
-    ButtonArea buttonArea;
 };

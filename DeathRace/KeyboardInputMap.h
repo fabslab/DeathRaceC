@@ -27,7 +27,6 @@ const KeyboardInputMap UI_NAVIGATION = {
     { InputCommand::Down, KEY_DOWN },
     { InputCommand::Left, KEY_LEFT },
     { InputCommand::Enter, KEY_ENTER },
-    { InputCommand::Exit, KEY_ESCAPE },
-    { InputCommand::Pause, KEY_SPACE },
+    { InputCommand::Pause, KEY_ESCAPE },
 };
 }

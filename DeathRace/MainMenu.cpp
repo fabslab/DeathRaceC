@@ -21,27 +21,33 @@ MainMenu::MainMenu()
     onePlayerButton->SetPosition(Vector2{ buttonsX, buttonsY });
     twoPlayersButton->SetPosition(Vector2{ buttonsX + buttonWidth + buttonSpacing, buttonsY });
 
-    buttonArea = ButtonArea(MenuOrientation::Horizontal, { onePlayerButton, twoPlayersButton });
+    buttonArea = new ButtonArea(MenuOrientation::Horizontal, { onePlayerButton, twoPlayersButton });
 }
 
 MainMenu::~MainMenu()
 {
+    delete buttonArea;
     delete onePlayerButton;
     delete twoPlayersButton;
 }
 
 void MainMenu::Update(ECS::World* world)
 {
-    buttonArea.Update();
+    buttonArea->Update();
 
-    if (IsKeyPressed(KEY_ENTER)) {
-        Button* selectedButton = buttonArea.GetFocusedButton();
+    if (inputAggregator.WasCommandEntered(Input::InputCommand::Enter)) {
+        Button* selectedButton = buttonArea->GetFocusedButton();
+        int numPlayers;
         if (selectedButton == onePlayerButton) {
-            Scene::SetCurrentScene(new Scene(world, 1));
-        } else if (selectedButton == twoPlayersButton) {
-            Scene::SetCurrentScene(new Scene(world, 2));
+            numPlayers = 1;
+            world->emit(Events::NumberOfPlayersChanged{ numPlayers });
+        } else {
+            numPlayers = 2;
+            world->emit(Events::NumberOfPlayersChanged{ numPlayers });
         }
+        Scene::SetCurrentScene(new Scene(world, numPlayers));
         world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
+        buttonArea->ResetFocus();
     }
 }
 
@@ -50,7 +56,7 @@ void MainMenu::Draw()
     float marqueeX = GameConstants::VIRTUAL_WIDTH / 2;
     float marqueeY = Textures::marquee.height / 2 + 10.f;
     GraphicsUtil::DrawTexture(Textures::marquee, Vector2{ marqueeX, marqueeY });
-    buttonArea.Draw();
+    buttonArea->Draw();
 
     float yPos = onePlayerButton->y + onePlayerButton->height + 12.f;
     float fontSize = 12.f;

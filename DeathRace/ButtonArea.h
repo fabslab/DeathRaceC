@@ -1,6 +1,9 @@
 #pragma once
 
+#include "AggregatedPlayerInput.h"
 #include "Button.h"
+#include "ControllerPlayerInput.h"
+#include "KeyboardPlayerInput.h"
 #include <vector>
 
 enum class MenuOrientation {
@@ -10,14 +13,19 @@ enum class MenuOrientation {
 
 class ButtonArea {
 public:
-    ButtonArea() = default;
     ButtonArea(MenuOrientation orientation, std::vector<Button*> buttons);
+    ~ButtonArea();
     void Update();
     void Draw();
     Button* GetFocusedButton();
+    void SetFocus(int focusIndex);
+    void ResetFocus();
 
 private:
-    int focusedIndex = 0;
+    int focusedIndex;
     std::vector<Button*> buttons;
     MenuOrientation orientation;
+    AggregatedPlayerInput inputAggregator;
+    KeyboardPlayerInput* keyboardInput;
+    ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
 };

@@ -4,36 +4,42 @@
 #include <unordered_map>
 
 KeyboardPlayerInput::KeyboardPlayerInput(Input::KeyboardInputMap inputMap)
+    : inputMap(inputMap)
 {
-    this->inputMap = inputMap;
 }
 
 float KeyboardPlayerInput::GetDirection()
 {
     float direction = 0;
-    int leftKey = inputMap[Input::InputCommand::Left];
-    int rightKey = inputMap[Input::InputCommand::Right];
+    int inputLeft = inputMap[Input::InputCommand::Left];
+    int inputRight = inputMap[Input::InputCommand::Right];
 
-    if (IsKeyDown(leftKey)) {
+    if (IsKeyDown(inputLeft)) {
         direction -= 1;
     }
-    if (IsKeyDown(rightKey)) {
+    if (IsKeyDown(inputRight)) {
         direction += 1;
     }
 
     return direction;
 }
 
+bool KeyboardPlayerInput::WasCommandEntered(Input::InputCommand command)
+{
+    int input = inputMap[command];
+    return IsKeyPressed(input);
+}
+
 float KeyboardPlayerInput::GetThrottleValue()
 {
     float throttle = 0;
-    int forwardKey = inputMap[Input::InputCommand::Forward];
-    int reverseKey = inputMap[Input::InputCommand::Reverse];
+    int inputForward = inputMap[Input::InputCommand::Forward];
+    int inputReverse = inputMap[Input::InputCommand::Reverse];
 
-    if (IsKeyDown(forwardKey)) {
+    if (IsKeyDown(inputForward)) {
         throttle += 1;
     }
-    if (IsKeyDown(reverseKey)) {
+    if (IsKeyDown(inputReverse)) {
         throttle -= 1;
     }
 
