@@ -16,18 +16,19 @@
 #include "RenderSystem.h"
 #include "Scene.h"
 #include "ScoreRenderSystem.h"
+#include "Shaders.h"
 #include "Textures.h"
 
 int main(int argc, char* argv[])
 {
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(GameConstants::VIRTUAL_WIDTH) / GameConstants::VIRTUAL_HEIGHT;
 
-    int screenWidth = 1920 / 3 * 2;
-    int screenHeight = 1080 / 3 * 2;
+    int screenWidth = 1920;
+    int screenHeight = 1080;
 
     InitWindow(screenWidth, screenHeight, "Death Race");
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
-    //ToggleFullscreen();
+    ToggleFullscreen();
 
     InitAudioDevice();
 
@@ -41,6 +42,8 @@ int main(int argc, char* argv[])
 
     Fonts::Load();
     Textures::Load();
+    Shaders::Load();
+    Shaders::SetDimensions(screenWidth, screenHeight);
     GameAudio::Load();
 
     auto world = ECS::World::createWorld();
@@ -59,6 +62,8 @@ int main(int argc, char* argv[])
 
     GameState gameState = GameStateChangedEventSubscriber::GetGameState();
 
+    RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
+
     while (!WindowShouldClose() && gameState != GameState::Exit) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -76,6 +81,8 @@ int main(int argc, char* argv[])
 
         EndTextureMode();
 
+        BeginTextureMode(target);
+        BeginShaderMode(Shaders::scanLines);
         DrawTexturePro(
             virtualRenderTexture.texture,
             virtualSizeRectangle,
@@ -83,6 +90,16 @@ int main(int argc, char* argv[])
             screenOrigin,
             0,
             WHITE);
+        EndTextureMode();
+        EndShaderMode();
+
+        BeginShaderMode(Shaders::bloom);
+        DrawTextureRec(
+            target.texture,
+            Rectangle{ 0.f, 0.f, static_cast<float>(target.texture.width), static_cast<float>(-target.texture.height) },
+            screenOrigin,
+            WHITE);
+        EndShaderMode();
 
         DrawFPS(10, 10);
 
@@ -93,6 +110,7 @@ int main(int argc, char* argv[])
     world->destroyWorld();
 
     GameAudio::Unload();
+    Shaders::Unload();
     Textures::Unload();
     Fonts::Unload();
     UnloadRenderTexture(virtualRenderTexture);

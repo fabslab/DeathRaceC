@@ -45,6 +45,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScoreRenderSystem.cpp" />
     <ClCompile Include="GameAudio.cpp" />
+    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ScoreRenderSystem.h" />
     <ClInclude Include="GameAudio.h" />
+    <ClInclude Include="Shaders.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
