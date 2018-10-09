@@ -15,7 +15,7 @@ uniform int renderHeight;
 out vec4 finalColor;
 
 const int samples = 8; // pixels per axis; higher = bigger glow, worse performance
-const float quality = 1.8; 	// lower = smaller glow, better quality
+const float quality = 1.5; 	// lower = smaller glow, better quality
 
 vec2 size = vec2(renderWidth, renderHeight);
 
@@ -34,6 +34,9 @@ void main()
         }
     }
 
+    vec4 bloom = (sum/(samples*samples))*colDiffuse;
+    source *= (1 - clamp(bloom, 0.0, 1.0));
+
     // Calculate final fragment color
-    finalColor = ((sum/(samples*samples)) + source)*colDiffuse;
+    finalColor = source + bloom;
 }
