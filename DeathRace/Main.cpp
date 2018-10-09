@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
     auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
     auto virtualRenderTexture = LoadRenderTexture(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
+    auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
     auto screenOrigin = Vector2{ 0, 0 };
 
     Fonts::Load();
@@ -62,8 +63,6 @@ int main(int argc, char* argv[])
 
     GameState gameState = GameStateChangedEventSubscriber::GetGameState();
 
-    RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
-
     while (!WindowShouldClose() && gameState != GameState::Exit) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -81,7 +80,7 @@ int main(int argc, char* argv[])
 
         EndTextureMode();
 
-        BeginTextureMode(target);
+        BeginTextureMode(fullScreenRenderTarget);
         BeginShaderMode(Shaders::scanLines);
         DrawTexturePro(
             virtualRenderTexture.texture,
@@ -95,13 +94,15 @@ int main(int argc, char* argv[])
 
         BeginShaderMode(Shaders::bloom);
         DrawTextureRec(
-            target.texture,
-            Rectangle{ 0.f, 0.f, static_cast<float>(target.texture.width), static_cast<float>(-target.texture.height) },
+            fullScreenRenderTarget.texture,
+            Rectangle{
+                0.f,
+                0.f,
+                static_cast<float>(fullScreenRenderTarget.texture.width),
+                static_cast<float>(-fullScreenRenderTarget.texture.height) },
             screenOrigin,
             WHITE);
         EndShaderMode();
-
-        DrawFPS(10, 10);
 
         EndDrawing();
     }
