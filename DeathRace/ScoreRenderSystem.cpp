@@ -1,7 +1,10 @@
 #include "ScoreRenderSystem.h"
 #include "Components.h"
+#include "EnemyMovementSystem.h"
+#include "Entities.h"
 #include "Events.h"
 #include "Fonts.h"
+#include "GameAudio.h"
 #include "GameConstants.h"
 #include "GameState.h"
 #include "GameStateChangedEventSubscriber.h"
@@ -14,6 +17,7 @@ void ScoreRenderSystem::configure(ECS::World* world)
 {
     Reset();
     world->subscribe<Events::GameStateChangedEvent>(this);
+    world->subscribe<Events::CollisionEnteredEvent>(this);
 }
 
 void ScoreRenderSystem::unconfigure(ECS::World* world)
@@ -25,6 +29,20 @@ void ScoreRenderSystem::receive(ECS::World* world, const Events::GameStateChange
 {
     if (event.state == GameState::MainMenu) {
         Reset();
+    }
+}
+
+void ScoreRenderSystem::receive(ECS::World* world, const Events::CollisionEnteredEvent& event)
+{
+    auto firstEntity = event.firstEntity;
+    auto secondEntity = event.secondEntity;
+    auto playerMovementComponent = firstEntity->get<Components::PlayerMovementComponent>();
+    if (playerMovementComponent) {
+        if (secondEntity->get<Components::EnemyMovementComponent>()) {
+            if (!EnemyMovementSystem::IsEnemySafe(world, secondEntity)) {
+                KillEnemy(world, secondEntity, firstEntity);
+            }
+        }
     }
 }
 
@@ -94,6 +112,15 @@ void ScoreRenderSystem::SetScore(PlayerIndex playerIndex, int score)
     } else if (playerIndex == PlayerIndex::Two) {
         player2Score = score;
     }
+}
+
+void ScoreRenderSystem::KillEnemy(ECS::World* world, ECS::Entity* enemy, ECS::Entity* player)
+{
+    PlaySound(GameAudio::scream);
+    auto enemyTransformComponent = enemy->get<Components::Transform2DComponent>();
+    Entities::CreateTombstone(world, enemyTransformComponent->position);
+    EnemyMovementSystem::ResetEnemy(enemy);
+    player->get<Components::ScoreComponent>()->score++;
 }
 
 void ScoreRenderSystem::Reset()

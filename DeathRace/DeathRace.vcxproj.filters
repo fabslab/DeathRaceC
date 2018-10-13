@@ -99,9 +99,6 @@
     <ClCompile Include="GameOverMenu.cpp">
       <Filter>Source Files\Menus</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionEventSubscriber.cpp">
-      <Filter>Source Files\Events</Filter>
-    </ClCompile>
     <ClCompile Include="GameStateChangedEventSubscriber.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
@@ -205,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionEventSubscriber.h">
-      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Header Files\Events</Filter>

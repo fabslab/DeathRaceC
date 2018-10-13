@@ -10,7 +10,6 @@ class Menu {
 public:
     Menu();
     virtual ~Menu();
-    // TODO: add Load method to reset focused button state
     virtual void Update(ECS::World* world) = 0;
     virtual void Draw() = 0;
 

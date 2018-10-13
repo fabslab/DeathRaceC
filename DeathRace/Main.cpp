@@ -1,7 +1,6 @@
 #include "raylib.h"
 
 #include "AnimationSystem.h"
-#include "CollisionEventSubscriber.h"
 #include "CollisionSystem.h"
 #include "EnemyMovementSystem.h"
 #include "Events.h"
@@ -51,7 +50,6 @@ int main(int argc, char* argv[])
 
     auto gameStateSubscriber = new GameStateChangedEventSubscriber();
     world->subscribe<Events::GameStateChangedEvent>(gameStateSubscriber);
-    world->subscribe<Events::CollisionEnteredEvent>(new CollisionEventSubscriber());
 
     world->registerSystem(new AnimationSystem());
     world->registerSystem(new PlayerMovementSystem());

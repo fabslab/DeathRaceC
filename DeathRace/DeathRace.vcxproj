@@ -23,7 +23,6 @@
     <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonArea.cpp" />
-    <ClCompile Include="CollisionEventSubscriber.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="ControllerPlayerInput.cpp" />
     <ClCompile Include="EnemyMovementSystem.cpp" />
@@ -53,7 +52,6 @@
     <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonArea.h" />
-    <ClInclude Include="CollisionEventSubscriber.h" />
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Components.h" />
