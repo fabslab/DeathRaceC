@@ -6,13 +6,13 @@
 
 class ControllerPlayerInput : public IPlayerInput {
 public:
-    ControllerPlayerInput(Input::ControllerInputMap inputMap, PlayerIndex playerIndex);
+    ControllerPlayerInput(PlayerIndex playerIndex);
     ~ControllerPlayerInput() override = default;
     float GetThrottleValue() override;
     float GetDirection() override;
     bool WasCommandEntered(Input::InputCommand command) override;
 
 private:
-    Input::ControllerInputMap inputMap;
+    Input::ControllerInputMap GetInputMap(int gamepadIndex);
     PlayerIndex playerIndex;
 };

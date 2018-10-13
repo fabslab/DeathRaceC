@@ -1,5 +1,4 @@
 #include "MenuRenderSystem.h"
-#include "ControllerInputMap.h"
 #include "KeyboardInputMap.h"
 #include "PlayerIndex.h"
 #include "Scene.h"
@@ -10,8 +9,8 @@ void MenuRenderSystem::configure(ECS::World* world)
     gameState = GameState::MainMenu;
     world->subscribe<Events::GameStateChangedEvent>(this);
     keyboardInput = new KeyboardPlayerInput(Input::UI_NAVIGATION);
-    controllerInputOne = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::One);
-    controllerInputTwo = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::Two);
+    controllerInputOne = new ControllerPlayerInput(PlayerIndex::One);
+    controllerInputTwo = new ControllerPlayerInput(PlayerIndex::Two);
     inputAggregator.SetInputs({ keyboardInput, controllerInputOne, controllerInputTwo });
 }
 

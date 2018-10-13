@@ -1,8 +1,7 @@
 #include "ControllerPlayerInput.h"
 
-ControllerPlayerInput::ControllerPlayerInput(Input::ControllerInputMap inputMap, PlayerIndex playerIndex)
-    : inputMap(inputMap)
-    , playerIndex(playerIndex)
+ControllerPlayerInput::ControllerPlayerInput(PlayerIndex playerIndex)
+    : playerIndex(playerIndex)
 {
 }
 
@@ -12,6 +11,7 @@ float ControllerPlayerInput::GetDirection()
     int gamepadIndex = static_cast<int>(playerIndex);
 
     if (IsGamepadAvailable(gamepadIndex)) {
+        auto inputMap = GetInputMap(gamepadIndex);
         int inputLeft = inputMap[Input::InputCommand::Left];
         int inputRight = inputMap[Input::InputCommand::Right];
 
@@ -28,9 +28,14 @@ float ControllerPlayerInput::GetDirection()
 
 bool ControllerPlayerInput::WasCommandEntered(Input::InputCommand command)
 {
+    bool entered = false;
     int gamepadIndex = static_cast<int>(playerIndex);
-    int input = inputMap[command];
-    return IsGamepadButtonPressed(gamepadIndex, input);
+    if (IsGamepadAvailable(gamepadIndex)) {
+        auto inputMap = GetInputMap(gamepadIndex);
+        int input = inputMap[command];
+        entered = IsGamepadButtonPressed(gamepadIndex, input);
+    }
+    return entered;
 }
 
 float ControllerPlayerInput::GetThrottleValue()
@@ -39,16 +44,26 @@ float ControllerPlayerInput::GetThrottleValue()
     int gamepadIndex = static_cast<int>(playerIndex);
 
     if (IsGamepadAvailable(gamepadIndex)) {
+        auto inputMap = GetInputMap(gamepadIndex);
         int inputForward = inputMap[Input::InputCommand::Forward];
         int inputReverse = inputMap[Input::InputCommand::Reverse];
 
-        if (IsGamepadButtonDown(gamepadIndex, inputForward)) {
+        if (GetGamepadAxisMovement(gamepadIndex, inputForward) >= 0.f) {
             throttle += 1;
         }
-        if (IsGamepadButtonDown(gamepadIndex, inputReverse)) {
+        if (GetGamepadAxisMovement(gamepadIndex, inputReverse) >= 0.f) {
             throttle -= 1;
         }
     }
 
     return throttle;
+}
+
+Input::ControllerInputMap ControllerPlayerInput::GetInputMap(int gamepadIndex)
+{
+    if (IsGamepadName(gamepadIndex, "Wireless Controller")) {
+        return Input::PS4_GAMEPAD;
+    } else {
+        return Input::XBO_GAMEPAD;
+    }
 }

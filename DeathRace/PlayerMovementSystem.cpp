@@ -1,6 +1,5 @@
 #include "PlayerMovementSystem.h"
 #include "Components.h"
-#include "ControllerInputMap.h"
 #include "GameAudio.h"
 #include "GameConstants.h"
 #include "GameStateChangedEventSubscriber.h"
@@ -14,8 +13,8 @@ void PlayerMovementSystem::configure(ECS::World* world)
     world->subscribe<Events::NumberOfPlayersChanged>(this);
     keyboardInputLeft = new KeyboardPlayerInput(Input::PLAYER_LEFT);
     keyboardInputRight = new KeyboardPlayerInput(Input::PLAYER_RIGHT);
-    controllerInputOne = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::One);
-    controllerInputTwo = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::Two);
+    controllerInputOne = new ControllerPlayerInput(PlayerIndex::One);
+    controllerInputTwo = new ControllerPlayerInput(PlayerIndex::Two);
 }
 
 void PlayerMovementSystem::unconfigure(ECS::World* world)

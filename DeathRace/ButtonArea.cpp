@@ -1,5 +1,4 @@
 #include "ButtonArea.h"
-#include "ControllerInputMap.h"
 #include "KeyboardInputMap.h"
 #include "PlayerIndex.h"
 
@@ -8,8 +7,8 @@ ButtonArea::ButtonArea(MenuOrientation orientation, std::vector<Button*> buttons
     , orientation(orientation)
 {
     keyboardInput = new KeyboardPlayerInput(Input::UI_NAVIGATION);
-    controllerInputOne = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::One);
-    controllerInputTwo = new ControllerPlayerInput(Input::PS4_GAMEPAD, PlayerIndex::Two);
+    controllerInputOne = new ControllerPlayerInput(PlayerIndex::One);
+    controllerInputTwo = new ControllerPlayerInput(PlayerIndex::Two);
     inputAggregator.SetInputs({ keyboardInput, controllerInputOne, controllerInputTwo });
 
     focusedIndex = 0;
