@@ -11,10 +11,14 @@
 #include <array>
 #include <vector>
 
-class PlayerMovementSystem : public ECS::EntitySystem, public ECS::EventSubscriber<Events::NumberOfPlayersChanged> {
+class PlayerMovementSystem
+    : public ECS::EntitySystem,
+      public ECS::EventSubscriber<Events::CollisionEnteredEvent>,
+      public ECS::EventSubscriber<Events::NumberOfPlayersChanged> {
 public:
     virtual void configure(ECS::World* world) override;
     virtual void unconfigure(ECS::World* world) override;
+    virtual void receive(ECS::World* world, const Events::CollisionEnteredEvent& event) override;
     virtual void receive(ECS::World* world, const Events::NumberOfPlayersChanged& event) override;
     virtual void tick(ECS::World* world, float deltaTime) override;
     void SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer);
@@ -24,6 +28,7 @@ public:
 private:
     void UpdateEngineIdleSound();
     void UpdateEngineRunningSound(PlayerIndex playerIndex, float throttle);
+    void CrashPlayer(ECS::Entity* player);
     AggregatedPlayerInput inputAggregator;
     KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
     ControllerPlayerInput *controllerInputOne, *controllerInputTwo;

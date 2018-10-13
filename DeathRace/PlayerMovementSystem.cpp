@@ -10,6 +10,7 @@
 
 void PlayerMovementSystem::configure(ECS::World* world)
 {
+    world->subscribe<Events::CollisionEnteredEvent>(this);
     world->subscribe<Events::NumberOfPlayersChanged>(this);
     keyboardInputLeft = new KeyboardPlayerInput(Input::PLAYER_LEFT);
     keyboardInputRight = new KeyboardPlayerInput(Input::PLAYER_RIGHT);
@@ -28,6 +29,18 @@ void PlayerMovementSystem::unconfigure(ECS::World* world)
         if (sound != 0) {
             StopMusicStream(sound);
             UnloadMusicStream(sound);
+        }
+    }
+}
+
+void PlayerMovementSystem::receive(ECS::World* world, const Events::CollisionEnteredEvent& event)
+{
+    auto firstEntity = event.firstEntity;
+    auto secondEntity = event.secondEntity;
+    auto playerMovementComponent = firstEntity->get<Components::PlayerMovementComponent>();
+    if (playerMovementComponent) {
+        if (!secondEntity->get<Components::EnemyMovementComponent>()) {
+            CrashPlayer(firstEntity);
         }
     }
 }
@@ -79,7 +92,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                     // Reset rotation back to snapped value if player stops turning
                     rotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
                 } else {
-                    rotation += (turnDirection * snappedRotationComponent->maxTurnPerUpdate);
+                    rotation += (turnDirection * snappedRotationComponent->maxTurnAnglePerUpdate);
                     // Prevent value from becoming too large by resetting once full circle reached
                     float pi2 = PI * 2;
                     if (rotation > pi2) {
@@ -91,9 +104,17 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                 transformComponent->rotation = rotation;
 
                 if (throttle != 0.f) {
-                    float speed = throttle > 0.f
-                        ? throttle * movementComponent->forwardSpeed
-                        : throttle * movementComponent->reverseSpeed;
+                    float speed = 0.f;
+                    if (throttle > 0.f) {
+                        auto collisionComponent = entity->get<Components::CollisionComponent>();
+                        if (collisionComponent && !collisionComponent->currentCollisions.empty()) {
+                            speed = throttle * movementComponent->speedWhileColliding;
+                        } else {
+                            speed = throttle * movementComponent->forwardSpeed;
+                        }
+                    } else {
+                        speed = throttle * movementComponent->reverseSpeed;
+                    }
                     float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
                     Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
                     Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
@@ -106,7 +127,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 
             // Store result of this tick to enable replays
             movementCommandBuffer[static_cast<int>(movementComponent->playerIndex)].push_back(
-                PlayerMovementCommand{ transformComponent->position, transformComponent->rotation });
+                PlayerMovementCommand { transformComponent->position, transformComponent->rotation });
         });
 }
 
@@ -144,6 +165,15 @@ void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, flo
             playerEngineVolumes[engineSoundIndex] -= 0.1f;
             SetMusicVolume(engineSound, playerEngineVolumes[engineSoundIndex]);
         }
+    }
+}
+
+void PlayerMovementSystem::CrashPlayer(ECS::Entity* player)
+{
+    auto playerMovementComponent = player->get<Components::PlayerMovementComponent>();
+    if (playerMovementComponent->remainingCrashTime <= 0.f) {
+        PlaySound(GameAudio::collision);
+        playerMovementComponent->remainingCrashTime = playerMovementComponent->crashTime;
     }
 }
 

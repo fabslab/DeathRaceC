@@ -4,10 +4,10 @@
 #include "GameState.h"
 
 namespace Events {
-typedef struct CollisionEvent {
+typedef struct CollisionEnteredEvent {
     ECS::Entity* firstEntity = nullptr;
     ECS::Entity* secondEntity = nullptr;
-} CollisionEvent;
+} CollisionEnteredEvent;
 
 typedef struct GameStateChangedEvent {
     GameState state;

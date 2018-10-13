@@ -5,7 +5,7 @@
 #include "GameAudio.h"
 #include "raylib.h"
 
-void CollisionEventSubscriber::receive(ECS::World* world, const Events::CollisionEvent& event)
+void CollisionEventSubscriber::receive(ECS::World* world, const Events::CollisionEnteredEvent& event)
 {
     auto firstEntity = event.firstEntity;
     auto secondEntity = event.secondEntity;
@@ -15,12 +15,11 @@ void CollisionEventSubscriber::receive(ECS::World* world, const Events::Collisio
             if (!EnemyMovementSystem::IsEnemySafe(world, secondEntity)) {
                 KillEnemy(world, secondEntity, firstEntity);
             }
-        } else {
-            CrashPlayer(firstEntity);
         }
     }
 }
 
+// TODO: move to ScoreRenderSystem
 void CollisionEventSubscriber::KillEnemy(ECS::World* world, ECS::Entity* enemy, ECS::Entity* player)
 {
     PlaySound(GameAudio::scream);
@@ -28,13 +27,4 @@ void CollisionEventSubscriber::KillEnemy(ECS::World* world, ECS::Entity* enemy, 
     Entities::CreateTombstone(world, enemyTransformComponent->position);
     EnemyMovementSystem::ResetEnemy(enemy);
     player->get<Components::ScoreComponent>()->score++;
-}
-
-void CollisionEventSubscriber::CrashPlayer(ECS::Entity* player)
-{
-    auto playerMovementComponent = player->get<Components::PlayerMovementComponent>();
-    if (playerMovementComponent->remainingCrashTime <= 0.f) {
-        PlaySound(GameAudio::collision);
-        playerMovementComponent->remainingCrashTime = playerMovementComponent->crashTime;
-    }
 }

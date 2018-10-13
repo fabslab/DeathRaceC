@@ -1,9 +1,11 @@
 #pragma once
 
 #include "CollisionLayer.h"
+#include "ECS.h"
 #include "MathUtil.h"
 #include "PlayerIndex.h"
 #include "raylib.h"
+#include <list>
 
 namespace Components {
 typedef struct CollisionComponent {
@@ -16,6 +18,7 @@ typedef struct CollisionComponent {
     {
     }
     CollisionComponent() = default;
+    std::list<ECS::Entity*> currentCollisions;
     CollisionLayer filter = CollisionLayer::None;
     CollisionLayer layer = CollisionLayer::None;
     float height = 0;
@@ -35,7 +38,7 @@ typedef struct EnemyMovementComponent {
     EnemyMovementComponent() = default;
     float chancePerUpdate = 0.f;
     Vector2 direction = DirectionVectors::Down;
-    Vector2 initialPosition = Vector2{ 0.f, 0.f };
+    Vector2 initialPosition = Vector2 { 0.f, 0.f };
     float lookDistance = 2.f;
     float speed = 0.f;
     float timeRangeEnd = 0.f;
@@ -44,16 +47,19 @@ typedef struct EnemyMovementComponent {
 } EnemyMovementComponent;
 
 typedef struct PlayerMovementComponent {
-    PlayerMovementComponent(PlayerIndex playerIndex, float forwardSpeed, float reverseSpeed)
-        : forwardSpeed(forwardSpeed)
+    PlayerMovementComponent(PlayerIndex playerIndex, float forwardSpeed, float reverseSpeed, float speedWhileColliding, float crashTime)
+        : crashTime(crashTime)
+        , forwardSpeed(forwardSpeed)
         , playerIndex(playerIndex)
         , reverseSpeed(reverseSpeed)
+        , speedWhileColliding(speedWhileColliding)
     {
     }
     PlayerMovementComponent() = default;
-    float crashTime = 1000.f;
-    PlayerIndex playerIndex = PlayerIndex::One;
+    float speedWhileColliding = 0.f;
+    float crashTime = 0.f;
     float forwardSpeed = 0.f;
+    PlayerIndex playerIndex = PlayerIndex::One;
     float remainingCrashTime = 0.f;
     float reverseSpeed = 0.f;
 } PlayerMovementComponent;
@@ -72,8 +78,13 @@ typedef struct ScoreComponent {
 } ScoreComponent;
 
 typedef struct SnappedRotationComponent {
-    float snapAngle = PI / 8;
-    float maxTurnPerUpdate = PI / 48;
+    SnappedRotationComponent(float maxTurnAnglePerUpdate, float snapAngle)
+        : maxTurnAnglePerUpdate(maxTurnAnglePerUpdate)
+        , snapAngle(snapAngle)
+    {
+    }
+    float snapAngle = 0.f;
+    float maxTurnAnglePerUpdate = 0.f;
 } SnappedRotationComponent;
 
 typedef struct TextureAnimationComponent {
@@ -100,12 +111,12 @@ typedef struct TextureComponent {
         : texture(texture)
         , tint(tint)
     {
-        sourceRect = Rectangle{ 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+        sourceRect = Rectangle { 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
     }
     TextureComponent(Texture& texture)
         : texture(texture)
     {
-        sourceRect = Rectangle{ 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+        sourceRect = Rectangle { 0.f, 0.f, static_cast<float>(texture.width), static_cast<float>(texture.height) };
     }
     TextureComponent()
         = default;

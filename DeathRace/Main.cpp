@@ -34,12 +34,12 @@ int main(int argc, char* argv[])
 
     SetTargetFPS(60);
 
-    auto virtualSizeRectangle = Rectangle{ 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
+    auto virtualSizeRectangle = Rectangle { 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
     auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
     auto virtualRenderTexture = LoadRenderTexture(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
     auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
-    auto screenOrigin = Vector2{ 0, 0 };
+    auto screenOrigin = Vector2 { 0, 0 };
 
     Fonts::Load();
     Textures::Load();
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
     auto gameStateSubscriber = new GameStateChangedEventSubscriber();
     world->subscribe<Events::GameStateChangedEvent>(gameStateSubscriber);
-    world->subscribe<Events::CollisionEvent>(new CollisionEventSubscriber());
+    world->subscribe<Events::CollisionEnteredEvent>(new CollisionEventSubscriber());
 
     world->registerSystem(new AnimationSystem());
     world->registerSystem(new PlayerMovementSystem());
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
         BeginShaderMode(Shaders::bloom);
         DrawTextureRec(
             fullScreenRenderTarget.texture,
-            Rectangle{
+            Rectangle {
                 0.f,
                 0.f,
                 static_cast<float>(fullScreenRenderTarget.texture.width),

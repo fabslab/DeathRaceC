@@ -24,7 +24,7 @@ float AggregatedPlayerInput::GetDirection()
     return direction;
 }
 
-void AggregatedPlayerInput::SetInputs(std::unordered_set<IPlayerInput*> inputs)
+void AggregatedPlayerInput::SetInputs(std::vector<IPlayerInput*> inputs)
 {
     this->inputs = inputs;
 }

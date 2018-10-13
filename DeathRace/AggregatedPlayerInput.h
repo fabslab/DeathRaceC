@@ -4,18 +4,18 @@
 #include "IPlayerInput.h"
 #include "InputCommand.h"
 #include "KeyboardPlayerInput.h"
-#include <unordered_set>
+#include <vector>
 
 class AggregatedPlayerInput : public IPlayerInput {
 public:
     ~AggregatedPlayerInput() override = default;
     float GetThrottleValue() override;
     float GetDirection() override;
-    void SetInputs(std::unordered_set<IPlayerInput*> inputs);
+    void SetInputs(std::vector<IPlayerInput*> inputs);
     bool WasCommandEntered(Input::InputCommand command);
 
 private:
-    std::unordered_set<IPlayerInput*> inputs;
+    std::vector<IPlayerInput*> inputs;
     KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
     ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
 };
