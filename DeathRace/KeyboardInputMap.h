@@ -8,16 +8,16 @@ namespace Input {
 using KeyboardInputMap = std::unordered_map<InputCommand, int>;
 
 const KeyboardInputMap PLAYER_LEFT = {
-    { InputCommand::Forward, KEY_W },
+    { InputCommand::ForwardAxis, KEY_W },
     { InputCommand::Right, KEY_D },
-    { InputCommand::Reverse, KEY_S },
+    { InputCommand::ReverseAxis, KEY_S },
     { InputCommand::Left, KEY_A },
 };
 
 const KeyboardInputMap PLAYER_RIGHT = {
-    { InputCommand::Forward, KEY_UP },
+    { InputCommand::ForwardAxis, KEY_UP },
     { InputCommand::Right, KEY_RIGHT },
-    { InputCommand::Reverse, KEY_DOWN },
+    { InputCommand::ReverseAxis, KEY_DOWN },
     { InputCommand::Left, KEY_LEFT },
 };
 

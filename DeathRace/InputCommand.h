@@ -2,14 +2,15 @@
 
 namespace Input {
 enum class InputCommand {
-    Forward,
-    Up,
-    Right,
-    Reverse,
-    Down,
-    Left,
-    Enter,
     Back,
-    Pause
+    DirectionAxis,
+    Down,
+    Enter,
+    ForwardAxis,
+    Left,
+    Pause,
+    ReverseAxis,
+    Right,
+    Up
 };
 }

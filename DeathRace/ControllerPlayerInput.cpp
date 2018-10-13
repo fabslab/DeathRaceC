@@ -14,11 +14,12 @@ float ControllerPlayerInput::GetDirection()
         auto inputMap = GetInputMap(gamepadIndex);
         int inputLeft = inputMap[Input::InputCommand::Left];
         int inputRight = inputMap[Input::InputCommand::Right];
+        int directionAxis = inputMap[Input::InputCommand::DirectionAxis];
 
-        if (IsGamepadButtonDown(gamepadIndex, inputLeft)) {
+        if (IsGamepadButtonDown(gamepadIndex, inputLeft) || GetGamepadAxisMovement(gamepadIndex, directionAxis) < -0.25f) {
             direction -= 1;
         }
-        if (IsGamepadButtonDown(gamepadIndex, inputRight)) {
+        if (IsGamepadButtonDown(gamepadIndex, inputRight) || GetGamepadAxisMovement(gamepadIndex, directionAxis) > 0.25f) {
             direction += 1;
         }
     }
@@ -45,8 +46,8 @@ float ControllerPlayerInput::GetThrottleValue()
 
     if (IsGamepadAvailable(gamepadIndex)) {
         auto inputMap = GetInputMap(gamepadIndex);
-        int inputForward = inputMap[Input::InputCommand::Forward];
-        int inputReverse = inputMap[Input::InputCommand::Reverse];
+        int inputForward = inputMap[Input::InputCommand::ForwardAxis];
+        int inputReverse = inputMap[Input::InputCommand::ReverseAxis];
 
         if (GetGamepadAxisMovement(gamepadIndex, inputForward) >= 0.f) {
             throttle += 1;

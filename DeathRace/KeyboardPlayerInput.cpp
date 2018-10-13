@@ -33,8 +33,8 @@ bool KeyboardPlayerInput::WasCommandEntered(Input::InputCommand command)
 float KeyboardPlayerInput::GetThrottleValue()
 {
     float throttle = 0;
-    int inputForward = inputMap[Input::InputCommand::Forward];
-    int inputReverse = inputMap[Input::InputCommand::Reverse];
+    int inputForward = inputMap[Input::InputCommand::ForwardAxis];
+    int inputReverse = inputMap[Input::InputCommand::ReverseAxis];
 
     if (IsKeyDown(inputForward)) {
         throttle += 1;
