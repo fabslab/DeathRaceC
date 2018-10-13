@@ -43,7 +43,7 @@ void ScoreRenderSystem::Update(ECS::World* world, float deltaTime)
 
     gameTime = std::max(gameTime - deltaTime / 1000, 0.f);
     if (gameTime == 0.f) {
-        world->emit(Events::GameStateChangedEvent{ GameState::GameOver });
+        world->emit(Events::GameStateChangedEvent { GameState::GameOver, { player1Score, player2Score } });
     } else {
         world->each<Components::ScoreComponent>(
             [&](ECS::Entity* entity,
@@ -64,17 +64,17 @@ void ScoreRenderSystem::Draw()
     float letterSpacing = 4;
     std::string remainingTime = IntToDisplayString(static_cast<int>(std::ceil(gameTime)));
     Vector2 remainingTimeTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, remainingTime, fontSize, letterSpacing);
-    GraphicsUtil::DrawText(Fonts::defaultFont32px, remainingTime, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width / 2 - remainingTimeTextSize.x / 2, 0 }, fontSize, letterSpacing);
+    GraphicsUtil::DrawText(Fonts::defaultFont32px, remainingTime, Vector2 { GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width / 2 - remainingTimeTextSize.x / 2, 0 }, fontSize, letterSpacing, WHITE);
 
     if (player1Score != -1) {
         std::string player1ScoreDisplay = IntToDisplayString(player1Score);
-        GraphicsUtil::DrawText(Fonts::defaultFont32px, player1ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing);
+        GraphicsUtil::DrawText(Fonts::defaultFont32px, player1ScoreDisplay, Vector2 { GameConstants::GAME_BOUNDS.x + GameConstants::SIDEWALK_WIDTH + GameConstants::BORDER_WIDTH, 0 }, fontSize, letterSpacing, WHITE);
     }
 
     if (player2Score != -1) {
         std::string player2ScoreDisplay = IntToDisplayString(player2Score);
         Vector2 scoreTextSize = GraphicsUtil::MeasureText(Fonts::defaultFont32px, player2ScoreDisplay, fontSize, letterSpacing);
-        GraphicsUtil::DrawText(Fonts::defaultFont32px, player2ScoreDisplay, Vector2{ GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - scoreTextSize.x, 0 }, fontSize, letterSpacing);
+        GraphicsUtil::DrawText(Fonts::defaultFont32px, player2ScoreDisplay, Vector2 { GameConstants::GAME_BOUNDS.x + GameConstants::GAME_BOUNDS.width - GameConstants::SIDEWALK_WIDTH - scoreTextSize.x, 0 }, fontSize, letterSpacing, WHITE);
     }
 }
 

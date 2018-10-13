@@ -28,14 +28,14 @@ void GraphicsUtil::DrawTexture(Texture2D texture, Vector2 position, float rotati
     DrawTexturePro(texture, sourceRec, destRec, origin, rotation * RAD2DEG, tint);
 }
 
-void GraphicsUtil::DrawText(Font font, const char* text, Vector2 pos, float fontSize, float spacing)
+void GraphicsUtil::DrawText(Font font, const char* text, Vector2 pos, float fontSize, float spacing, Color tint)
 {
-    DrawTextEx(font, text, pos, fontSize, spacing, WHITE);
+    DrawTextEx(font, text, pos, fontSize, spacing, tint);
 }
 
-void GraphicsUtil::DrawText(Font font, std::string text, Vector2 pos, float fontSize, float spacing)
+void GraphicsUtil::DrawText(Font font, std::string text, Vector2 pos, float fontSize, float spacing, Color tint)
 {
-    GraphicsUtil::DrawText(font, text.c_str(), pos, fontSize, spacing);
+    GraphicsUtil::DrawText(font, text.c_str(), pos, fontSize, spacing, tint);
 }
 
 Vector2 GraphicsUtil::MeasureText(Font font, const char* text, float fontSize, float spacing)

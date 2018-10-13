@@ -2,6 +2,7 @@
 
 #include "ECS.h"
 #include "GameState.h"
+#include <vector>
 
 namespace Events {
 typedef struct CollisionEnteredEvent {
@@ -11,6 +12,7 @@ typedef struct CollisionEnteredEvent {
 
 typedef struct GameStateChangedEvent {
     GameState state;
+    std::vector<int> scores;
 } GameStateChangedEvent;
 
 typedef struct NumberOfPlayersChanged {

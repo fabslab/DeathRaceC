@@ -16,7 +16,7 @@ void Button::SetPosition(Vector2 position)
 void Button::Draw()
 {
     int borderWidth = 2;
-    Rectangle border = Rectangle{ x, y, width, height };
+    Rectangle border = Rectangle { x, y, width, height };
     DrawRectangleRec(border, BLACK);
     DrawRectangleLinesEx(border, borderWidth, borderColor);
 
@@ -25,7 +25,7 @@ void Button::Draw()
     Vector2 textSize = GraphicsUtil::MeasureText(Fonts::defaultFont14px, text, fontSize, letterSpacing);
     float textX = x + (width / 2 - textSize.x / 2);
     float textY = y + (height / 2 - Fonts::defaultFont14px.baseSize / 2);
-    GraphicsUtil::DrawText(Fonts::defaultFont14px, text, Vector2{ textX, textY }, fontSize, letterSpacing);
+    GraphicsUtil::DrawText(Fonts::defaultFont14px, text, Vector2 { textX, textY }, fontSize, letterSpacing, WHITE);
 }
 
 void Button::Focus()

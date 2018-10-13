@@ -15,7 +15,7 @@ public:
     float y = 0;
 
 private:
-    Color defaultBorderColor = Color{ 100, 100, 100, 255 };
+    Color defaultBorderColor = Fade(WHITE, .5f);
     Color focusedBorderColor = WHITE;
     Color borderColor = defaultBorderColor;
     const char* text;

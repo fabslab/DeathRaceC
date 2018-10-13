@@ -35,6 +35,9 @@ void MenuRenderSystem::receive(ECS::World* world, const Events::GameStateChanged
         } else {
             SetExitKey(0);
         }
+        if (gameState == GameState::GameOver) {
+            gameOverMenu.SetPlayerScores(event.scores);
+        }
     }
 }
 
@@ -42,12 +45,12 @@ void MenuRenderSystem::tick(ECS::World* world, float deltaTime)
 {
     if (gameState == GameState::GameRunning) {
         if (inputAggregator.WasCommandEntered(Input::InputCommand::Pause)) {
-            world->emit(Events::GameStateChangedEvent{ GameState::GamePaused });
+            world->emit(Events::GameStateChangedEvent { GameState::GamePaused });
         }
     } else if (gameState == GameState::GamePaused) {
         if (inputAggregator.WasCommandEntered(Input::InputCommand::Pause)
             || inputAggregator.WasCommandEntered(Input::InputCommand::Back)) {
-            world->emit(Events::GameStateChangedEvent{ GameState::GameRunning });
+            world->emit(Events::GameStateChangedEvent { GameState::GameRunning });
         } else {
             pausedMenu.Update(world);
             pausedMenu.Draw();
