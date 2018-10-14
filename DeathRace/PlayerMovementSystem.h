@@ -16,11 +16,11 @@ class PlayerMovementSystem
       public ECS::EventSubscriber<Events::CollisionEnteredEvent>,
       public ECS::EventSubscriber<Events::NumberOfPlayersChanged> {
 public:
-    virtual void configure(ECS::World* world) override;
-    virtual void unconfigure(ECS::World* world) override;
-    virtual void receive(ECS::World* world, const Events::CollisionEnteredEvent& event) override;
-    virtual void receive(ECS::World* world, const Events::NumberOfPlayersChanged& event) override;
-    virtual void tick(ECS::World* world, float deltaTime) override;
+    void configure(ECS::World* world) override;
+    void unconfigure(ECS::World* world) override;
+    void receive(ECS::World* world, const Events::CollisionEnteredEvent& event) override;
+    void receive(ECS::World* world, const Events::NumberOfPlayersChanged& event) override;
+    void tick(ECS::World* world, float deltaTime) override;
     void SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer);
     std::array<std::vector<PlayerMovementCommand>, 2> GetCommandBuffers();
     void ClearCommandBuffers();

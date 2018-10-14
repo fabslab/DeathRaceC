@@ -9,11 +9,11 @@ class ScoreRenderSystem
       public ECS::EventSubscriber<Events::GameStateChangedEvent>,
       public ECS::EventSubscriber<Events::CollisionEnteredEvent> {
 public:
-    virtual void configure(ECS::World* world) override;
-    virtual void unconfigure(ECS::World* world) override;
+    void configure(ECS::World* world) override;
+    void unconfigure(ECS::World* world) override;
     void receive(ECS::World* world, const Events::GameStateChangedEvent& event) override;
     void receive(ECS::World* world, const Events::CollisionEnteredEvent& event) override;
-    virtual void tick(ECS::World* world, float deltaTime) override;
+    void tick(ECS::World* world, float deltaTime) override;
 
 private:
     void Update(ECS::World* world, float deltaTime);

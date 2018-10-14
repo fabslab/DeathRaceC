@@ -11,10 +11,10 @@
 
 class MenuRenderSystem : public ECS::EntitySystem, public ECS::EventSubscriber<Events::GameStateChangedEvent> {
 public:
-    virtual void configure(ECS::World* world) override;
-    virtual void unconfigure(ECS::World* world) override;
-    virtual void receive(ECS::World* world, const Events::GameStateChangedEvent& event) override;
-    virtual void tick(ECS::World* world, float deltaTime) override;
+    void configure(ECS::World* world) override;
+    void unconfigure(ECS::World* world) override;
+    void receive(ECS::World* world, const Events::GameStateChangedEvent& event) override;
+    void tick(ECS::World* world, float deltaTime) override;
 
 private:
     GameOverMenu gameOverMenu;

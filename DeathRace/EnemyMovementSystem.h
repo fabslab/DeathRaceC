@@ -5,7 +5,7 @@
 
 class EnemyMovementSystem : public ECS::EntitySystem {
 public:
-    virtual void tick(ECS::World* world, float deltaTime) override;
+    void tick(ECS::World* world, float deltaTime) override;
     static bool IsCollisionAhead(ECS::World* world, ECS::Entity* entity);
     static bool IsEnemySafe(ECS::World* world, ECS::Entity* entity);
     static bool ShouldMakeTimeBasedTurn(ECS::Entity* entity);
