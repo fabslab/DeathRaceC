@@ -69,11 +69,6 @@ int main(int argc, char* argv[])
 
         world->tick(GetFrameTime() * 1000);
 
-        Scene* scene = Scene::GetCurrentScene();
-        if (scene != nullptr) {
-            scene->Draw();
-        }
-
         gameState = GameStateChangedEventSubscriber::GetGameState();
 
         EndTextureMode();
@@ -105,9 +100,7 @@ int main(int argc, char* argv[])
         EndDrawing();
     }
 
-    Scene::UnloadCurrentScene();
     world->destroyWorld();
-
     GameAudio::Unload();
     Shaders::Unload();
     Textures::Unload();

@@ -3,6 +3,6 @@
 #include "ECS.h"
 
 namespace GameBounds {
-void Init(ECS::World* world);
+void Load(ECS::World* world);
 void Draw();
 }

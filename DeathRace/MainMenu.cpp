@@ -45,7 +45,7 @@ void MainMenu::Update(ECS::World* world)
             numPlayers = 2;
             world->emit(Events::NumberOfPlayersChanged { numPlayers });
         }
-        Scene::SetCurrentScene(new Scene(world, numPlayers));
+        Scene::Load(world, numPlayers);
         world->emit(Events::GameStateChangedEvent { GameState::GameRunning });
         buttonArea->ResetFocus();
     }

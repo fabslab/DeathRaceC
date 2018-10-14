@@ -29,7 +29,7 @@ void MenuRenderSystem::receive(ECS::World* world, const Events::GameStateChanged
 
     if (gameState != prevGameState) {
         if (gameState == GameState::MainMenu) {
-            Scene::UnloadCurrentScene();
+            Scene::Unload(world);
             SetExitKey(KEY_ESCAPE);
         } else {
             SetExitKey(0);
