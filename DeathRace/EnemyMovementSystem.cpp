@@ -59,7 +59,8 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
     auto collisionComponent = entity->get<Components::CollisionComponent>();
     bool enemySafe = EnemyMovementSystem::IsEnemySafe(world, entity);
 
-    // TODO: Should cast the collision box but instead we simply shift it by the look distance
+    // Ideally should cast the collision box in the look direction
+    // but because look distance is short we simply shift it that distance
     Vector2 lookAmount = Vector2Scale(movementComponent->direction, movementComponent->lookDistance);
     Vector2 lookAheadPoint = Vector2Add(transformComponent->position, lookAmount);
     Rectangle collisionBox = CollisionSystem::GetCollisionBox(lookAheadPoint, collisionComponent->width, collisionComponent->height);
