@@ -18,12 +18,12 @@ typedef struct CollisionComponent {
     {
     }
     CollisionComponent() = default;
-    std::list<ECS::Entity*> currentCollisions;
     CollisionLayer filter = CollisionLayer::None;
-    CollisionLayer layer = CollisionLayer::None;
     float height = 0;
     bool isStatic = true;
+    CollisionLayer layer = CollisionLayer::None;
     float width = 0;
+    std::list<ECS::Entity*> currentCollisions;
 } CollisionComponent;
 
 typedef struct EnemyMovementComponent {
@@ -56,12 +56,12 @@ typedef struct PlayerMovementComponent {
     {
     }
     PlayerMovementComponent() = default;
-    float speedWhileColliding = 0.f;
     float crashTime = 0.f;
     float forwardSpeed = 0.f;
     PlayerIndex playerIndex = PlayerIndex::One;
-    float remainingCrashTime = 0.f;
     float reverseSpeed = 0.f;
+    float speedWhileColliding = 0.f;
+    float remainingCrashTime = 0.f;
 } PlayerMovementComponent;
 
 typedef struct EnemySafeAreaComponent {
@@ -73,8 +73,8 @@ typedef struct ScoreComponent {
         : playerIndex(playerIndex)
     {
     }
-    int score = 0;
     PlayerIndex playerIndex = PlayerIndex::One;
+    int score = 0;
 } ScoreComponent;
 
 typedef struct SnappedRotationComponent {
@@ -83,8 +83,8 @@ typedef struct SnappedRotationComponent {
         , snapAngle(snapAngle)
     {
     }
-    float snapAngle = 0.f;
     float maxTurnAnglePerUpdate = 0.f;
+    float snapAngle = 0.f;
 } SnappedRotationComponent;
 
 typedef struct TextureAnimationComponent {
@@ -94,9 +94,9 @@ typedef struct TextureAnimationComponent {
     {
     }
     TextureAnimationComponent() = default;
-    int currentFrameIndex = 0;
     int frameCount = 0;
     float frameDurationMs = 0.f;
+    int currentFrameIndex = 0;
     float remainingFrameTime = 0.f;
 } TextureAnimationComponent;
 

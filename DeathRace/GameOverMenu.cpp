@@ -5,6 +5,7 @@
 #include "GraphicsUtil.h"
 #include "InputCommand.h"
 #include "raylib.h"
+#include "raymath.h"
 
 GameOverMenu::GameOverMenu()
 {

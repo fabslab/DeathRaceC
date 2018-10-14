@@ -11,11 +11,9 @@ public:
     ~AggregatedPlayerInput() override = default;
     float GetThrottleValue() override;
     float GetDirection() override;
+    bool WasCommandEntered(Input::InputCommand command) override;
     void SetInputs(std::vector<IPlayerInput*> inputs);
-    bool WasCommandEntered(Input::InputCommand command);
 
 private:
     std::vector<IPlayerInput*> inputs;
-    KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
-    ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
 };
