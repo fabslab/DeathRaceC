@@ -59,15 +59,15 @@ void ScoreRenderSystem::Update(ECS::World* world, float deltaTime)
         return;
     }
 
+    world->each<Components::ScoreComponent>(
+        [&](ECS::Entity* entity,
+            ECS::ComponentHandle<Components::ScoreComponent> scoreComponent) {
+            SetScore(scoreComponent->playerIndex, scoreComponent->score);
+        });
+
     gameTime = std::max(gameTime - deltaTime / 1000, 0.f);
     if (gameTime == 0.f) {
         world->emit(Events::GameStateChangedEvent { GameState::GameOver, { player1Score, player2Score } });
-    } else {
-        world->each<Components::ScoreComponent>(
-            [&](ECS::Entity* entity,
-                ECS::ComponentHandle<Components::ScoreComponent> scoreComponent) {
-                SetScore(scoreComponent->playerIndex, scoreComponent->score);
-            });
     }
 }
 
