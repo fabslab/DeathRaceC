@@ -77,7 +77,7 @@ void GameOverMenu::SetPlayerScores(std::vector<int> scores)
 {
     highlightedRanges.assign(scoreRanges.size(), false);
     for (int score : scores) {
-        for (int i = scoreRanges.size() - 1; i >= 0; --i) {
+        for (auto i = scoreRanges.size() - 1; i >= 0; --i) {
             if (score >= scoreRanges[i]) {
                 highlightedRanges[i] = true;
                 break;
