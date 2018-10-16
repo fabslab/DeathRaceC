@@ -21,17 +21,23 @@
 int main(int argc, char* argv[])
 {
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(GameConstants::VIRTUAL_WIDTH) / GameConstants::VIRTUAL_HEIGHT;
+    Image icon = LoadImage("Content/icon.png");
 
-    int screenWidth = 1920;
-    int screenHeight = 1080;
-
-    InitWindow(screenWidth, screenHeight, "Death Race");
+    InitWindow(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT, "Death Race");
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
-    ToggleFullscreen();
-
+    SetWindowIcon(icon);
+    int screenWidth = GetMonitorWidth(0);
+    int screenHeight = GetMonitorHeight(0);
+    SetWindowPosition(0, 0);
+    SetWindowSize(screenWidth, screenHeight);
     InitAudioDevice();
-
     SetTargetFPS(60);
+
+    Fonts::Load();
+    Textures::Load();
+    Shaders::Load();
+    Shaders::SetDimensions(screenWidth, screenHeight);
+    GameAudio::Load();
 
     auto virtualSizeRectangle = Rectangle { 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
     auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
@@ -40,17 +46,9 @@ int main(int argc, char* argv[])
     auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
     auto screenOrigin = Vector2 { 0, 0 };
 
-    Fonts::Load();
-    Textures::Load();
-    Shaders::Load();
-    Shaders::SetDimensions(screenWidth, screenHeight);
-    GameAudio::Load();
-
     auto world = ECS::World::createWorld();
-
     auto gameStateSubscriber = new GameStateChangedEventSubscriber();
     world->subscribe<Events::GameStateChangedEvent>(gameStateSubscriber);
-
     world->registerSystem(new AnimationSystem());
     world->registerSystem(new PlayerMovementSystem());
     world->registerSystem(new EnemyMovementSystem());
@@ -100,6 +98,7 @@ int main(int argc, char* argv[])
         EndDrawing();
     }
 
+    UnloadImage(icon);
     world->destroyWorld();
     GameAudio::Unload();
     Shaders::Unload();
