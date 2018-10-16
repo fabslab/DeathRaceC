@@ -3,7 +3,8 @@
 namespace Input {
 enum class InputCommand {
     Back,
-    DirectionAxis,
+    DirectionXAxis,
+    DirectionYAxis,
     Down,
     Enter,
     ForwardAxis,

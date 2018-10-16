@@ -17,7 +17,8 @@ const ControllerInputMap PS4_GAMEPAD = {
     { InputCommand::Right, 15 },
     { InputCommand::Down, 16 },
     { InputCommand::Left, 17 },
-    { InputCommand::DirectionAxis, 0 }
+    { InputCommand::DirectionXAxis, 0 },
+    { InputCommand::DirectionYAxis, 1 }
 };
 
 const ControllerInputMap XBO_GAMEPAD = {
@@ -30,6 +31,7 @@ const ControllerInputMap XBO_GAMEPAD = {
     { InputCommand::Right, 11 },
     { InputCommand::Down, 12 },
     { InputCommand::Left, 13 },
-    { InputCommand::DirectionAxis, 1 }
+    { InputCommand::DirectionXAxis, 0 },
+    { InputCommand::DirectionYAxis, 1 }
 };
 }

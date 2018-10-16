@@ -14,7 +14,7 @@ float ControllerPlayerInput::GetDirection()
         auto inputMap = GetInputMap(gamepadIndex);
         int inputLeft = inputMap[Input::InputCommand::Left];
         int inputRight = inputMap[Input::InputCommand::Right];
-        int directionAxis = inputMap[Input::InputCommand::DirectionAxis];
+        int directionAxis = inputMap[Input::InputCommand::DirectionXAxis];
 
         if (IsGamepadButtonDown(gamepadIndex, inputLeft) || GetGamepadAxisMovement(gamepadIndex, directionAxis) < -0.25f) {
             direction -= 1;
@@ -64,7 +64,9 @@ Input::ControllerInputMap ControllerPlayerInput::GetInputMap(int gamepadIndex)
 {
     if (IsGamepadName(gamepadIndex, "Wireless Controller")) {
         return Input::PS4_GAMEPAD;
-    } else {
+    } else if (IsGamepadName(gamepadIndex, "Xbox Controller")) {
         return Input::XBO_GAMEPAD;
+    } else {
+        return Input::PS4_GAMEPAD;
     }
 }
