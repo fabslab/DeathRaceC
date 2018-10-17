@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     int screenHeight = GetMonitorHeight(0);
     SetWindowPosition(0, 0);
     SetWindowSize(screenWidth, screenHeight);
+    ToggleFullscreen();
     InitAudioDevice();
     SetTargetFPS(60);
 

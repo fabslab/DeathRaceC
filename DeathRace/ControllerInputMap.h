@@ -28,6 +28,8 @@ const ControllerInputMap XBO_GAMEPAD = {
     { InputCommand::Back, 1 },
     { InputCommand::ReverseAxis, 4 },
     { InputCommand::ForwardAxis, 5 },
+    { InputCommand::ReverseButton, 4 },
+    { InputCommand::ForwardButton, 5 },
     { InputCommand::Pause, 7 },
     { InputCommand::Up, 10 },
     { InputCommand::Right, 11 },
@@ -36,7 +38,7 @@ const ControllerInputMap XBO_GAMEPAD = {
     { InputCommand::DirectionXAxis, 0 },
     { InputCommand::DirectionYAxis, 1 }
 };
-    
+
 const ControllerInputMap XBO_WIRELESS_GAMEPAD = {
     { InputCommand::Enter, 0 },
     { InputCommand::Back, 1 },
