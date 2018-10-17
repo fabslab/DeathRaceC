@@ -48,11 +48,18 @@ float ControllerPlayerInput::GetThrottleValue()
         auto inputMap = GetInputMap(gamepadIndex);
         int inputForward = inputMap[Input::InputCommand::ForwardAxis];
         int inputReverse = inputMap[Input::InputCommand::ReverseAxis];
+        int inputForwardButton = inputMap[Input::InputCommand::ForwardButton];
+        int inputReverseButton = inputMap[Input::InputCommand::ReverseButton];
 
-        if (GetGamepadAxisMovement(gamepadIndex, inputForward) >= 0.f) {
+        float forwardAxis = GetGamepadAxisMovement(gamepadIndex, inputForward);
+        bool fowardButtonDown = IsGamepadButtonDown(gamepadIndex, inputForwardButton);
+        if (forwardAxis >= .1f || fowardButtonDown) {
             throttle += 1;
         }
-        if (GetGamepadAxisMovement(gamepadIndex, inputReverse) >= 0.f) {
+        
+        float reverseAxis = GetGamepadAxisMovement(gamepadIndex, inputReverse);
+        bool reverseButtonDown = IsGamepadButtonDown(gamepadIndex, inputReverseButton);
+        if (reverseAxis >= .1f || reverseButtonDown) {
             throttle -= 1;
         }
     }
@@ -66,6 +73,8 @@ Input::ControllerInputMap ControllerPlayerInput::GetInputMap(int gamepadIndex)
         return Input::PS4_GAMEPAD;
     } else if (IsGamepadName(gamepadIndex, "Xbox Controller")) {
         return Input::XBO_GAMEPAD;
+    } else if (IsGamepadName(gamepadIndex, "Xbox Wireless Controller")) {
+        return Input::XBO_WIRELESS_GAMEPAD;
     } else {
         return Input::PS4_GAMEPAD;
     }

@@ -8,9 +8,11 @@ enum class InputCommand {
     Down,
     Enter,
     ForwardAxis,
+    ForwardButton,
     Left,
     Pause,
     ReverseAxis,
+    ReverseButton,
     Right,
     Up
 };
