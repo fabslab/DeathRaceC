@@ -71,11 +71,12 @@ Input::ControllerInputMap ControllerPlayerInput::GetInputMap(int gamepadIndex)
 {
     if (IsGamepadName(gamepadIndex, "Wireless Controller")) {
         return Input::PS4_GAMEPAD;
-    } else if (IsGamepadName(gamepadIndex, "Xbox Controller") || IsGamepadName(gamepadIndex, "Wireless Xbox Controller")) {
-        return Input::XBO_GAMEPAD;
-    } else if (IsGamepadName(gamepadIndex, "Xbox Wireless Controller")) {
-        return Input::XBO_WIRELESS_GAMEPAD;
-    } else {
-        return Input::PS4_GAMEPAD;
     }
+    if (IsGamepadName(gamepadIndex, "Xbox Controller") || IsGamepadName(gamepadIndex, "Wireless Xbox Controller")) {
+        return Input::XBO_GAMEPAD;
+    }
+    if (IsGamepadName(gamepadIndex, "Xbox Wireless Controller")) {
+        return Input::XBO_WIRELESS_GAMEPAD;
+    }
+    return Input::PS4_GAMEPAD;
 }
