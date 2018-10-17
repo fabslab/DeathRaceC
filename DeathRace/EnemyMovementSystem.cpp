@@ -4,6 +4,7 @@
 #include "GameStateChangedEventSubscriber.h"
 #include "MathUtil.h"
 #include "Textures.h"
+#include "raylib.h"
 #include "raymath.h"
 
 void EnemyMovementSystem::tick(ECS::World* world, float deltaTime)
@@ -78,8 +79,9 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
 bool EnemyMovementSystem::IsEnemySafe(ECS::World* world, ECS::Entity* entity)
 {
     auto enemySafe = false;
+    auto transformComponent = entity->get<Components::Transform2DComponent>();
     for (auto safeAreaEntity : world->each<Components::EnemySafeAreaComponent>()) {
-        if (CollisionSystem::AreColliding(entity, safeAreaEntity)) {
+        if (CheckCollisionPointRec(transformComponent->position, CollisionSystem::GetCollisionBox(safeAreaEntity))) {
             enemySafe = true;
             break;
         }
