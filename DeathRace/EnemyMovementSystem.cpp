@@ -76,12 +76,12 @@ bool EnemyMovementSystem::IsCollisionAhead(ECS::World* world, ECS::Entity* entit
     return false;
 }
 
-bool EnemyMovementSystem::IsEnemySafe(ECS::World* world, ECS::Entity* entity)
+bool EnemyMovementSystem::IsEnemySafe(ECS::World* world, ECS::Entity* enemy)
 {
     auto enemySafe = false;
-    auto transformComponent = entity->get<Components::Transform2DComponent>();
+    auto enemyTransform = enemy->get<Components::Transform2DComponent>();
     for (auto safeAreaEntity : world->each<Components::EnemySafeAreaComponent>()) {
-        if (CheckCollisionPointRec(transformComponent->position, CollisionSystem::GetCollisionBox(safeAreaEntity))) {
+        if (CheckCollisionPointRec(enemyTransform->position, CollisionSystem::GetCollisionBox(safeAreaEntity))) {
             enemySafe = true;
             break;
         }
