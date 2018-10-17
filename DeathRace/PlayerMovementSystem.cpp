@@ -123,10 +123,6 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                         GameConstants::GAME_BOUNDS);
                 }
             }
-
-            // Store result of this tick to enable replays
-            movementCommandBuffer[static_cast<int>(movementComponent->playerIndex)].push_back(
-                PlayerMovementCommand { transformComponent->position, transformComponent->rotation });
         });
 }
 
@@ -173,22 +169,5 @@ void PlayerMovementSystem::CrashPlayer(ECS::Entity* player)
     if (playerMovementComponent->remainingCrashTime <= 0.f) {
         PlaySound(GameAudio::collision);
         playerMovementComponent->remainingCrashTime = playerMovementComponent->crashTime;
-    }
-}
-
-void PlayerMovementSystem::SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer)
-{
-    movementCommandBuffer = buffer;
-}
-
-std::array<std::vector<PlayerMovementCommand>, 2> PlayerMovementSystem::GetCommandBuffers()
-{
-    return movementCommandBuffer;
-}
-
-void PlayerMovementSystem::ClearCommandBuffers()
-{
-    for (auto buffer : movementCommandBuffer) {
-        buffer.clear();
     }
 }

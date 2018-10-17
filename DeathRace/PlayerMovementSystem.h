@@ -6,7 +6,6 @@
 #include "Events.h"
 #include "KeyboardPlayerInput.h"
 #include "PlayerIndex.h"
-#include "PlayerMovementCommand.h"
 #include "raylib.h"
 #include <array>
 #include <vector>
@@ -21,9 +20,6 @@ public:
     void receive(ECS::World* world, const Events::CollisionEnteredEvent& event) override;
     void receive(ECS::World* world, const Events::NumberOfPlayersChanged& event) override;
     void tick(ECS::World* world, float deltaTime) override;
-    void SetCommandBuffers(std::array<std::vector<PlayerMovementCommand>, 2>& buffer);
-    std::array<std::vector<PlayerMovementCommand>, 2> GetCommandBuffers();
-    void ClearCommandBuffers();
 
 private:
     void UpdateEngineIdleSound();
@@ -32,7 +28,6 @@ private:
     AggregatedPlayerInput inputAggregator;
     KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
     ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
-    std::array<std::vector<PlayerMovementCommand>, 2> movementCommandBuffer;
     int numPlayers = 0;
     Music engineIdleSound = nullptr;
     Music playerEngineSounds[2] = { nullptr, nullptr };
