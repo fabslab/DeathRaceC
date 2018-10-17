@@ -5,7 +5,7 @@
 void Entities::CreateEnemy(ECS::World* world, Vector2 position)
 {
     auto entity = world->create();
-    entity->assign<Components::CollisionComponent>(14, 15, false, CollisionLayer::Enemy, ~CollisionLayer::Sidewalk);
+    entity->assign<Components::CollisionComponent>(14, 15, false, CollisionLayer::Enemy, ~(CollisionLayer::Sidewalk | CollisionLayer::Enemy));
     entity->assign<Components::EnemyMovementComponent>(position, 1.5f, 350.f, 1800.f, .05);
     entity->assign<Components::TextureAnimationComponent>(2, 60.f);
     entity->assign<Components::TextureComponent>(Textures::enemyFront, Color(WHITE), Rectangle { 0.f, 0.f, 16.f, 16.f });
