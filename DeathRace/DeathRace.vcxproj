@@ -59,7 +59,6 @@
     <ClInclude Include="ControllerPlayerInput.h" />
     <ClInclude Include="GameConstants.h" />
     <ClInclude Include="ECS.h" />
-    <ClInclude Include="EnemyMovementCommand.h" />
     <ClInclude Include="EnemyMovementSystem.h" />
     <ClInclude Include="Entities.h" />
     <ClInclude Include="Events.h" />
@@ -79,7 +78,6 @@
     <ClInclude Include="MenuRenderSystem.h" />
     <ClInclude Include="PausedMenu.h" />
     <ClInclude Include="PlayerIndex.h" />
-    <ClInclude Include="PlayerMovementCommand.h" />
     <ClInclude Include="PlayerMovementSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
