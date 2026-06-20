@@ -18,14 +18,63 @@
 #include "Shaders.h"
 #include "Textures.h"
 
+#include <iostream>
+#include <string>
+#include <stdexcept>
+
 int main(int argc, char* argv[])
 {
+    // Parse command-line arguments
+    bool windowed = false;
+    int windowWidth = GameConstants::VIRTUAL_WIDTH * 2;
+    int windowHeight = GameConstants::VIRTUAL_HEIGHT * 2;
+
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--windowed") {
+            windowed = true;
+        } else if (arg == "--width") {
+            if (i + 1 >= argc) {
+                std::cerr << "Error: --width requires a value.\n";
+                return 1;
+            }
+            try {
+                windowWidth = std::stoi(argv[++i]);
+            } catch (const std::exception&) {
+                std::cerr << "Error: --width requires a numeric value.\n";
+                return 1;
+            }
+            if (windowWidth <= 0) {
+                std::cerr << "Error: --width must be positive.\n";
+                return 1;
+            }
+        } else if (arg == "--height") {
+            if (i + 1 >= argc) {
+                std::cerr << "Error: --height requires a value.\n";
+                return 1;
+            }
+            try {
+                windowHeight = std::stoi(argv[++i]);
+            } catch (const std::exception&) {
+                std::cerr << "Error: --height requires a numeric value.\n";
+                return 1;
+            }
+            if (windowHeight <= 0) {
+                std::cerr << "Error: --height must be positive.\n";
+                return 1;
+            }
+        } else if (arg == "--help" || arg == "-h") {
+            std::cout << "Death Race - Command Line Options:\n"
+                      << "  --windowed         Start in windowed mode\n"
+                      << "  --width <pixels>   Set window width (default: " << GameConstants::VIRTUAL_WIDTH * 2 << ")\n"
+                      << "  --height <pixels>  Set window height (default: " << GameConstants::VIRTUAL_HEIGHT * 2 << ")\n"
+                      << "  --help, -h         Show this help message\n";
+            return 0;
+        }
+    }
+
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(GameConstants::VIRTUAL_WIDTH) / GameConstants::VIRTUAL_HEIGHT;
     Image icon = LoadImage("Content/icon.png");
-
-    const int WINDOW_SCALE = 2;
-    const int windowWidth = GameConstants::VIRTUAL_WIDTH * WINDOW_SCALE;
-    const int windowHeight = GameConstants::VIRTUAL_HEIGHT * WINDOW_SCALE;
 
     InitWindow(windowWidth, windowHeight, "Death Race");
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
