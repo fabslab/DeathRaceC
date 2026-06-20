@@ -179,6 +179,9 @@ int main(int argc, char* argv[])
 
     UnloadImage(icon);
     world->destroyWorld();
+    delete gameStateSubscriber; // gameStateSubscriber is not owned by the world
+    // Note: ECS systems (AnimationSystem, PlayerMovementSystem, etc.) are owned by the world
+    // and are deleted automatically by destroyWorld().
     GameAudio::Unload();
     Shaders::Unload();
     Textures::Unload();
