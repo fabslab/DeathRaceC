@@ -29,7 +29,7 @@ private:
     KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
     ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
     int numPlayers = 0;
-    Music engineIdleSound = nullptr;
-    Music playerEngineSounds[2] = { nullptr, nullptr };
+    Music engineIdleSound = {};
+    Music playerEngineSounds[2] = { {}, {} };
     float playerEngineVolumes[2] = { 0.f, 0.f };
 };

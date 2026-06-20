@@ -24,10 +24,11 @@ void PlayerMovementSystem::unconfigure(ECS::World* world)
     delete keyboardInputRight;
     delete controllerInputOne;
     delete controllerInputTwo;
-    for (auto sound : playerEngineSounds) {
-        if (sound != 0) {
+    for (auto& sound : playerEngineSounds) {
+        if (IsMusicReady(sound)) {
             StopMusicStream(sound);
             UnloadMusicStream(sound);
+            sound = Music{};
         }
     }
 }
@@ -128,7 +129,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 
 void PlayerMovementSystem::UpdateEngineIdleSound()
 {
-    if (engineIdleSound == nullptr) {
+    if (!IsMusicReady(engineIdleSound)) {
         engineIdleSound = LoadMusicStream("Content/Audio/engine-idle-loop.ogg");
         PlayMusicStream(engineIdleSound);
     }
@@ -138,16 +139,16 @@ void PlayerMovementSystem::UpdateEngineIdleSound()
 void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, float throttle)
 {
     int engineSoundIndex = static_cast<int>(playerIndex);
-    Music engineSound = playerEngineSounds[engineSoundIndex];
+    Music& engineSound = playerEngineSounds[engineSoundIndex];
 
-    if (engineSound == nullptr) {
-        engineSound = playerEngineSounds[engineSoundIndex] = LoadMusicStream("Content/Audio/engine-running-loop.ogg");
+    if (!IsMusicReady(engineSound)) {
+        engineSound = LoadMusicStream("Content/Audio/engine-running-loop.ogg");
     }
 
     UpdateMusicStream(engineSound);
 
     if (throttle != 0.f) {
-        if (!IsMusicPlaying(engineSound)) {
+        if (!IsMusicStreamPlaying(engineSound)) {
             PlayMusicStream(engineSound);
         }
         float volume = 1.f;

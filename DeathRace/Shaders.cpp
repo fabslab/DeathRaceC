@@ -21,7 +21,7 @@ void SetDimensions(int width, int height)
 {
     int widthInput = GetShaderLocation(bloom, "renderWidth");
     int heightInput = GetShaderLocation(bloom, "renderHeight");
-    SetShaderValuei(bloom, widthInput, &width, 1);
-    SetShaderValuei(bloom, heightInput, &height, 1);
+    SetShaderValue(bloom, widthInput, &width, SHADER_UNIFORM_INT);
+    SetShaderValue(bloom, heightInput, &height, SHADER_UNIFORM_INT);
 }
 }
