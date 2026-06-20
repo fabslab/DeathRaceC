@@ -15,10 +15,10 @@ void CollisionSystem::tick(ECS::World* world, float deltaTime)
                     [&](ECS::Entity* oEntity,
                         ECS::ComponentHandle<Components::CollisionComponent> oCollisionComponent) {
                         if (PassesCollisionFilter(entity, oEntity) && AreColliding(entity, oEntity)) {
-                            collisionComponent->currentCollisions.push_back(oEntity);
-                            auto it = std::find(previousCollisions.begin(), previousCollisions.end(), oEntity);
+                            collisionComponent->currentCollisions.push_back(oEntity->getEntityId());
+                            auto it = std::find(previousCollisions.begin(), previousCollisions.end(), oEntity->getEntityId());
                             if (it == previousCollisions.end()) {
-                                world->emit(Events::CollisionEnteredEvent { entity, oEntity });
+                                world->emit(Events::CollisionEnteredEvent { entity->getEntityId(), oEntity->getEntityId() });
                             }
                         }
                     });

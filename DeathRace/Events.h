@@ -6,8 +6,8 @@
 
 namespace Events {
 typedef struct CollisionEnteredEvent {
-    ECS::Entity* firstEntity = nullptr;
-    ECS::Entity* secondEntity = nullptr;
+    size_t firstEntity;
+    size_t secondEntity;
 } CollisionEnteredEvent;
 
 typedef struct GameStateChangedEvent {

@@ -34,8 +34,11 @@ void ScoreRenderSystem::receive(ECS::World* world, const Events::GameStateChange
 
 void ScoreRenderSystem::receive(ECS::World* world, const Events::CollisionEnteredEvent& event)
 {
-    auto firstEntity = event.firstEntity;
-    auto secondEntity = event.secondEntity;
+    auto firstEntity = world->getById(event.firstEntity);
+    auto secondEntity = world->getById(event.secondEntity);
+    if (!firstEntity || !secondEntity) {
+        return;
+    }
     auto playerMovementComponent = firstEntity->get<Components::PlayerMovementComponent>();
     if (playerMovementComponent) {
         if (secondEntity->get<Components::EnemyMovementComponent>()) {
