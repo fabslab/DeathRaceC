@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 #include "ECS.h"
 #include "Events.h"
 #include "PlayerIndex.h"

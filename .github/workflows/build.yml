@@ -1,0 +1,65 @@
+# GitHub Actions CI workflow for automated Windows builds
+# NOTE: Users may need to adjust the Raylib path and MSBuild configuration
+#       to match their specific project setup (e.g., different Raylib version,
+#       different MSBuild platform, or additional dependencies).
+
+name: Build
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Cache Raylib
+      id: cache-raylib
+      uses: actions/cache@v4
+      with:
+        path: C:\raylib
+        key: ${{ runner.os }}-raylib-5.0.0
+        
+    - name: Download and Install Raylib
+      if: steps.cache-raylib.outputs.cache-hit != 'true'
+      run: |
+        $url = "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip"
+        Invoke-WebRequest -Uri $url -OutFile raylib.zip
+        Expand-Archive -Path raylib.zip -DestinationPath C:\
+        Rename-Item -Path "C:\raylib-5.0_win64_msvc16" -NewName "C:\raylib"
+      shell: pwsh
+      
+    - name: Set Raylib Environment Variables
+      run: |
+        echo "RAYLIB_PATH=C:\raylib" >> $env:GITHUB_ENV
+        echo "INCLUDE=C:\raylib\include;" >> $env:GITHUB_ENV
+
+    - name: Override Raylib Paths for CI
+      run: |
+        # The .vcxproj references raylib as a sibling directory ($(SolutionDir)..\raylib),
+        # but on CI raylib is installed to C:\raylib. Override the paths.
+        $content = Get-Content DeathRace\DeathRace.vcxproj
+        $content = $content -replace '\$\(SolutionDir\)\.\.\\raylib\\src', 'C:\raylib\include'
+        $content = $content -replace '\$\(SolutionDir\)\.\.\\raylib\\projects\\VS2017\\raylib\\Release', 'C:\raylib\lib'
+        $content | Set-Content DeathRace\DeathRace.vcxproj
+      shell: pwsh
+
+    - name: Build Solution
+      run: msbuild DeathRace.sln /p:Configuration=Release /p:Platform=x64
+
+
+      
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: DeathRace-Windows-x64
+        path: x64/Release/DeathRace.exe

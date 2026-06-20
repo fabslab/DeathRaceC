@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     auto virtualSizeRectangle = Rectangle { 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
     auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
     auto virtualRenderTexture = LoadRenderTexture(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
-    SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
+    SetTextureFilter(virtualRenderTexture.texture, TEXTURE_FILTER_POINT);
     auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
     auto screenOrigin = Vector2 { 0, 0 };
 

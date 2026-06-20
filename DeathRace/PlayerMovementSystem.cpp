@@ -121,7 +121,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                     float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
                     Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
                     Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
-                    Vector3 movement = Vector3Multiply(movementDirection, speed);
+                    Vector3 movement = Vector3Scale(movementDirection, speed);
                     transformComponent->position = MathUtil::WrapPosition(
                         Vector2Add(transformComponent->position, MathUtil::Vector3To2(movement)),
                         GameConstants::GAME_BOUNDS);
