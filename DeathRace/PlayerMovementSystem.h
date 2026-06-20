@@ -32,6 +32,6 @@ private:
     ControllerPlayerInput* controllerInputTwo = nullptr;
     int numPlayers = 0;
     Music engineIdleSound = {};
-    std::array<Music, 2> playerEngineSounds = { {}, {} };
+    std::array<Music, 2> playerEngineSounds = { Music{}, Music{} };
     std::array<float, 2> playerEngineVolumes = { 0.f, 0.f };
 };
