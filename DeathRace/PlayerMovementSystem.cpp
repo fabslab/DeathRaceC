@@ -31,6 +31,11 @@ void PlayerMovementSystem::unconfigure(ECS::World* world)
             sound = Music{};
         }
     }
+    if (IsMusicReady(engineIdleSound)) {
+        StopMusicStream(engineIdleSound);
+        UnloadMusicStream(engineIdleSound);
+        engineIdleSound = Music{};
+    }
 }
 
 void PlayerMovementSystem::receive(ECS::World* world, const Events::CollisionEnteredEvent& event)
