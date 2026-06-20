@@ -69,13 +69,14 @@ float ControllerPlayerInput::GetThrottleValue()
 
 Input::ControllerInputMap ControllerPlayerInput::GetInputMap(int gamepadIndex)
 {
-    if (IsGamepadName(gamepadIndex, "Wireless Controller")) {
+    const char* name = GetGamepadName(gamepadIndex);
+    if (TextIsEqual(name, "Wireless Controller")) {
         return Input::PS4_GAMEPAD;
     }
-    if (IsGamepadName(gamepadIndex, "Xbox Controller") || IsGamepadName(gamepadIndex, "Wireless Xbox Controller")) {
+    if (TextIsEqual(name, "Xbox Controller") || TextIsEqual(name, "Wireless Xbox Controller")) {
         return Input::XBO_GAMEPAD;
     }
-    if (IsGamepadName(gamepadIndex, "Xbox Wireless Controller")) {
+    if (TextIsEqual(name, "Xbox Wireless Controller")) {
         return Input::XBO_WIRELESS_GAMEPAD;
     }
     return Input::PS4_GAMEPAD;
