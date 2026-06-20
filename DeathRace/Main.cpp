@@ -35,8 +35,12 @@ int main(int argc, char* argv[])
     SetTargetFPS(60);
 
     // Get monitor size for fullscreen toggle
-    int screenWidth = GetMonitorWidth(0);
-    int screenHeight = GetMonitorHeight(0);
+    const int monitorWidth = GetMonitorWidth(0);
+    const int monitorHeight = GetMonitorHeight(0);
+
+    // Start windowed and use the current window dimensions for rendering
+    int screenWidth = GetScreenWidth();
+    int screenHeight = GetScreenHeight();
 
     Fonts::Load();
     Textures::Load();
@@ -69,17 +73,20 @@ int main(int argc, char* argv[])
         if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_ENTER)) {
             ToggleFullscreen();
             if (IsWindowFullscreen()) {
-                SetWindowSize(screenWidth, screenHeight);
+                SetWindowSize(monitorWidth, monitorHeight);
                 SetWindowPosition(0, 0);
             } else {
                 SetWindowSize(windowWidth, windowHeight);
-                int monitorX = GetMonitorWidth(0) / 2 - windowWidth / 2;
-                int monitorY = GetMonitorHeight(0) / 2 - windowHeight / 2;
+                int monitorX = monitorWidth / 2 - windowWidth / 2;
+                int monitorY = monitorHeight / 2 - windowHeight / 2;
                 SetWindowPosition(monitorX, monitorY);
             }
-            // Recalculate destination rectangle for aspect ratio
+            // Update render target and aspect ratio to match the new window size
             screenWidth = GetScreenWidth();
             screenHeight = GetScreenHeight();
+            UnloadRenderTexture(fullScreenRenderTarget);
+            fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
+            Shaders::SetDimensions(screenWidth, screenHeight);
             destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
         }
 
