@@ -20,10 +20,10 @@ void PlayerMovementSystem::configure(ECS::World* world)
 void PlayerMovementSystem::unconfigure(ECS::World* world)
 {
     world->unsubscribeAll(this);
-    delete keyboardInputLeft;
-    delete keyboardInputRight;
-    delete controllerInputOne;
-    delete controllerInputTwo;
+    if (keyboardInputLeft) { delete keyboardInputLeft; keyboardInputLeft = nullptr; }
+    if (keyboardInputRight) { delete keyboardInputRight; keyboardInputRight = nullptr; }
+    if (controllerInputOne) { delete controllerInputOne; controllerInputOne = nullptr; }
+    if (controllerInputTwo) { delete controllerInputTwo; controllerInputTwo = nullptr; }
     for (auto& sound : playerEngineSounds) {
         if (IsMusicReady(sound)) {
             StopMusicStream(sound);
