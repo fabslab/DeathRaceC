@@ -26,10 +26,12 @@ private:
     void UpdateEngineRunningSound(PlayerIndex playerIndex, float throttle);
     void CrashPlayer(ECS::Entity* player);
     AggregatedPlayerInput inputAggregator;
-    KeyboardPlayerInput *keyboardInputLeft, *keyboardInputRight;
-    ControllerPlayerInput *controllerInputOne, *controllerInputTwo;
+    KeyboardPlayerInput* keyboardInputLeft = nullptr;
+    KeyboardPlayerInput* keyboardInputRight = nullptr;
+    ControllerPlayerInput* controllerInputOne = nullptr;
+    ControllerPlayerInput* controllerInputTwo = nullptr;
     int numPlayers = 0;
     Music engineIdleSound = {};
-    Music playerEngineSounds[2] = { {}, {} };
-    float playerEngineVolumes[2] = { 0.f, 0.f };
+    std::array<Music, 2> playerEngineSounds = { {}, {} };
+    std::array<float, 2> playerEngineVolumes = { 0.f, 0.f };
 };
