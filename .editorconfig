@@ -1,0 +1,31 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cpp,h,hpp,c}]
+indent_style = space
+indent_size = 4
+
+cpp_new_line_before_open_brace_namespace = same_line
+cpp_new_line_before_open_brace_type = same_line
+cpp_new_line_before_open_brace_function = new_line
+cpp_new_line_before_open_brace_block = same_line
+cpp_new_line_before_open_brace_lambda = same_line
+
+cpp_indent_braces = false
+cpp_indent_namespace_contents = true
+cpp_indent_case_contents = true
+cpp_indent_case_labels = false
+
+cpp_space_pointer_reference_alignment = ignore
+
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2
+
+[*.{md,txt}]
+trim_trailing_whitespace = false
