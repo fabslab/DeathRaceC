@@ -1,8 +1,8 @@
-# DeathRaceC
+# DeathRace
 
-A C++17 remake of Exidy's 1976 arcade classic **Death Race**, built with [Raylib](https://www.raylib.com/) and an Entity-Component-System (ECS) architecture. Features retro CRT-style post-processing with authentic scanlines and bloom effects for that classic arcade feel.
+A C++ remake of Exidy's 1976 arcade classic **Death Race**, built with [raylib](https://www.raylib.com/) and an Entity-Component-System (ECS) architecture. Features retro CRT-style post-processing with authentic scanlines and bloom effects for that classic arcade feel.
 
-Play the latest build online at: **[fabslab.itch.io/death-race](https://fabslab.itch.io/death-race)**
+Download the latest build for **Windows** and **macOS** at **[fabslab.itch.io/death-race](https://fabslab.itch.io/death-race)**.
 
 ![Death Race Marquee](https://img.itch.zone/aW1hZ2UvOTM5OTgvNDQxODc2LnBuZw==/original/zAFTKi.png)
 
@@ -16,7 +16,7 @@ Play the latest build online at: **[fabslab.itch.io/death-race](https://fabslab.
 
 - Faithful remake of the 1976 arcade classic
 - Local 2-player competitive mode
-- Keyboard + game controller support (PS4, Xbox One)
+- Keyboard + game controller support (PS4, Xbox One, Xbox Wireless)
 - Authentic CRT post-processing (scanlines + bloom)
 - Retro pixel art style with virtual 480x360 resolution
 - Windowed mode with **Alt+Enter** fullscreen toggle
@@ -36,36 +36,58 @@ This is a fan implementation of the original cabinet arcade game made by Exidy i
 
 ## Dependencies
 
-- [Raylib](https://www.raylib.com/) (4.x or later recommended)
-- Visual Studio 2019 or later (Windows)
+- [raylib](https://www.raylib.com/) 5.0
 - C++17 compatible compiler
+- **Windows:** Visual Studio 2022 (v143 toolset) or later
+- **Linux/macOS:** CMake 3.14 or later
 
 ## Build Instructions
 
 ### Windows (Visual Studio)
 
-1. Clone the repository
-2. Open `DeathRace.sln` in Visual Studio
-3. Ensure raylib is installed and include/lib paths are configured
+The Visual Studio solution expects raylib as a sibling directory:
+
+```
+DeathRaceC/
+  DeathRace/
+    DeathRace.sln
+    ...
+raylib/
+  src/
+  ...
+```
+
+1. Clone this repository
+2. Clone [raylib](https://github.com/raysan5/raylib) into a sibling `raylib/` directory
+3. Open `DeathRace/DeathRace.sln` in Visual Studio 2022
 4. Build and run (F5)
 
-### Linux / macOS (CMake)
+> **Note:** The `.vcxproj` is configured for the v143 toolset and latest Windows SDK. If you have an older Visual Studio version, you may need to retarget the solution.
+
+### CMake (Windows, Linux, macOS)
+
+The CMake build fetches raylib automatically via `FetchContent` — no manual raylib installation required.
 
 ```bash
 # Clone the repository
 git clone https://github.com/fabslab/DeathRaceC.git
 cd DeathRaceC
 
-# Build with CMake
+# Build
 mkdir build && cd build
 cmake ..
 cmake --build .
 
-# Run
+# Run (from the build directory so Content/ is found)
+# Linux / macOS:
 ./DeathRace
+# Windows:
+Debug\DeathRace.exe
+# or
+Release\DeathRace.exe
 ```
 
-> **Note:** The CMake build fetches Raylib automatically via FetchContent.
+> **Note:** The `Content/` directory (game assets) is copied to the build output directory automatically. You must run the executable from the build directory, or copy `Content/` manually to wherever you move the executable.
 
 ## Launch Options
 
@@ -79,37 +101,48 @@ Command-line arguments can be passed when launching the game:
 | `--help`, `-h` | Show help message |
 
 ```bash
-# Examples
+# Linux / macOS
 ./DeathRace --windowed
 ./DeathRace --windowed --width 1280 --height 960
 ./DeathRace --help
+
+# Windows
+Release\DeathRace.exe --windowed
+Release\DeathRace.exe --windowed --width 1280 --height 960
+Release\DeathRace.exe --help
 ```
 
 While in-game, press **Alt+Enter** to toggle between windowed and fullscreen modes.
 
 ## Controls
 
-### Player 1 (Keyboard - WASD)
+### Player 1 (Keyboard — WASD)
 
-| Action     | Key |
-|------------|-----|
-| Accelerate | W   |
-| Turn Left  | A   |
-| Turn Right | D   |
-| Reverse    | S   |
+| Action | Key |
+|--------|-----|
+| Accelerate | W |
+| Turn Left | A |
+| Turn Right | D |
+| Reverse | S |
 
-### Player 2 (Keyboard - Arrow Keys)
+### Player 2 (Keyboard — Arrow Keys)
 
-| Action     | Key        |
-|------------|------------|
-| Accelerate | Up Arrow   |
-| Turn Left  | Left Arrow |
-| Turn Right | Right Arrow|
-| Reverse    | Down Arrow |
+| Action | Key |
+|--------|-----|
+| Accelerate | Up Arrow |
+| Turn Left | Left Arrow |
+| Turn Right | Right Arrow |
+| Reverse | Down Arrow |
 
 ### Controllers
 
-Both PS4 and Xbox One controllers are supported for player movement and menu navigation.
+Supported controllers are detected automatically by name:
+
+- **PS4:** `Wireless Controller`
+- **Xbox One (wired):** `Xbox Controller`
+- **Xbox One (wireless):** `Xbox Wireless Controller`
+
+Both controllers are supported for player movement and menu navigation.
 
 ### Menu Navigation
 
@@ -126,11 +159,9 @@ Both PS4 and Xbox One controllers are supported for player movement and menu nav
 
 ## Download
 
-Pre-built binaries are available on itch.io for **Windows** and **Mac**:
+Pre-built binaries are available on itch.io for **Windows** and **macOS**:
 
 **[https://fabslab.itch.io/death-race](https://fabslab.itch.io/death-race)**
-
-You can also play directly in your browser on the itch.io page.
 
 ## Architecture
 
@@ -143,6 +174,7 @@ The game is built using an **Entity-Component-System (ECS)** pattern. The ECS wo
 - `AnimationSystem` — Updates sprite animations
 - `ScoreRenderSystem` — Displays the in-game scoreboard
 - `MenuRenderSystem` — Renders menus and UI overlays
+- `GameAudio` — Static audio loading / unloading helpers
 
 ## Credits
 
@@ -153,5 +185,3 @@ The game is built using an **Entity-Component-System (ECS)** pattern. The ECS wo
 ## License
 
 This project is licensed under the **MIT License**.
-
-The ECS header (`ECS.h`) is Copyright (c) 2016 Sam Bloomberg and is used under the MIT License. See the file header for full license text.
