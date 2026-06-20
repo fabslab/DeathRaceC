@@ -23,16 +23,20 @@ int main(int argc, char* argv[])
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(GameConstants::VIRTUAL_WIDTH) / GameConstants::VIRTUAL_HEIGHT;
     Image icon = LoadImage("Content/icon.png");
 
-    InitWindow(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT, "Death Race");
+    const int WINDOW_SCALE = 2;
+    const int windowWidth = GameConstants::VIRTUAL_WIDTH * WINDOW_SCALE;
+    const int windowHeight = GameConstants::VIRTUAL_HEIGHT * WINDOW_SCALE;
+
+    InitWindow(windowWidth, windowHeight, "Death Race");
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     SetWindowIcon(icon);
-    int screenWidth = GetMonitorWidth(0);
-    int screenHeight = GetMonitorHeight(0);
-    SetWindowPosition(0, 0);
-    SetWindowSize(screenWidth, screenHeight);
-    ToggleFullscreen();
+    // Start windowed — user can toggle fullscreen with Alt+Enter
     InitAudioDevice();
     SetTargetFPS(60);
+
+    // Get monitor size for fullscreen toggle
+    int screenWidth = GetMonitorWidth(0);
+    int screenHeight = GetMonitorHeight(0);
 
     Fonts::Load();
     Textures::Load();
@@ -41,7 +45,7 @@ int main(int argc, char* argv[])
     GameAudio::Load();
 
     auto virtualSizeRectangle = Rectangle { 0, 0, GameConstants::VIRTUAL_WIDTH, -GameConstants::VIRTUAL_HEIGHT };
-    auto destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
+    Rectangle destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
     auto virtualRenderTexture = LoadRenderTexture(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     SetTextureFilter(virtualRenderTexture.texture, FILTER_POINT);
     auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
@@ -61,6 +65,24 @@ int main(int argc, char* argv[])
     GameState gameState = GameStateChangedEventSubscriber::GetGameState();
 
     while (!WindowShouldClose() && gameState != GameState::Exit) {
+        // Toggle fullscreen on Alt+Enter
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_ENTER)) {
+            ToggleFullscreen();
+            if (IsWindowFullscreen()) {
+                SetWindowSize(screenWidth, screenHeight);
+                SetWindowPosition(0, 0);
+            } else {
+                SetWindowSize(windowWidth, windowHeight);
+                int monitorX = GetMonitorWidth(0) / 2 - windowWidth / 2;
+                int monitorY = GetMonitorHeight(0) / 2 - windowHeight / 2;
+                SetWindowPosition(monitorX, monitorY);
+            }
+            // Recalculate destination rectangle for aspect ratio
+            screenWidth = GetScreenWidth();
+            screenHeight = GetScreenHeight();
+            destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
+        }
+
         BeginDrawing();
         ClearBackground(BLACK);
 
@@ -106,6 +128,7 @@ int main(int argc, char* argv[])
     Textures::Unload();
     Fonts::Unload();
     UnloadRenderTexture(virtualRenderTexture);
+    UnloadRenderTexture(fullScreenRenderTarget);
     CloseAudioDevice();
     CloseWindow();
 
