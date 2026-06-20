@@ -23,7 +23,7 @@ typedef struct CollisionComponent {
     bool isStatic = true;
     CollisionLayer layer = CollisionLayer::None;
     float width = 0;
-    std::list<ECS::Entity*> currentCollisions;
+    std::list<size_t> currentCollisions;
 } CollisionComponent;
 
 typedef struct EnemyMovementComponent {
