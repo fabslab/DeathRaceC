@@ -124,7 +124,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
                         speed = throttle * movementComponent->reverseSpeed;
                     }
                     float snappedRotation = MathUtil::Snap(rotation, snappedRotationComponent->snapAngle);
-                    Matrix rotationMatrix = MatrixRotateZ(-snappedRotation);
+                    Matrix rotationMatrix = MatrixRotateZ(snappedRotation);
                     Vector3 movementDirection = Vector3Transform(MathUtil::Vector2To3(DirectionVectors::Down), rotationMatrix);
                     Vector3 movement = Vector3Scale(movementDirection, speed);
                     transformComponent->position = MathUtil::WrapPosition(
