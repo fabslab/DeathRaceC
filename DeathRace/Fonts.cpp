@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "Fonts.h"
 
 namespace Fonts {
@@ -9,10 +10,10 @@ Font
 
 void Load()
 {
-    defaultFont32px = LoadFont("Content/Fonts/fnt/text/munro-edit-32px.fnt");
-    defaultFont14px = LoadFont("Content/Fonts/fnt/text/munro-edit-14px.fnt");
-    defaultFont12px = LoadFont("Content/Fonts/fnt/text/munro-12px.fnt");
-    defaultFont12pxEdit = LoadFont("Content/Fonts/fnt/text/munro-edit-12px.fnt");
+    defaultFont32px = LoadFont(GetAssetPath("Content/Fonts/fnt/text/munro-edit-32px.fnt").c_str());
+    defaultFont14px = LoadFont(GetAssetPath("Content/Fonts/fnt/text/munro-edit-14px.fnt").c_str());
+    defaultFont12px = LoadFont(GetAssetPath("Content/Fonts/fnt/text/munro-12px.fnt").c_str());
+    defaultFont12pxEdit = LoadFont(GetAssetPath("Content/Fonts/fnt/text/munro-edit-12px.fnt").c_str());
 }
 
 void Unload()

@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "Textures.h"
 
 namespace GameAudio {
@@ -7,8 +8,8 @@ Sound
 
 void Load()
 {
-    collision = LoadSound("Content/Audio/collision.ogg");
-    scream = LoadSound("Content/Audio/scream.ogg");
+    collision = LoadSound(GetAssetPath("Content/Audio/collision.ogg").c_str());
+    scream = LoadSound(GetAssetPath("Content/Audio/scream.ogg").c_str());
 }
 
 void Unload()

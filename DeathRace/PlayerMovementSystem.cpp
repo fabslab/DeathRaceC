@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "PlayerMovementSystem.h"
 #include "Components.h"
 #include "GameAudio.h"
@@ -138,7 +139,7 @@ void PlayerMovementSystem::tick(ECS::World* world, float deltaTime)
 void PlayerMovementSystem::UpdateEngineIdleSound()
 {
     if (!IsMusicReady(engineIdleSound)) {
-        engineIdleSound = LoadMusicStream("Content/Audio/engine-idle-loop.ogg");
+        engineIdleSound = LoadMusicStream(GetAssetPath("Content/Audio/engine-idle-loop.ogg").c_str());
         PlayMusicStream(engineIdleSound);
     }
     UpdateMusicStream(engineIdleSound);
@@ -150,7 +151,7 @@ void PlayerMovementSystem::UpdateEngineRunningSound(PlayerIndex playerIndex, flo
     Music& engineSound = playerEngineSounds[engineSoundIndex];
 
     if (!IsMusicReady(engineSound)) {
-        engineSound = LoadMusicStream("Content/Audio/engine-running-loop.ogg");
+        engineSound = LoadMusicStream(GetAssetPath("Content/Audio/engine-running-loop.ogg").c_str());
     }
 
     UpdateMusicStream(engineSound);

@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "raylib.h"
 
 #include "AnimationSystem.h"
@@ -74,7 +75,7 @@ int main(int argc, char* argv[])
     }
 
     const float PREFERRED_ASPECT_RATIO = static_cast<float>(GameConstants::VIRTUAL_WIDTH) / GameConstants::VIRTUAL_HEIGHT;
-    Image icon = LoadImage("Content/icon.png");
+    Image icon = LoadImage(GetAssetPath("Content/icon.png").c_str());
 
     InitWindow(windowWidth, windowHeight, "Death Race");
     SetWindowMinSize(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);

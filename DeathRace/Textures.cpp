@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "Textures.h"
 
 namespace Textures {
@@ -11,12 +12,12 @@ Texture
 
 void Load()
 {
-    enemyFront = LoadTexture("Content/gremlin-front.png");
-    enemyLeft = LoadTexture("Content/gremlin-left.png");
-    enemyRight = LoadTexture("Content/gremlin-right.png");
-    marquee = LoadTexture("Content/marquee.png");
-    player = LoadTexture("Content/car.png");
-    tombstone = LoadTexture("Content/cross.png");
+    enemyFront = LoadTexture(GetAssetPath("Content/gremlin-front.png").c_str());
+    enemyLeft = LoadTexture(GetAssetPath("Content/gremlin-left.png").c_str());
+    enemyRight = LoadTexture(GetAssetPath("Content/gremlin-right.png").c_str());
+    marquee = LoadTexture(GetAssetPath("Content/marquee.png").c_str());
+    player = LoadTexture(GetAssetPath("Content/car.png").c_str());
+    tombstone = LoadTexture(GetAssetPath("Content/cross.png").c_str());
 }
 
 void Unload()

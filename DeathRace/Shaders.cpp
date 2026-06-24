@@ -1,3 +1,4 @@
+#include "AssetPath.h"
 #include "Shaders.h"
 
 namespace Shaders {
@@ -7,8 +8,8 @@ Shader
 
 void Load()
 {
-    bloom = LoadShader(0, "Content/Shaders/glsl330/bloom.fs");
-    scanLines = LoadShader(0, "Content/Shaders/glsl330/scanlines.fs");
+    bloom = LoadShader(0, GetAssetPath("Content/Shaders/glsl330/bloom.fs").c_str());
+    scanLines = LoadShader(0, GetAssetPath("Content/Shaders/glsl330/scanlines.fs").c_str());
 }
 
 void Unload()

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AggregatedPlayerInput.cpp" />
     <ClCompile Include="AnimationSystem.cpp" />
+    <ClCompile Include="AssetPath.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonArea.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -50,6 +51,7 @@
   <ItemGroup>
     <ClInclude Include="AggregatedPlayerInput.h" />
     <ClInclude Include="AnimationSystem.h" />
+    <ClInclude Include="AssetPath.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonArea.h" />
     <ClInclude Include="CollisionLayer.h" />
