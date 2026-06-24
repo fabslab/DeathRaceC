@@ -143,6 +143,7 @@ int main(int argc, char* argv[])
         ClearBackground(BLACK);
 
         BeginTextureMode(virtualRenderTexture);
+        ClearBackground(BLACK);
 
         world->tick(GetFrameTime() * 1000);
 

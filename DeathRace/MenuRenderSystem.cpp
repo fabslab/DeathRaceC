@@ -59,6 +59,8 @@ void MenuRenderSystem::tick(ECS::World* world, float deltaTime)
         gameOverMenu.Draw();
     } else if (gameState == GameState::MainMenu) {
         mainMenu.Update(world);
-        mainMenu.Draw();
+        if (gameState == GameState::MainMenu) {
+            mainMenu.Draw();
+        }
     }
 }
