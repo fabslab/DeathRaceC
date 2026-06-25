@@ -121,6 +121,7 @@ int main(int argc, char* argv[])
     auto virtualRenderTexture = LoadRenderTexture(GameConstants::VIRTUAL_WIDTH, GameConstants::VIRTUAL_HEIGHT);
     SetTextureFilter(virtualRenderTexture.texture, TEXTURE_FILTER_POINT);
     auto fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
+    SetTextureWrap(fullScreenRenderTarget.texture, TEXTURE_WRAP_CLAMP);
     auto screenOrigin = Vector2 { 0, 0 };
 
     auto world = ECS::World::createWorld();
@@ -152,8 +153,8 @@ int main(int argc, char* argv[])
             // Update render target and aspect ratio to match the new window size
             screenWidth = GetScreenWidth();
             screenHeight = GetScreenHeight();
-            UnloadRenderTexture(fullScreenRenderTarget);
             fullScreenRenderTarget = LoadRenderTexture(screenWidth, screenHeight);
+            SetTextureWrap(fullScreenRenderTarget.texture, TEXTURE_WRAP_CLAMP);
             Shaders::SetDimensions(screenWidth, screenHeight);
             destinationRectangle = GraphicsUtil::GetDestinationRectangleForScreen(static_cast<float>(screenWidth), static_cast<float>(screenHeight), PREFERRED_ASPECT_RATIO);
         }
@@ -171,6 +172,7 @@ int main(int argc, char* argv[])
         EndTextureMode();
 
         BeginTextureMode(fullScreenRenderTarget);
+        ClearBackground(BLACK);
         BeginShaderMode(Shaders::scanLines);
         DrawTexturePro(
             virtualRenderTexture.texture,
