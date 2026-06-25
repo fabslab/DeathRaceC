@@ -27,6 +27,8 @@ int main(int argc, char* argv[])
 {
     // Parse command-line arguments
     bool windowed = false;
+    bool explicitWidth = false;
+    bool explicitHeight = false;
     int windowWidth = GameConstants::VIRTUAL_WIDTH * 2;
     int windowHeight = GameConstants::VIRTUAL_HEIGHT * 2;
 
@@ -41,6 +43,7 @@ int main(int argc, char* argv[])
             }
             try {
                 windowWidth = std::stoi(argv[++i]);
+                explicitWidth = true;
             } catch (const std::exception&) {
                 std::cerr << "Error: --width requires a numeric value.\n";
                 return 1;
@@ -56,6 +59,7 @@ int main(int argc, char* argv[])
             }
             try {
                 windowHeight = std::stoi(argv[++i]);
+                explicitHeight = true;
             } catch (const std::exception&) {
                 std::cerr << "Error: --height requires a numeric value.\n";
                 return 1;
@@ -67,8 +71,8 @@ int main(int argc, char* argv[])
         } else if (arg == "--help" || arg == "-h") {
             std::cout << "Death Race - Command Line Options:\n"
                       << "  --windowed         Start in windowed mode\n"
-                      << "  --width <pixels>   Set window width (default: " << GameConstants::VIRTUAL_WIDTH * 2 << ")\n"
-                      << "  --height <pixels>  Set window height (default: " << GameConstants::VIRTUAL_HEIGHT * 2 << ")\n"
+                      << "  --width <pixels>   Set window width (default: max display)\n"
+                      << "  --height <pixels>  Set window height (default: max display)\n"
                       << "  --help, -h         Show this help message\n";
             return 0;
         }
@@ -84,9 +88,33 @@ int main(int argc, char* argv[])
     InitAudioDevice();
     SetTargetFPS(60);
 
-    // Get monitor size for fullscreen toggle
+    // Get monitor size for fullscreen toggle and default window sizing
     const int monitorWidth = GetMonitorWidth(0);
     const int monitorHeight = GetMonitorHeight(0);
+
+    // If no explicit size was given, compute the largest window that fits the monitor
+    // while maintaining the game's aspect ratio.
+    if (!explicitWidth && !explicitHeight) {
+        int maxWidth = monitorWidth;
+        int maxHeight = monitorHeight;
+
+        // Fit to aspect ratio: width-limited or height-limited
+        int newWidth = static_cast<int>(maxHeight * PREFERRED_ASPECT_RATIO);
+        int newHeight = static_cast<int>(maxWidth / PREFERRED_ASPECT_RATIO);
+
+        if (newWidth <= maxWidth) {
+            windowWidth = newWidth;
+            windowHeight = maxHeight;
+        } else {
+            windowWidth = maxWidth;
+            windowHeight = newHeight;
+        }
+
+        SetWindowSize(windowWidth, windowHeight);
+        int monitorX = monitorWidth / 2 - windowWidth / 2;
+        int monitorY = monitorHeight / 2 - windowHeight / 2;
+        SetWindowPosition(monitorX, monitorY);
+    }
 
     // Start windowed and use the current window dimensions for rendering
     int screenWidth = GetScreenWidth();
