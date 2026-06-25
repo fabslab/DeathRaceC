@@ -92,27 +92,17 @@ int main(int argc, char* argv[])
     const int monitorWidth = GetMonitorWidth(0);
     const int monitorHeight = GetMonitorHeight(0);
 
-    // If no explicit size was given, compute the largest window that fits the monitor
-    // while maintaining the game's aspect ratio.
+    // If no explicit size was given, maximize the window to fill the monitor.
+    // The game rendering handles aspect ratio with black bars, so the window
+    // can be any size — we just want it as large as possible.
     if (!explicitWidth && !explicitHeight) {
-        int maxWidth = monitorWidth;
-        int maxHeight = monitorHeight;
-
-        // Fit to aspect ratio: width-limited or height-limited
-        int newWidth = static_cast<int>(maxHeight * PREFERRED_ASPECT_RATIO);
-        int newHeight = static_cast<int>(maxWidth / PREFERRED_ASPECT_RATIO);
-
-        if (newWidth <= maxWidth) {
-            windowWidth = newWidth;
-            windowHeight = maxHeight;
-        } else {
-            windowWidth = maxWidth;
-            windowHeight = newHeight;
-        }
+        const int chromeHeight = 64; // title bar + macOS menu bar
+        windowWidth = monitorWidth;
+        windowHeight = monitorHeight - chromeHeight;
 
         SetWindowSize(windowWidth, windowHeight);
-        int monitorX = monitorWidth / 2 - windowWidth / 2;
-        int monitorY = monitorHeight / 2 - windowHeight / 2;
+        int monitorX = 0;
+        int monitorY = chromeHeight / 2;
         SetWindowPosition(monitorX, monitorY);
     }
 
