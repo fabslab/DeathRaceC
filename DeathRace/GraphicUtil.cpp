@@ -30,6 +30,8 @@ void GraphicsUtil::DrawTexture(Texture2D texture, Vector2 position, float rotati
 
 void GraphicsUtil::DrawText(Font font, const char* text, Vector2 pos, float fontSize, float spacing, Color tint)
 {
+    pos.x = std::round(pos.x);
+    pos.y = std::round(pos.y);
     DrawTextEx(font, text, pos, fontSize, spacing, tint);
 }
 
